@@ -1,9 +1,9 @@
-### Personal Blog
+# Personal Blog
 
 ## Technologies Used
-# Front End:
+### Front End:
 - react 
-# Back End: 
+### Back End: 
 - node.js
 - express
 - mysql
