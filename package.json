@@ -1,0 +1,20 @@
+{
+  "name": "mattboan-blog",
+  "version": "1.0.0",
+  "description": "## Technologies Used ### Front End: - react  ### Back End:  - node.js - express - mysql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattboan/mattboan-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattboan/mattboan-blog/issues"
+  },
+  "homepage": "https://github.com/mattboan/mattboan-blog#readme"
+}

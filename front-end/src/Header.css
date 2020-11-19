@@ -1,0 +1,16 @@
+.App-header {
+    background-color: #282c34;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 15px;
+    padding-left: 15px;
+    color: white;
+}
+
+.App-header-text {
+    color: white;
+    text-decoration: none;
+}
