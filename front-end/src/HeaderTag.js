@@ -1,13 +1,15 @@
 import React from 'react';
-import './Header.css';
+import './HeaderTag.css';
 
 class HeaderTag extends React.Component {
-    
+    constructor() {
+        super();
+    }
 
     render() {
         return(
-            <div className="MainCon">
-                <p></p>
+            <div className="MainCon" style={{fontSize: this.props.size}}>
+                <p>{this.props.tag}</p>
             </div>
         );
     }

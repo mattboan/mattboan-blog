@@ -1,0 +1,36 @@
+.ProjectCon {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ProjectConTop {
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+
+}
+
+.ProjectConBot {
+    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: teal;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.ProjectConImage {
+    width: 50%;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    border-top-left-radius: 10px;
+}
+
+.ProjectConText {
+    width: 50%;
+}
