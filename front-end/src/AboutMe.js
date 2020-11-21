@@ -23,6 +23,11 @@ class BigButton extends React.Component {
                         </div>
                     </div>
                     <div className="socials">
+                        <p>
+                            Hey, I'm Matt Boan currently studying Computer Science and Web and Mobile Design
+                            at Murdoch University. This website showcases all of my most recent and interesting 
+                            projects I've been working on.
+                        </p>
                         <a href="github.com/mattboan">
                             Github: github.com/mattboan/
                         </a>

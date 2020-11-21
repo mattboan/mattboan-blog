@@ -31,9 +31,16 @@
 }
 
 .imgring {
-    background-color: orange;
+    background-color: white;
     border-radius: 100px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
 }
 
 .maincontext {
