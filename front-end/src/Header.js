@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaBars } from 'react-icons/fa';
 import './Header.css';
 
 class Header extends React.Component {
@@ -12,7 +13,7 @@ class Header extends React.Component {
                     Matt Boan
                 </a>
                 <div className="menu">
-                Menu
+                    <FaBars size="20pt"/>
                 </div>
             </header>
         );

@@ -2,3 +2,15 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.ProjecCon h2 {
+    margin-bottom: 0px;
+}
+
+.loadmore {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

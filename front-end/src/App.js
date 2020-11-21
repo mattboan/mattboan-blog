@@ -3,14 +3,14 @@ import './App.css';
 import Header from './Header';
 import TagCon from './TagCon';
 import ProjectsCon from './ProjectsCon';
+import AboutMe from './AboutMe';
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
-      <TagCon></TagCon>
+      <AboutMe></AboutMe>
       <ProjectsCon></ProjectsCon>
-
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './TagCon.css';
-import HeaderTag from './HeaderTag';
+import Tag from './Tag';
 
 //Placeholder tags
 const TAGS = [
@@ -23,7 +23,7 @@ class TagCon extends React.Component {
         return(
             <div className="TagCon-Con">
                 {TAGS.map((text) => 
-                    <HeaderTag tag={text} />
+                    <Tag tag={text} />
                 )}
             </div>
         );

@@ -1,0 +1,72 @@
+.AboutMe {
+    margin: 10px;
+}
+
+.aboutmecon {
+    display: flex;
+    flex-direction: column;
+    background-color: #222222;
+    border-radius: 10px;
+    padding: 8px;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+}
+
+.maincon {
+    display: flex;
+    flex-direction: row;
+}
+
+.mainconimg {
+    max-width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainconimg img {
+    width: 95%;
+    border-radius: 100px;
+}
+
+.imgring {
+    background-color: orange;
+    border-radius: 100px;
+    display: flex;
+}
+
+.maincontext {
+    width: 75%;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    
+}
+
+.maincontext h3 {
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+.maincontext h4 {
+    margin: 0px;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 11pt;
+}
+
+.socials {
+    margin-top: 10px;
+}
+
+.socials a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+

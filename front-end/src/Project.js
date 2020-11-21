@@ -1,6 +1,6 @@
 import React from 'react';
 import './Project.css';
-import HeaderTag from './HeaderTag';
+import Tag from './Tag';
 
 class Project extends React.Component {
     constructor() {
@@ -23,8 +23,8 @@ class Project extends React.Component {
                     </div>
                 </div>
                 <div className="ProjectConBot">
-                    {this.props.tags.map((text) => 
-                    <HeaderTag tag={text} size="12px"></HeaderTag>)}
+                    {this.props.tags.map((tag) => 
+                    <Tag text={tag.text} color={tag.color} size="12px"></Tag>)}
                 </div>
                 
             </div>
