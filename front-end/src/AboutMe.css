@@ -1,5 +1,6 @@
 .AboutMe {
     margin: 10px;
+    margin-bottom: 30px;
 }
 
 .aboutmecon {
@@ -11,6 +12,10 @@
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+}
+
+.AboutMe h2 {
+    margin-bottom: 10px;
 }
 
 .maincon {
