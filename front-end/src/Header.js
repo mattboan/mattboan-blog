@@ -28,7 +28,7 @@ class Header extends React.Component {
                         href="./">
                             Matt Boan
                     </a>
-                    <Hamburger onToggle={this.onMenuClick} size={26} />
+                    <Hamburger className="menubtn" onToggle={this.onMenuClick} size={26} hideOutline={true}/>
                 </header>
                 <div className={this.state.menuOpen ? 'dropDown slideDown': 'dropDown slideUp'}>
                     <ul>

@@ -13,7 +13,7 @@ class BigButton extends React.Component {
                 <div className="aboutmecon">
                     <div className="maincon">
                         <div className="mainconimg">
-			    <div className="imgring">
+			                <div className="imgring">
                                 <img src="./me2.jpg" />
                             </div>
                         </div>

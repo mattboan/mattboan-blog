@@ -20,6 +20,11 @@
     font-size: 22pt;
 }
 
+
+.hamburger-react {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+}
+
 .dropDown {
     display: flex;
     background-color: #eb691e;
@@ -44,6 +49,7 @@
 }
 
 .dropDown ul {
+    width: 100%;
     margin: 0;
     padding: 0;
     padding-left: 15px;

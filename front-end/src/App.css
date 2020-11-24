@@ -3,3 +3,12 @@ body {
     color: #ffffff;
 
 }
+
+.banner {
+    overflow: hidden;
+}
+
+.banner img {
+    height: 350px;
+    min-width: 100vw;
+}
