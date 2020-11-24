@@ -14,7 +14,6 @@ class Header extends React.Component {
     }
 
     onMenuClick() {
-        console.log(this.state.menuOpen);
         const menuState = this.state.menuOpen;
         this.setState({ menuOpen: !menuState })
     }

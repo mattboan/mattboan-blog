@@ -45,6 +45,22 @@ const PROJECTS = [
                 color: "#e7352c",
             },
         ]
+    },
+    {
+        id: "003",
+        name: "Galtron.py",
+        img: "https://i.ytimg.com/vi/adBrMzfKTG8/maxresdefault.jpg",
+        desc: "Galaga Clone implemented using pygame.",
+        tags: [
+            {
+                color: "#306998",
+                text: "Python"
+            },
+            {
+                color: "#6aee28",
+                text: "PyGame"
+            }
+        ]
     }
 ];
 

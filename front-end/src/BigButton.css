@@ -1,5 +1,8 @@
 .BigButton a {
     background-color: #dd5405;
+    border-color: #dd5405;
+    border-style: solid;
+    border-width: 2px;
     color: white;
     font-weight: bold;
     padding: 8px;
@@ -9,4 +12,14 @@
     -webkit-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
     -moz-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
     box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.BigButton a:hover {
+    color: #dd5405;
+    background-color: rgba(0,0,0,0);
+    border-color: #dd5405;
+    border-style: solid;
+    border-width: 2px;
 }

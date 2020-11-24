@@ -1,14 +1,8 @@
 body {
     background-color: #1a1a1a;
     color: #ffffff;
-
 }
 
-.banner {
-    overflow: hidden;
-}
-
-.banner img {
-    height: 350px;
-    min-width: 100vw;
+.AppContent {
+    min-height: 85vh;
 }

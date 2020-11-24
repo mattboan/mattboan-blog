@@ -5,8 +5,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
     color: white;
 }
 
@@ -52,20 +52,26 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    padding-left: 15px;
-    padding-right: 15px;
+    
     height: auto;
     list-style-type: none;
 }
 
 .dropDown ul li a {
+    padding-left: 15px;
+    padding-right: 15px;
     height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    cursor: pointer;
+}
+
+.dropDown ul li a:hover {
+    background-color: #dd5405;
 }
 
 .dropDown ul li a p {
-    margin-left: 5px;
+    margin-left: 8px;
 }
