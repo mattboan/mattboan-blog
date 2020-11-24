@@ -19,3 +19,47 @@
 .App-header-text {
     font-size: 22pt;
 }
+
+.dropDown {
+    display: flex;
+    background-color: #eb691e;
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    overflow: hidden;
+    transition-duration: 2s;
+    transition-timing-function: linear;       
+    -webkit-transition: max-height 0.2s ease-in-out;
+    -moz-transition: max-height 0.2s ease-in-out;
+    -o-transition: max-height 0.2s ease-in-out;
+    transition: max-height 0.2s ease-in-out;
+}
+
+.slideUp {
+    max-height: 0px;
+}
+
+.slideDown {
+    max-height: auto;
+}
+
+.dropDown ul {
+    margin: 0;
+    padding: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: auto;
+    list-style-type: none;
+}
+
+.dropDown ul li a {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.dropDown ul li a p {
+    margin-left: 5px;
+}
