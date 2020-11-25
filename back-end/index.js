@@ -25,67 +25,20 @@ const con = mysql.createConnection({
 
 con.connect(); //Connect to the database
 
-
-//Temp globals
-const PROJECTS = [
-    {
-        id: "001",
-        name: "Raspberry Pi Spy Car",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStCaCObdap38GDLPqKFBihSkRpVWcZxpO9ew&usqp=CAU",
-        desc: "Built a little spy car using a raspberry pi 3 and various smaller modules...",
-        tags: [
-            {
-                color: "#1b8ac2", 
-                text: "C++"
-            },
-            {
-                text: "Raspberry Pi",
-                color: "#bd2b1e",
-            },
-        ]
-    }, 
-    {
-        id: "002",
-        name: "MyPlants",
-        img: "https://images.pexels.com/photos/4503273/pexels-photo-4503273.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        desc: "MyPlants is a React Native application that works in conjunction with an ESP32...",
-        tags: [
-            {
-                color: "#61dafb", 
-                text: "React Native"
-            },
-            {
-                text: "ESP32",
-                color: "#e7352c",
-            },
-        ]
-    },
-    {
-        id: "003",
-        name: "Galtron.py",
-        img: "https://i.ytimg.com/vi/adBrMzfKTG8/maxresdefault.jpg",
-        desc: "Galaga Clone implemented using pygame.",
-        tags: [
-            {
-                color: "#306998",
-                text: "Python"
-            },
-            {
-                color: "#6aee28",
-                text: "PyGame"
-            }
-        ]
-    }
-];
-
 //Get recent projects
 app.get('/projects', (req, res) => {
     con.query('SELECT * FROM Projects', function(err, result, fields) {
         if (err) res.send(err.message);
-        console.log("Test MySQL: " + result.text);
         res.json(result);
     });
-    //res.json(PROJECTS);
+});
+
+//Get tags for a project 
+app.get('/tags:id', (req, res) => {
+    con.query('SELECT Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = ?', 
+    req.params.id, function(err, tags) {
+        res.json(tags);
+    });
 });
 
 //Get a single project

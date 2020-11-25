@@ -22,10 +22,15 @@ class ProjectsCon extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.1.109:8080/projects')
+        this.loadProjects();
+    }
+
+    loadProjects() {
+        fetch('http://localhost:8080/projects')
         .then(res => res.json())
         .then(
             (result) => {
+                console.log("Result: " + JSON.stringify(result));
                 this.setState({
                     isLoaded: true,
                     projs: result
@@ -41,7 +46,7 @@ class ProjectsCon extends React.Component {
     }
 
     loadMoreProjects() {
-        fetch('http://192.168.1.109:8080/moreProjects')
+        fetch('http://localhost:8080/moreProjects')
         .then(res => res.json())
         .then(
             (result) => {
@@ -80,7 +85,7 @@ class ProjectsCon extends React.Component {
                 <div className="ProjecCon">
                     <h2>Projects</h2>
                     {
-                        projs.map((project) => <Project name={project.name} desc={project.description} img={project.img} tags={project.tags} /> ) 
+                        this.state.projs.map((project) => <Project id={project.id} name={project.name} desc={project.description} img={project.image}  /> ) 
                     }
                     <div className="loadmore">
                         <BigButton text="Load More"></BigButton>     

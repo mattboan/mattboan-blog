@@ -5,6 +5,35 @@ import Tag from './Tag';
 class Project extends React.Component {
     constructor() {
         super();
+        this.state = {
+            error: null,
+            isLoaded: false,
+            tags: []
+        }
+    }
+
+    componentDidMount() {
+        this.loadTags();
+    }
+
+    loadTags() {
+        fetch('http://localhost:8080/tags' + this.props.id)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log("Tags: " + JSON.stringify(result));
+                this.setState({
+                    tags: result,
+                    isLoaded: true,
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error: error
+                });
+            }
+        );
     }
 
     render() {
@@ -23,7 +52,7 @@ class Project extends React.Component {
                     </div>
                 </div>
                 <div className="ProjectConBot">
-                    {this.props.tags.map((tag) => 
+                    {this.state.tags.map((tag) => 
                     <Tag text={tag.text} color={tag.color} size="12px"></Tag>)}
                 </div>
                 
