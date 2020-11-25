@@ -1,8 +1,11 @@
 'use strict';
 
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mysql = require('mysql');
 
 //Express init
 const app = express();
@@ -11,6 +14,17 @@ const port = 8080;
 //Express middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+//MySQL setup
+const con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DB
+});
+
+con.connect(); //Connect to the database
+
 
 //Temp globals
 const PROJECTS = [
@@ -66,7 +80,12 @@ const PROJECTS = [
 
 //Get recent projects
 app.get('/projects', (req, res) => {
-    res.json(PROJECTS);
+    con.query('SELECT * FROM Projects', function(err, result, fields) {
+        if (err) res.send(err.message);
+        console.log("Test MySQL: " + result.text);
+        res.json(result);
+    });
+    //res.json(PROJECTS);
 });
 
 //Get a single project

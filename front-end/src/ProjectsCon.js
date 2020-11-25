@@ -80,7 +80,7 @@ class ProjectsCon extends React.Component {
                 <div className="ProjecCon">
                     <h2>Projects</h2>
                     {
-                        projs.map((project) => <Project name={project.name} desc={project.desc} img={project.img} tags={project.tags} /> ) 
+                        projs.map((project) => <Project name={project.name} desc={project.description} img={project.img} tags={project.tags} /> ) 
                     }
                     <div className="loadmore">
                         <BigButton text="Load More"></BigButton>     
