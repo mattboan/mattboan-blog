@@ -81,7 +81,4 @@ INSERT INTO ProjectsTags(project_id, tag_id) VALUES
 SELECT text, color FROM Tags WHERE id =
 (SELECT tag_id FROM ProjectsTags WHERE project_id = 1);
 
-SELECT Tags.text, Tags.color
-FROM Tags 
-INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id
-WHERE ProjectsTags.project_id = 1;
+SELECT Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = 1;
