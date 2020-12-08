@@ -9,9 +9,7 @@
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 100px;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
-    box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
+    
     cursor: pointer;
     transition: 0.2s linear;
 }
@@ -22,4 +20,10 @@
     border-color: #dd5405;
     border-style: solid;
     border-width: 2px;
+}
+
+.addShadow {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
+    box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
 }

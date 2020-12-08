@@ -1,11 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
-import Header from './Header';
-import Footer from './Footer';
-import TagCon from './TagCon';
-import ProjectsCon from './ProjectsCon';
-import AboutMe from './AboutMe';
-
+import Header from './Components/Header';
+import Footer from './Components/Footer';
+import ProjectsCon from './Components/ProjectsCon';
 
 function App() {
   return (

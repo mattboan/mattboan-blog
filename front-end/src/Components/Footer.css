@@ -10,6 +10,7 @@
 
 .footercon {
     display: flex;
+    flex-direction: column;
     background-color: #dd5405;
 }
 
