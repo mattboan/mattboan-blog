@@ -2,7 +2,7 @@ import React from 'react';
 import Project from './Project';
 import BigButton from './BigButton';
 import DotLoader from 'react-spinners/DotLoader';
-import "./ProjecsCon.css";
+import "./Project.css";
 
 const override = `
     display: block;
@@ -82,11 +82,14 @@ class ProjectsCon extends React.Component {
             );
         } else {
             return (
-                <div className="ProjecCon">
+                <div className="ProjecConCon">
                     <h2>Projects</h2>
+                    <div className="projects">
                     {
                         this.state.projs.map((project) => <Project id={project.id} name={project.name} desc={project.description} img={project.image}  /> ) 
                     }
+                    </div>
+                    
                     <div className="loadmore">
                         <BigButton text="Load More"></BigButton>     
                     </div>

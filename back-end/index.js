@@ -27,7 +27,15 @@ con.connect(); //Connect to the database
 
 //Get recent projects
 app.get('/projects', (req, res) => {
-    con.query('SELECT * FROM Projects', function(err, result, fields) {
+    con.query('SELECT * FROM Projects', function(err, result) {
+        if (err) res.send(err.message);
+        res.json(result);
+    });
+});
+
+//Get a single project
+app.get('/project:id', (req, res) => {
+    con.query('SELECT * FROM Projects WHERE id = ?', req.params.id, function(err, result) {
         if (err) res.send(err.message);
         res.json(result);
     });
@@ -39,12 +47,6 @@ app.get('/tags:id', (req, res) => {
     req.params.id, function(err, tags) {
         res.json(tags);
     });
-});
-
-//Get a single project
-app.get('/project:id', (req, res) => {
-    //Get the id
-    console.log("/project:id" + req.params.id);
 });
 
 app.listen(port, () => {
