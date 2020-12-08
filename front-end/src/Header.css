@@ -48,16 +48,15 @@
     max-height: auto;
 }
 
-.dropDown ul {
+.dropDown {
     width: 100%;
     margin: 0;
     padding: 0;
-    
     height: auto;
-    list-style-type: none;
+    flex-direction: column;
 }
 
-.dropDown ul li a {
+.dropDown a {
     padding-left: 15px;
     padding-right: 15px;
     height: 50px;
@@ -68,10 +67,39 @@
     cursor: pointer;
 }
 
-.dropDown ul li a:hover {
+.dropDown a:hover {
     background-color: #dd5405;
 }
 
-.dropDown ul li a p {
+.dropDown a p {
     margin-left: 8px;
+}
+
+
+/* ------------------------------------- */
+/* Anything bigger than a phone */
+@media only screen and (min-width: 600px) {
+    .hamburger-react {
+        display: none;
+    }
+
+    .dropDown {
+        margin-top: -50px;
+        flex-direction: row;
+        justify-content: flex-end;
+        background-color: #dd5405;
+    }
+
+    .dropDown a:hover {
+        background-color:#eb691e;
+    }
+
+    .slideUp {
+        max-height: 50px !important;
+    }
+}
+
+/* Anything bigger than a tablet screen */
+@media only screen and (min-width: 1000px) {
+
 }

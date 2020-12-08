@@ -30,6 +30,19 @@ class Header extends React.Component {
                     <Hamburger className="menubtn" onToggle={this.onMenuClick} size={26} hideOutline={true}/>
                 </header>
                 <div className={this.state.menuOpen ? 'dropDown slideDown': 'dropDown slideUp'}>
+                        <a>
+                            <FaHome /> <p>Home</p>
+                        </a>
+                        <a>
+                            <FaDraftingCompass /> <p>Projects</p>
+                        </a>
+                        <a>
+                            <FaAddressCard /> <p>About Me</p>
+                        </a>
+                        <a>
+                            <FaMugHot /> <p>Misc.</p>
+                        </a>
+                    {/*
                     <ul>
                         <li><a>
                             <FaHome /> <p>Home</p>
@@ -44,6 +57,7 @@ class Header extends React.Component {
                             <FaMugHot /> <p>Misc.</p>
                         </a></li>
                     </ul>
+                    */}
                 </div>
             </div>
             
