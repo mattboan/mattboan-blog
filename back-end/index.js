@@ -27,10 +27,13 @@ con.connect(); //Connect to the database
 
 //Get recent projects
 app.get('/projects', (req, res) => {
-    con.query('SELECT * FROM Projects', function(err, result) {
-        if (err) res.send(err.message);
-        res.json(result);
-    });
+    setTimeout(function() {
+        con.query('SELECT * FROM Projects', function(err, result) {
+            if (err) res.send(err.message);
+            res.json(result);
+        });
+    }, 1000);
+    
 });
 
 //Get a single project

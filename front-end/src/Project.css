@@ -2,7 +2,6 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    min-width: 350px;
     border-radius: 10px;
     background-color: #2b2b2b;
     margin-top: 10px;
@@ -10,6 +9,8 @@
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
     -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+    transition: 0.2s ease-in-out;
 }
 
 .ProjectConTop {
@@ -32,8 +33,8 @@
     overflow: hidden;
     background-position: center;
     background-size: cover;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 .ProjectConText {
@@ -96,7 +97,7 @@
     .ProjecConCon .projects {
         flex-wrap: wrap;
         flex-direction: unset;
-        justify-content: center;
+        justify-content: left;
         margin-left: -10px;
         margin-right: -10px;
 
