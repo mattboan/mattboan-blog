@@ -43,3 +43,21 @@
     font-size: 10pt;
     text-align: center;
 }
+
+/* ------------------------------------- */
+/* Anything bigger than a phone */
+@media only screen and (min-width: 600px) {
+    .footercon {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .footercon-col {
+        min-width: 20vw;
+    }
+}
+
+/* Anything bigger than a tablet screen */
+@media only screen and (min-width: 1000px) {
+    
+}
