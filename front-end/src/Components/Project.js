@@ -3,12 +3,13 @@ import './Project.css';
 import Tag from './Tag';
 
 class Project extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             error: null,
             isLoaded: false,
-            tags: []
+            tags: [],
+            isHovered: false,
         }
     }
 
@@ -17,7 +18,7 @@ class Project extends React.Component {
     }
 
     loadTags() {
-        fetch('http://localhost:8080/tags' + this.props.id)
+        fetch('http://192.168.0.239:8080/tags' + this.props.id)
         .then(res => res.json())
         .then(
             (result) => {
