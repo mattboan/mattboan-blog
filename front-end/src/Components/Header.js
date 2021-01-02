@@ -25,7 +25,7 @@ class Header extends React.Component {
                     <a 
                         className="App-header-text" 
                         href="./">
-                            Matt Boan
+                        MATT_BOAN
                     </a>
                     <Hamburger className="menubtn" onToggle={this.onMenuClick} size={26} hideOutline={true}/>
                 </header>

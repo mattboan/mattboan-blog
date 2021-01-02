@@ -18,7 +18,7 @@ class Project extends React.Component {
     }
 
     loadTags() {
-        fetch('http://192.168.0.239:8080/tags' + this.props.id)
+        fetch('http://localhost:8080/tags' + this.props.id)
         .then(res => res.json())
         .then(
             (result) => {

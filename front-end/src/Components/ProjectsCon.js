@@ -26,7 +26,7 @@ class ProjectsCon extends React.Component {
     }
 
     loadProjects() {
-        fetch('http://192.168.0.239:8080/projects')
+        fetch('http://localhost:8080/projects')
         .then(res => res.json())
         .then(
             (result) => {
@@ -46,7 +46,7 @@ class ProjectsCon extends React.Component {
     }
 
     loadMoreProjects() {
-        fetch('http://192.168.0.239:8080/moreProjects')
+        fetch('http://localhost:8080/moreProjects')
         .then(res => res.json())
         .then(
             (result) => {
