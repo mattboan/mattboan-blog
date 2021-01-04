@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+    Link
+} from "react-router-dom";
+
 import { FaHome, FaDraftingCompass, FaAddressCard, FaMugHot, FaAd } from 'react-icons/fa';
 import Hamburger from 'hamburger-react';
 import './Header.css';
@@ -30,18 +34,18 @@ class Header extends React.Component {
                     <Hamburger className="menubtn" onToggle={this.onMenuClick} size={26} hideOutline={true}/>
                 </header>
                 <div className={this.state.menuOpen ? 'dropDown slideDown': 'dropDown slideUp'}>
-                        <a>
+                        <Link to="/">
                             <FaHome /> <p>Home</p>
-                        </a>
-                        <a>
+                        </Link>
+                        <Link>
                             <FaDraftingCompass /> <p>Projects</p>
-                        </a>
-                        <a>
+                        </Link>
+                        <Link to="/AboutMe">
                             <FaAddressCard /> <p>About Me</p>
-                        </a>
-                        <a>
+                        </Link>
+                        <Link>
                             <FaMugHot /> <p>Misc.</p>
-                        </a>
+                        </Link>
                     {/*
                     <ul>
                         <li><a>

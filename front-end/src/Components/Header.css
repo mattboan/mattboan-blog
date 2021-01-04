@@ -1,3 +1,5 @@
+
+
 .App-header {
     background-color: #dd5405;
     min-height: 50px;
@@ -65,6 +67,8 @@
     align-items: center;
     justify-content: flex-start;
     cursor: pointer;
+    color: white;
+    text-decoration: none;
 }
 
 .dropDown a:hover {
