@@ -18,6 +18,7 @@ class Header extends React.Component {
     }
 
     onMenuClick() {
+        console.log("Clicked Menu!");
         const menuState = this.state.menuOpen;
         this.setState({ menuOpen: !menuState })
     }
@@ -31,37 +32,24 @@ class Header extends React.Component {
                         href="./">
                         MATT_BOAN
                     </a>
-                    <Hamburger className="menubtn" onToggle={this.onMenuClick} size={26} hideOutline={true}/>
+                    <Hamburger rounded 
+                        className="menubtn" toggled={this.state.menuOpen} toggle={this.onMenuClick} 
+                        size={26} hideOutline={true}
+                    />
                 </header>
                 <div className={this.state.menuOpen ? 'dropDown slideDown': 'dropDown slideUp'}>
-                        <Link to="/">
-                            <FaHome /> <p>Home</p>
-                        </Link>
-                        <Link>
-                            <FaDraftingCompass /> <p>Projects</p>
-                        </Link>
-                        <Link to="/AboutMe">
-                            <FaAddressCard /> <p>About Me</p>
-                        </Link>
-                        <Link>
-                            <FaMugHot /> <p>Misc.</p>
-                        </Link>
-                    {/*
-                    <ul>
-                        <li><a>
-                            <FaHome /> <p>Home</p>
-                        </a></li>
-                        <li><a>
-                            <FaDraftingCompass /> <p>Projects</p>
-                        </a></li>
-                        <li><a>
-                            <FaAddressCard /> <p>About Me</p>
-                        </a></li>
-                        <li><a>
-                            <FaMugHot /> <p>Misc.</p>
-                        </a></li>
-                    </ul>
-                    */}
+                    <Link to="/" onClick={this.onMenuClick}>
+                        <FaHome /> <p>Home</p>
+                    </Link>
+                    <Link onClick={this.onMenuClick}> 
+                        <FaDraftingCompass /> <p>Projects</p>
+                    </Link>
+                    <Link to="/AboutMe" onClick={this.onMenuClick}>
+                        <FaAddressCard /> <p>About Me</p>
+                    </Link>
+                    <Link onClick={this.onMenuClick}>
+                        <FaMugHot /> <p>Misc.</p>
+                    </Link>
                 </div>
             </div>
             

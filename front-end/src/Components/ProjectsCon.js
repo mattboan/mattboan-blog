@@ -64,14 +64,14 @@ class ProjectsCon extends React.Component {
         //Depending on the state of the fetch request
         if (error) {
             return (
-                <div className="ProjecCon">
+                <div className="ProjecConCon">
                     <h2>Projects</h2>
                     <p>Error retrieving recent projects. 😕</p>
                 </div>
             );
         } else if (!isLoaded) {
             return (
-                <div className="ProjecCon">
+                <div className="ProjecConCon">
                     <h2>Projects</h2>
                     <DotLoader  
                         css={override}
