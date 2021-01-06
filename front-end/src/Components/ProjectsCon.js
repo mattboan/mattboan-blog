@@ -11,9 +11,10 @@ const override = `
     border-color: red;
 `;
 
+
 class ProjectsCon extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             error: null,
             isLoaded: false,
@@ -60,6 +61,7 @@ class ProjectsCon extends React.Component {
 
     render() {
         const { error, isLoaded, projs } = this.state;
+
         
         //Depending on the state of the fetch request
         if (error) {

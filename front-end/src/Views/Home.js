@@ -15,7 +15,7 @@ class Home extends React.Component {
     render() {
         return(
             <div className="Home">
-                <ProjectsCon></ProjectsCon>
+                <ProjectsCon title="Highlighted Projects"></ProjectsCon>
             </div>
         );
     }

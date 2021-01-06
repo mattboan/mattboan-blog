@@ -30,7 +30,7 @@ class Header extends React.Component {
                     <a 
                         className="App-header-text" 
                         href="./">
-                        MATT_BOAN
+                        matt boan
                     </a>
                     <Hamburger rounded 
                         className="menubtn" toggled={this.state.menuOpen} toggle={this.onMenuClick} 

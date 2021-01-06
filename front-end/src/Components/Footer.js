@@ -46,7 +46,7 @@ class Footer extends React.Component {
                         <ContactMe />
                     </div>
                 </div>
-                <p>&copy; 2020 Matt Boan. All Rights Reserved.</p>
+                <p>&copy; 2021 Matt Boan. All Rights Reserved.</p>
             </div>
             
         );

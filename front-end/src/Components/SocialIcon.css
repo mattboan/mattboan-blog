@@ -1,0 +1,31 @@
+.SocialIcon {
+    border-radius: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background-color: #dd5405;
+    margin-right: 15px;
+    margin-top: 15px;
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transition: 0.4s ease;
+}
+
+.SocialIcon:hover {
+    transform: translateY(-5px);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.icon {
+    width: 50%;
+    height: 50%;
+}
