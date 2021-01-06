@@ -24,7 +24,7 @@ class AboutMe extends React.Component {
                 >
                 </div>
                 <div className="para">
-                    <h3>This Site</h3>
+                    <h2>This Site</h2>
                     <p>
                         If you want to learn, contribute, or just see what I'm working on in a greater detail than 
                         a github repository might provide, this is where it all happens. This blog is a culmination of
@@ -34,7 +34,7 @@ class AboutMe extends React.Component {
                     </p>
                 </div>
                 <div className="socials">
-                    <h3>Get in touch</h3>
+                    <h2>Get in touch</h2>
                     <div className="socialsCon">
                         <SocialIcon icon={<FaLinkedin className="icon"/>} />
                         <SocialIcon icon={<FaGithub className="icon"/>}/>
