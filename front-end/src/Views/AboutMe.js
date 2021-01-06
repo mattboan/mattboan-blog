@@ -1,7 +1,6 @@
 import React from 'react';
 
-
-import './Home.css';
+import './AboutMe.css';
 
 class AboutMe extends React.Component {
     constructor(props) {
@@ -13,6 +12,8 @@ class AboutMe extends React.Component {
     render() {
         return(
             <div className="AboutMe">
+                <h2>About Me</h2>
+                <img src='./img/beach.jpg' />
                 <p>About me page... </p>
             </div>
         );

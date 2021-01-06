@@ -6,3 +6,11 @@ body {
 .AppContent {
     min-height: 85vh;
 }
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+}
