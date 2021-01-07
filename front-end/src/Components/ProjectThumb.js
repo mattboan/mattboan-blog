@@ -1,8 +1,10 @@
 import React from 'react';
-import './Project.css';
+import { Link } from "react-router-dom";
+
+import './ProjectThumb.css';
 import Tag from './Tag';
 
-class Project extends React.Component {
+class ProjectThumb extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,8 +40,10 @@ class Project extends React.Component {
     }
 
     render() {
+        console.log('ProjectThumb: ' + this.props.id);
         return(
-            <div className="ProjectCon">
+            <Link to= {{ pathname: `/Project/${this.props.id}` }} className="ProjectCon">
+
                 <div className="ProjectConTop">
                     <div className="ProjectConImage"
                         style={{
@@ -55,11 +59,11 @@ class Project extends React.Component {
                 <div className="ProjectConBot">
                     {this.state.tags.map((tag) => 
                     <Tag text={tag.text} color={tag.color} size="12px"></Tag>)}
-                </div>
-                
-            </div>
+                </div>                
+            </Link>
+            
         );
     }
 }
 
-export default Project;
+export default ProjectThumb;

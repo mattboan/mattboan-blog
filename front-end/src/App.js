@@ -13,6 +13,7 @@ import Footer from './Components/Footer';
 //Views
 import Home from './Views/Home';
 import AboutMe from './Views/AboutMe';
+import Project from './Views/Project';
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
             <div className="dynamicCon">
               { /* Switch Routes */ }
               <Switch>
+                <Route path="/Project/:id" render= { props => <Project {...props} />}>
+                </Route>
                 <Route path="/AboutMe">
                   <AboutMe />
                 </Route>

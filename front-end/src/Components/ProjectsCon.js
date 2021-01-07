@@ -1,8 +1,8 @@
 import React from 'react';
-import Project from './Project';
+import Project from './ProjectThumb';
 import BigButton from './BigButton';
 import DotLoader from 'react-spinners/DotLoader';
-import "./Project.css";
+import "./ProjectThumb.css";
 
 const override = `
     display: block;

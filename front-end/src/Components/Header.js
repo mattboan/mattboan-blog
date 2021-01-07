@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FaHome, FaDraftingCompass, FaAddressCard, FaMugHot, FaAd } from 'react-icons/fa';
 import Hamburger from 'hamburger-react';
@@ -29,7 +27,7 @@ class Header extends React.Component {
                 <header className="App-header" >
                     <a 
                         className="App-header-text" 
-                        href="./">
+                        href="/">
                         matt boan
                     </a>
                     <Hamburger rounded 

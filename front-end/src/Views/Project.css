@@ -1,0 +1,28 @@
+.Project {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .Project {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .imageHeader {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .imageHeader {
+        height: 400px;
+        margin-left: -80px;
+        margin-right: -80px;
+    }
+}
