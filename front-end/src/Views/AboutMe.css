@@ -13,6 +13,10 @@
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     background-color: grey;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
 }
 
 .para {

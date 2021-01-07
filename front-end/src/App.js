@@ -19,19 +19,20 @@ function App() {
     <Router>
       <div>
         <div className="AppContent">
+            <div className="HeaderWrapper">
               <Header></Header>
-              <div className="dynamicCon">
-                { /* Switch Routes */ }
-                <Switch>
-                  <Route path="/AboutMe">
-                    <AboutMe />
-                  </Route>
-                  <Route path="/">
-                    <Home />
-                  </Route>
-                </Switch>
-              </div>
-              
+            </div>
+            <div className="dynamicCon">
+              { /* Switch Routes */ }
+              <Switch>
+                <Route path="/AboutMe">
+                  <AboutMe />
+                </Route>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+            </div>
           </div>
           <Footer></Footer>
       </div>

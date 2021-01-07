@@ -1,6 +1,5 @@
-
-
 .App-header {
+    z-index: 1;
     background-color: #dd5405;
     min-height: 50px;
     display: flex;
@@ -10,6 +9,7 @@
     padding-right: 10px;
     padding-left: 10px;
     color: white;
+
 }
 
 .App-header-text {
