@@ -18,13 +18,14 @@ import Project from './Views/Project';
 function App() {
   return (
     <Router>
+
       <div>
         <div className="AppContent">
             <div className="HeaderWrapper">
               <Header></Header>
             </div>
             <div className="dynamicCon">
-              { /* Switch Routes */ }
+
               <Switch>
                 <Route path="/Project/:id" render= { props => <Project {...props} />}>
                 </Route>
@@ -35,13 +36,12 @@ function App() {
                   <Home />
                 </Route>
               </Switch>
+
             </div>
           </div>
           <Footer></Footer>
       </div>
 
-      
-      
     </Router>
   );
 }

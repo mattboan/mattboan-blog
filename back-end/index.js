@@ -1,5 +1,4 @@
 'use strict';
-
 require('dotenv').config();
 
 const express = require('express');
@@ -26,13 +25,16 @@ const con = mysql.createConnection({
 con.connect(); //Connect to the database
 
 //Get recent projects
+/**
+ * IMPORTANT - REMOVE THE setTimeout() when on live server!
+ */
 app.get('/projects', (req, res) => {
     setTimeout(function() {
         con.query('SELECT * FROM Projects', function(err, result) {
             if (err) res.send(err.message);
             res.json(result);
         });
-    }, 1000);
+    }, 100);
     
 });
 
