@@ -1,8 +1,8 @@
 import React from 'react';
-import Project from './ProjectThumb';
+import Project from './ProjectThumb2';
 import BigButton from './BigButton';
 import DotLoader from 'react-spinners/DotLoader';
-import "./ProjectThumb.css";
+import "./ProjecsCon.css";
 
 const override = `
     display: block;
@@ -88,7 +88,7 @@ class ProjectsCon extends React.Component {
                     <h2>Projects</h2>
                     <div className="projects">
                     {
-                        this.state.projs.map((project) => <Project id={project.id} name={project.name} desc={project.description} img={project.image}  /> ) 
+                        this.state.projs.map((project) => <Project project={project} /> ) 
                     }
                     </div>
                     

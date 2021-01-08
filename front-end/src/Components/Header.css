@@ -9,7 +9,6 @@
     padding-right: 10px;
     padding-left: 10px;
     color: white;
- 
 }
 
 .App-header-text {
@@ -69,6 +68,7 @@
     cursor: pointer;
     color: white;
     text-decoration: none;
+    transition: 0.3s ease;
 }
 
 .dropDown a:hover {

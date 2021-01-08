@@ -1,6 +1,8 @@
 .ProjectCon {
     cursor: pointer;
     display: flex;
+    flex: 1 31%;
+
     flex-direction: column;
     border-radius: 10px;
     background-color: #2b2b2b;
@@ -59,68 +61,18 @@
     font-size: 12pt;
 }
 
-/* For the ProjectContainter Class */
-/* ------------------------------- */
-.ProjecConCon {
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 35px;
-    overflow: hidden;
-    text-decoration: none;
-    color: white;
-}
 
-.ProjecConCon h2 {
-    margin-bottom: 0px;
-    width: 100vw;
-}
-
-.ProjecConCon .projects {
-    display: flex;
-    flex-direction: column;
-}
-
-.loadmore {
-    margin-top: 25px;
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
-
-}
-
-
-/* For both Project and ProjectCon class */
-/* ------------------------------------- */
-/* Anything bigger than a phone */
 @media only screen and (min-width: 600px) {
-    .ProjecConCon {
-        margin: 20px;
-    }
-
-    .ProjecConCon .projects {
-        flex-wrap: wrap;
-        flex-direction: unset;
-        justify-content: left;
-        margin-left: -10px;
-        margin-right: -10px;
-
-    }
-
     .ProjectCon {
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 2%;
+        margin-right: 2%;
         align-self: flex-start;
         max-width: 45vw;
-
     }
   }
 
-  /* Anything bigger than a tablet screen */
-  @media only screen and (min-width: 1000px) {
-      .ProjectCon {
-          max-width: 420px;
-      }
-  }
+/* Anything bigger than a tablet screen */
+@media only screen and (min-width: 1000px) {
+    .ProjectCon {
+    }
+}

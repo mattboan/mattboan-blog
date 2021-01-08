@@ -32,6 +32,12 @@ INSERT INTO Projects (name, image, description) VALUES (
     "Galaga Clone implemented using pygame."
 );
 
+INSERT INTO Projects (name, image, description) VALUES (
+    "Javascript Basics",
+    "https://miro.medium.com/max/3600/1*6ahbWjp_g9hqhaTDSJOL1Q.png",
+    "Getting back to basics, working with JavaScript to grasp a deeper understanding,"
+);
+
 CREATE TABLE `Tags` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR(100) NOT NULL,
@@ -58,6 +64,12 @@ INSERT INTO Tags (text, color) VALUES (
     "C++",
     "#1b8ac2"
 );
+
+INSERT INTO Tags (text, color) VALUES (
+    "JavaScript",
+    "#f0db4f"
+);
+INSERT INTO ProjectsTags(project_id, tag_id) VALUES (4, 7);
 
 CREATE TABLE `ProjectsTags` (
     `id` INT unsigned NOT NULL AUTO_INCREMENT,

@@ -13,10 +13,24 @@ body {
     position: relative;
 }
 
+.dynamicCon {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 @media only screen and (min-width: 600px) {
     /* For tablets: */
 }
 
 @media only screen and (min-width: 768px) {
     /* For desktop: */
+}
+
+@media only screen and (min-width: 1100px) {
+    .dynamicCon {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

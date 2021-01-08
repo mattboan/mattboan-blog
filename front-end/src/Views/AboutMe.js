@@ -17,7 +17,7 @@ class AboutMe extends React.Component {
     render() {
         return(
             <div className="AboutMe">
-                <div className="imageHeader"
+                <div className="aboutMeImageHeader"
                     style={{
                         backgroundImage: "url('" + headerImage + "')"
                     }}

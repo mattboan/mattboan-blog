@@ -1,12 +1,19 @@
-.ProjecCon {
-
+.ProjecConCon {
+    margin-bottom: 35px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
 }
 
-.ProjecCon h2 {
+.ProjecConCon h2 {
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
     margin-bottom: 0px;
+    width: 100vw;
 }
 
-.ProjecCon .projects {
+.ProjecConCon .projects {
     display: flex;
     flex-direction: column;
 }
@@ -18,11 +25,40 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
+
 }
 
 @media only screen and (min-width: 600px) {
-    /* For tablets: */
-}
-@media only screen and (min-width: 768px) {
-    /* For desktop: */
-}
+    .ProjecConCon {
+        margin: 20px;
+    }
+
+    .ProjecConCon .projects {
+        flex-wrap: wrap;
+        flex-direction: unset;
+        justify-content: left;
+        margin-left: -10px;
+        margin-right: -10px;
+
+    }
+
+    .ProjecConCon h2 {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .ProjectCon {
+        margin-left: 10px;
+        margin-right: 10px;
+        align-self: flex-start;
+        max-width: 45vw;
+    }
+  }
+
+  /* Anything bigger than a tablet screen */
+  @media only screen and (min-width: 1000px) {
+      .ProjectCon {
+          max-width: 420px;
+      }
+  }

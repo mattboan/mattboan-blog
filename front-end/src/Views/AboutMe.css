@@ -5,7 +5,7 @@
     margin-bottom: 100px;
 }
 
-.imageHeader {
+.aboutMeImageHeader {
     margin-right: -10px;
     margin-left: -10px;
     height: 300px;
@@ -47,7 +47,7 @@
         margin-right: auto;
     }
 
-    .imageHeader {
+    .aboutMeImageHeader {
         margin-right: 0px;
         margin-left: 0px;
     }
@@ -56,7 +56,7 @@
 
 @media only screen and (min-width: 768px) {
     /* For desktop: */
-    .imageHeader {
+    .aboutMeImageHeader {
         height: 400px;
         margin-left: -80px;
         margin-right: -80px;

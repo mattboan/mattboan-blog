@@ -39,7 +39,7 @@ class Header extends React.Component {
                     <Link to="/" onClick={this.onMenuClick}>
                         <FaHome /> <p>Home</p>
                     </Link>
-                    <Link onClick={this.onMenuClick}> 
+                    <Link to="/Projects" onClick={this.onMenuClick}> 
                         <FaDraftingCompass /> <p>Projects</p>
                     </Link>
                     <Link to="/AboutMe" onClick={this.onMenuClick}>
