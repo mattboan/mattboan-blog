@@ -1,8 +1,13 @@
 .Projects h2 {
-    margin-right: 15px;
-    margin-left: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 0px;
+}
+
+.searchBarWrapper {
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .Projects p {
@@ -10,7 +15,12 @@
 
 @media only screen and (min-width: 600px) {
     .Projects h2 {
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .searchBarWrapper {
+        margin-left: 10px;
+        margin-right: 10px;
     }
 }

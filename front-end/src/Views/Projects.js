@@ -72,7 +72,9 @@ class Projects extends React.Component {
         return(
             <div className="Projects">
                 <h2>Projects</h2>
-                <SearchBar placeholder="Search Projects" onSearch={this.search}/>
+                <div className="searchBarWrapper">
+                    <SearchBar placeholder="Search Projects" onSearch={this.search}/>
+                </div>
                 {(() => {
                     if (error) {
                         return (<div>Error Loading Projects.</div>);

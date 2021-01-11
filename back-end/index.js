@@ -41,7 +41,7 @@ app.get('/projects', (req, res) => {
 //Search projects
 app.get('/queryProjects::query', (req, res) => {
     console.log(req.params.query);
-    con.query("SELECT * FROM Projects WHERE MATCH(name, description) against (?)", req.params.query,
+    con.query("SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)", req.params.query,
     function(err, result) {
         if (err) res.send(err.message);
         res.json(result);
