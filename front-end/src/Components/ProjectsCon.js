@@ -1,5 +1,6 @@
 import React from 'react';
-import Project from './ProjectThumb2';
+import Thumbnail from './Thumbnail';
+
 import BigButton from './BigButton';
 import DotLoader from 'react-spinners/DotLoader';
 import "./ProjecsCon.css";
@@ -18,63 +19,31 @@ class ProjectsCon extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            projs: []
+            projects: null,
         }
     }
 
-    componentDidMount() {
-        this.loadProjects();
-    }
-
-    loadProjects() {
-        fetch('http://localhost:8080/projects')
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log("Result: " + JSON.stringify(result));
-                this.setState({
-                    isLoaded: true,
-                    projs: result
-                });
-            },
-            (error) => {
-                this.setState({
-                    isLoaded: true,
-                    error: error
-                });
-            }
-        );
-    }
-
-    loadMoreProjects() {
-        fetch('http://localhost:8080/moreProjects')
-        .then(res => res.json())
-        .then(
-            (result) => {
-
-            },
-            (error) => {
-
-            }
-        );
+    loadProjects(projs, err, loaded) {
+        this.setState({
+            projects: projs,
+            error: err,
+            isLoaded: loaded
+        });
     }
 
     render() {
         const { error, isLoaded, projs } = this.state;
-
         
         //Depending on the state of the fetch request
         if (error) {
             return (
                 <div className="ProjecConCon">
-                    <h2>Projects</h2>
                     <p>Error retrieving recent projects. 😕</p>
                 </div>
             );
         } else if (!isLoaded) {
             return (
                 <div className="ProjecConCon">
-                    <h2>Projects</h2>
                     <DotLoader  
                         css={override}
                         size={30}
@@ -85,15 +54,14 @@ class ProjectsCon extends React.Component {
         } else {
             return (
                 <div className="ProjecConCon">
-                    <h2>Projects</h2>
                     <div className="projects">
                     {
-                        this.state.projs.map((project) => <Project project={project} /> ) 
+                        this.state.projs.map((project) => <Thumbnail item={project} link='Project'/> ) 
                     }
                     </div>
                     
                     <div className="loadmore">
-                        <BigButton text="Load More"></BigButton>     
+                        <BigButton text="Load More" shadow="false"></BigButton>
                     </div>
                 </div>
             );

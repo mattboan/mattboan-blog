@@ -1,0 +1,16 @@
+.Projects h2 {
+    margin-right: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.Projects p {
+}
+
+@media only screen and (min-width: 600px) {
+    .Projects h2 {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}

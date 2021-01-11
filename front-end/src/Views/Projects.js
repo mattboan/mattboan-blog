@@ -1,5 +1,8 @@
 import React from 'react';
-import SocialIcon from '../Components/SocialIcon';
+
+import ProjectCon from "../Components/ProjectsCon";
+import SearchBar from "../Components/SearchBar";
+
 import './Projects.css';
 
 class Projects extends React.Component {
@@ -12,9 +15,9 @@ class Projects extends React.Component {
     render() {
         return(
             <div className="Projects">
-                <div className="para">
-                    <h2>Projects</h2>
-                </div>
+                <h2>Projects</h2>
+                <SearchBar placeholder="Search Projects"/>
+                <ProjectCon />
             </div>
         );
     }

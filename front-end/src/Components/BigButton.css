@@ -23,7 +23,7 @@
 }
 
 .addShadow {
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
-    box-shadow: 0px 0px 5px 0px rgba(221,84,5,1);
+    -webkit-box-shadow: 0px 0px 5px 0px#222222;
+    -moz-box-shadow: 0px 0px 5px 0px#222222;
+    box-shadow: 0px 0px 5px 0px#222222;
 }
