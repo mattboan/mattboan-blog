@@ -39,10 +39,8 @@
 }
 
 .sidepanel .profile {
-    max-width: 100%;
     margin-bottom: 15px;
     display: flex;
-    width: 100%;
     border: 2px solid #252525;
     background-color: none;
     border-radius: 15px;
@@ -86,7 +84,6 @@
 .moreFromTheAuthor {
     display: flex;
     flex-direction: column;
-    width: 100%;
     border-radius: 15px;
     border: 2px solid #252525;
 
@@ -95,7 +92,7 @@
 .moreFromTheAuthor .innerCon {
     margin-right: 15px;
     margin-left: 15px;
-    width: 100%;
+
 }
 
 .profile .innerCon {
