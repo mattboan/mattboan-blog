@@ -23,6 +23,8 @@
 
 .SearchBar button {
     padding: 10px;
+    padding-right: 25px;
+    padding-left: 25px;
     border: none;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;

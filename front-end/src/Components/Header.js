@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-import { FaHome, FaDraftingCompass, FaAddressCard, FaMugHot, FaAd } from 'react-icons/fa';
+import { FaHome, FaDraftingCompass, FaAddressCard, FaMugHot } from 'react-icons/fa';
 import Hamburger from 'hamburger-react';
 import './Header.css';
 
@@ -45,7 +45,7 @@ class Header extends React.Component {
                     <Link to="/AboutMe" onClick={this.onMenuClick}>
                         <FaAddressCard /> <p>About Me</p>
                     </Link>
-                    <Link onClick={this.onMenuClick}>
+                    <Link to="/Misc" onClick={this.onMenuClick}>
                         <FaMugHot /> <p>Misc.</p>
                     </Link>
                 </div>

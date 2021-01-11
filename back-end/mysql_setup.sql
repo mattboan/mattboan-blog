@@ -14,6 +14,8 @@ CREATE TABLE `Projects` (
 	PRIMARY KEY (`id`)
 );
 
+ALTER TABLE `Projects` ADD FULLTEXT(name, description);
+
 INSERT INTO Projects (name, image, description) VALUES (
     "Raspberry Pi Spy Car",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStCaCObdap38GDLPqKFBihSkRpVWcZxpO9ew&usqp=CAU",

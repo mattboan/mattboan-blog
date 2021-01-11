@@ -32,9 +32,20 @@ app.get('/projects', (req, res) => {
     setTimeout(function() {
         con.query('SELECT * FROM Projects', function(err, result) {
             if (err) res.send(err.message);
-            res.json(result);
+                res.json(result);
         });
-    }, 100);
+    }, 1500);
+    
+});
+
+//Search projects
+app.get('/queryProjects::query', (req, res) => {
+    console.log(req.params.query);
+    con.query("SELECT * FROM Projects WHERE MATCH(name, description) against (?)", req.params.query,
+    function(err, result) {
+        if (err) res.send(err.message);
+        res.json(result);
+    });
     
 });
 
@@ -48,7 +59,7 @@ app.get('/project:id', (req, res) => {
 
 //Get tags for a project 
 app.get('/tags:id', (req, res) => {
-    con.query('SELECT Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = ?', 
+    con.query('SELECT Tags.id, Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = ?', 
     req.params.id, function(err, tags) {
         res.json(tags);
     });

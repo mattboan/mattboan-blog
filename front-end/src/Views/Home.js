@@ -1,16 +1,17 @@
 import React from 'react';
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+import DotLoader from 'react-spinners/DotLoader';
+
 import ProjectsCon from '../Components/ProjectsCon';
 
 import './Home.css';
+import dotConfig from '../Config/DotConfig';
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
+            loaded: false,
             projects: []
         };
     }
@@ -19,20 +20,20 @@ class Home extends React.Component {
         this.loadProjects();
     }
 
+    //API call to retrieve highlighted projects
     loadProjects() {
         fetch('http://localhost:8080/projects')
         .then(res => res.json())
         .then(
             (result) => {
-                console.log("Result: " + JSON.stringify(result));
                 this.setState({
-                    isLoaded: true,
+                    loaded: true,
                     projects: result
                 });
             },
             (error) => {
                 this.setState({
-                    isLoaded: true,
+                    loaded: true,
                     error: error
                 });
             }
@@ -40,10 +41,19 @@ class Home extends React.Component {
     }
 
     render() {
+        const { error, loaded, projects } = this.state;
         return(
             <div className="Home">
                 <h2>Projects</h2>
-                <ProjectsCon title="Highlighted Projects" />
+                {(() => {
+                    if (error) {
+                        return (<div>Error Loading Projects.</div>);
+                    } else if (!loaded) {
+                        return (<DotLoader css={dotConfig} size={55} color={'#dd5405'}/>);
+                    } else {
+                        return (<ProjectsCon projects={projects} />);
+                    }
+                })()}
                 <h2>Blog Posts</h2>
             </div>
         );

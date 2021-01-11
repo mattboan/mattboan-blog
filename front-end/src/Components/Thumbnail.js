@@ -26,7 +26,6 @@ class Thumbnail extends React.Component {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log("Tags: " + JSON.stringify(result));
                 this.setState({
                     tags: result,
                     isLoaded: true,
@@ -42,7 +41,6 @@ class Thumbnail extends React.Component {
     }
 
     render() {
-        console.log("Thumbnail: " + this.props.item.image);
         return(
             <Link to= {{ pathname: `${this.props.link}/${this.props.item.id}` }} className="Thumbnail">
                 
@@ -55,7 +53,7 @@ class Thumbnail extends React.Component {
                 </div>
                 
                 <div className="ThumbnailTags">
-                    { this.state.tags.map((tag) => <Tag text={tag.text} color={tag.color} size="12px" />) }
+                    { this.state.tags.map((tag) => <Tag key={tag.id} text={tag.text} color={tag.color} size="12px" />) }
                 </div>
             </Link>
         );
