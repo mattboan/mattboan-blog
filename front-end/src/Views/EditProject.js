@@ -1,10 +1,9 @@
 import React from "react";
 import { Editor, EditorState, RichUtils } from "draft-js";
-import { FaEdit } from "react-icons/fa";
 
-import "./Project.css";
+import "./EditProject.css";
 
-class Project extends React.Component {
+class EditProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +12,8 @@ class Project extends React.Component {
             project: {},
             editorState: EditorState.createEmpty(),
         };
+
+        console.log("EditProject id: " + this.props.match.params.id);
     }
 
     componentDidMount() {
@@ -37,6 +38,14 @@ class Project extends React.Component {
         return "not-handled";
     };
 
+    triggetHeaderImageInput = (e) => {
+        this.inputRef.click();
+    };
+
+    headerImageOnChange = (e) => {
+        console.log("Image input: " + JSON.stringify(e.target.files[0]));
+    };
+
     getProjectFromAPI() {
         fetch("http://localhost:8080/Project" + this.props.match.params.id)
             .then((res) => res.json())
@@ -58,125 +67,23 @@ class Project extends React.Component {
     }
 
     render() {
+        console.log(this);
         return (
-            <div className="Project">
-                <div className="flexCon">
-                    <div className="contentCon">
-                        <div
-                            className="imageHeader"
-                            style={{
-                                backgroundImage:
-                                    "url('" + this.state.project.image + "')",
-                            }}
-                        ></div>
-                        <div className="projectcon">
-                            <div className="headerCon">
-                                <h2>{this.state.project.name}</h2>
-                                <div className="editButton">
-                                    <FaEdit className="icon" />
-                                </div>
-                            </div>
-                            <p>{this.state.project.description}</p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="sidepanel">
-                        <div className="profile">
-                            <div className="innerCon">
-                                <img src="../img/me2.jpg" />
-                                <div className="author">
-                                    <p className="authorName">Matt Boan</p>
-                                    <p className="authorDesc">
-                                        Programmer, Designer, Fullstack 🙏
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="moreFromTheAuthor">
-                            <div className="innerCon">
-                                <h3>More From the Author</h3>
-                                <p>Another one.</p>
-                            </div>
-                        </div>
+            <div className="EditProject">
+                <h2>Edit Project</h2>
+                <div className="headerImageEdit">
+                    <h3>Header Image</h3>
+                    <img src={this.state.project.image} alt="Header Image" />
+                    <div className="headerImageControls">
+                        <button onClick={this.triggetHeaderImageInput}>
+                            Upload
+                        </button>
+                        <input
+                            ref={(inputRef) => (this.inputRef = inputRef)}
+                            onChange={this.headerImageOnChange}
+                            type="file"
+                            name="headerImageInput"
+                        />
                     </div>
                 </div>
             </div>
@@ -184,4 +91,4 @@ class Project extends React.Component {
     }
 }
 
-export default Project;
+export default EditProject;

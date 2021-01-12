@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Editor, EditorState, RichUtils } from "draft-js";
 import { FaEdit } from "react-icons/fa";
 
 import "./Project.css";
@@ -12,31 +11,12 @@ class Project extends React.Component {
             error: null,
             isLoaded: false,
             project: {},
-            editorState: EditorState.createEmpty(),
         };
     }
 
     componentDidMount() {
         this.getProjectFromAPI();
     }
-
-    onChange = (editorState) => {
-        this.setState({ editorState });
-    };
-
-    handleKeyCommand = (command) => {
-        const newState = RichUtils.handleKeyCommand(
-            this.state.editorState,
-            command
-        );
-
-        if (newState) {
-            this.onChange(newState);
-            return "handled";
-        }
-
-        return "not-handled";
-    };
 
     getProjectFromAPI() {
         fetch("http://localhost:8080/Project" + this.props.match.params.id)
@@ -73,9 +53,14 @@ class Project extends React.Component {
                         <div className="projectcon">
                             <div className="headerCon">
                                 <h2>{this.state.project.name}</h2>
-                                <div className="editButton">
+                                <Link
+                                    to={{
+                                        pathname: `/EditProject/${this.props.match.params.id}`,
+                                    }}
+                                    className="editButton"
+                                >
                                     <FaEdit className="icon" />
-                                </div>
+                                </Link>
                             </div>
                             <p>{this.state.project.description}</p>
                             <p>

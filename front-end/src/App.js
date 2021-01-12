@@ -10,37 +10,42 @@ import Home from "./Views/Home";
 import AboutMe from "./Views/AboutMe";
 import Project from "./Views/Project";
 import Projects from "./Views/Projects";
+import EditProject from "./Views/EditProject";
 
 function App() {
-  return (
-    <Router>
-      <div>
-        <div className="AppContent">
-          <div className="HeaderWrapper">
-            <Header></Header>
-          </div>
-          <div className="dynamicCon">
-            <Switch>
-              <Route path="/Projects">
-                <Projects />
-              </Route>
-              <Route
-                path="/Project/:id"
-                render={(props) => <Project {...props} />}
-              ></Route>
-              <Route path="/AboutMe">
-                <AboutMe />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </div>
-        </div>
-        <Footer></Footer>
-      </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <div>
+                <div className="AppContent">
+                    <div className="HeaderWrapper">
+                        <Header></Header>
+                    </div>
+                    <div className="dynamicCon">
+                        <Switch>
+                            <Route
+                                path="/EditProject/:id"
+                                render={(props) => <EditProject {...props} />}
+                            />
+                            <Route path="/Projects">
+                                <Projects />
+                            </Route>
+                            <Route
+                                path="/Project/:id"
+                                render={(props) => <Project {...props} />}
+                            ></Route>
+                            <Route path="/AboutMe">
+                                <AboutMe />
+                            </Route>
+                            <Route path="/">
+                                <Home />
+                            </Route>
+                        </Switch>
+                    </div>
+                </div>
+                <Footer></Footer>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

@@ -1,0 +1,37 @@
+.EditProject {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.headerImageEdit h3 {
+    margin-bottom: 10px;
+}
+
+.headerImageEdit img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.headerImageControls {
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.headerImageControls button {
+    background-color: #222222;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 12pt;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.headerImageControls input {
+    display: none;
+}
