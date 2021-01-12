@@ -14,11 +14,21 @@ class Thumbnail extends React.Component {
             isLoaded: false,
             tags: [],
             isHovered: false,
+            hidden: true,
         }
+
     }
 
     componentDidMount() {
         this.loadTags();
+
+        setTimeout(() => {
+            this.show();
+        }, this.props.anim);
+    }
+    
+    show() {
+        this.setState({hidden: false});
     }
 
     loadTags() {
@@ -41,9 +51,10 @@ class Thumbnail extends React.Component {
     }
 
     render() {
+        const classes = this.state.hidden ? 'Thumbnail hide' : 'Thumbnail';
+
         return(
-            <Link to= {{ pathname: `${this.props.link}/${this.props.item.id}` }} className="Thumbnail">
-                
+            <Link to= {{ pathname: `${this.props.link}/${this.props.item.id}` }} className={classes}>
                 <div className="ThumbnailImage"
                 style={{ backgroundImage: "url('" + this.props.item.image + "')" }} />
                 

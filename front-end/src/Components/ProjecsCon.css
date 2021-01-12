@@ -3,6 +3,8 @@
     overflow: hidden;
     text-decoration: none;
     color: white;
+    transition: 1s ease-in-out;
+
 }
 
 .ProjecConCon h2 {
@@ -16,6 +18,7 @@
 .ProjecConCon .projects {
     display: flex;
     flex-direction: column;
+
 }
 
 .loadmore {
