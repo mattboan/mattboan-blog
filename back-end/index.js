@@ -34,7 +34,7 @@ app.get('/projects', (req, res) => {
             if (err) res.send(err.message);
                 res.json(result);
         });
-    }, 1500);
+    });
     
 });
 

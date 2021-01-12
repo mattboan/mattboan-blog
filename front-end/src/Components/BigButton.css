@@ -1,29 +1,29 @@
 .BigButton a {
-    background-color: #dd5405;
-    border-color: #dd5405;
-    border-style: solid;
-    border-width: 2px;
-    color: white;
-    font-weight: bold;
-    padding: 8px;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 100px;
-    
-    cursor: pointer;
-    transition: 0.2s linear;
+  background-color: #dd5405;
+  border-color: #dd5405;
+  border-style: solid;
+  border-width: 2px;
+  color: white;
+  font-weight: bold;
+  padding: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 100px;
+
+  cursor: pointer;
+  transition: 0.2s linear;
 }
 
 .BigButton a:hover {
-    color: #dd5405;
-    background-color: rgba(0,0,0,0);
-    border-color: #dd5405;
-    border-style: solid;
-    border-width: 2px;
+  color: #dd5405;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #dd5405;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .addShadow {
-    -webkit-box-shadow: 0px 0px 5px 0px#222222;
-    -moz-box-shadow: 0px 0px 5px 0px#222222;
-    box-shadow: 0px 0px 5px 0px#222222;
+  -webkit-box-shadow: 0px 0px 5px 0px#222222;
+  -moz-box-shadow: 0px 0px 5px 0px#222222;
+  box-shadow: 0px 0px 5px 0px#222222;
 }

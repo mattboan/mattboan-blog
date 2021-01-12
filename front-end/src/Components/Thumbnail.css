@@ -1,71 +1,71 @@
 .Thumbnail {
-    opacity: 1;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    max-width: 100%;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  max-width: 100%;
 
-    color: white;
-    text-decoration: none;
-    background-color: #242424;
-    border: 2px solid #3c3c3c;
-    border-radius: 15px;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.7);
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  
-    transition: 0.5s ease-in-out;
+  color: white;
+  text-decoration: none;
+  background-color: #242424;
+  border: 2px solid #3c3c3c;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: 0.5s ease-in-out;
 }
 
 .Thumbnail.hide {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .ThumbnailImage {
-    min-height: 180px;
-    overflow: hidden;
-    background-position: center;
-    background-size: cover;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
-    background-color: #3c3c3c;
+  min-height: 180px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  background-color: #3c3c3c;
 }
 
 .ThumbnailText {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    margin-left: 15px;
-    margin-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
-.ThumbnailText h3{
-    margin: 0;
-    margin-bottom: 5px;
+.ThumbnailText h3 {
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 .ThumbnailText p {
-    margin: 0;
-    margin-bottom: 5px;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 .ThumbnailTags {
-    margin: 5px;
-    margin-bottom: 10px;
-    margin-top:auto;
+  margin: 5px;
+  margin-bottom: 10px;
+  margin-top: auto;
 }
 
 @media only screen and (min-width: 600px) {
-    .Thumbnail {
-        flex: 1 45%;
-        max-width: 48%;
-    }
+  .Thumbnail {
+    flex: 1 45%;
+    max-width: 48%;
   }
+}
 
 /* Anything bigger than a tablet screen */
 @media only screen and (min-width: 1100px) {
-    .Thumbnail {
-        flex: 1 30%;
-        max-width: 32%;
-    }
+  .Thumbnail {
+    flex: 1 30%;
+    max-width: 32%;
+  }
 }

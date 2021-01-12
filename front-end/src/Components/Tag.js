@@ -1,5 +1,5 @@
-import React from 'react';
-import './Tag.css';
+import React from "react";
+import "./Tag.css";
 /*
 function invertColor(hex) {
     if (hex.indexOf('#') === 0) {
@@ -27,30 +27,30 @@ function padZero(str, len) {
 }
 */
 class Tag extends React.Component {
-    constructor(props) {
-        super(props);
-        //this.onHover = this.onHover.bind(this);
-    }
-/*
+  constructor(props) {
+    super(props);
+    //this.onHover = this.onHover.bind(this);
+  }
+  /*
     onHover(e) {
         console.log("test");
         e.target.style.background = this.props.color;
         e.target.style.color = invertColor(this.props.color);
     }
 */
-    render() {
-        return(
-            <div 
-                className="MainCon" 
-                style={{
-                    fontSize: this.props.size,
-                    borderColor: this.props.color
-                }}
-            >
-                <p>{this.props.text}</p>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div
+        className="MainCon"
+        style={{
+          fontSize: this.props.size,
+          borderColor: this.props.color,
+        }}
+      >
+        <p>{this.props.text}</p>
+      </div>
+    );
+  }
 }
 
 export default Tag;
