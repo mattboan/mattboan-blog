@@ -1,5 +1,6 @@
 import React from "react";
 import { Editor, EditorState, RichUtils } from "draft-js";
+import axios from "axios";
 
 import "./EditProject.css";
 
@@ -42,8 +43,38 @@ class EditProject extends React.Component {
         this.inputRef.click();
     };
 
-    headerImageOnChange = (e) => {
-        console.log("Image input: " + JSON.stringify(e.target.files[0]));
+    headerImageOnChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0];
+            this.setState({
+                project: {
+                    image: URL.createObjectURL(img),
+                },
+            });
+            let form = new FormData();
+            form.append("name", "Matt");
+            form.append("headerImage", img);
+            axios({
+                method: "post",
+                url: "http://localhost:8080/test",
+                data: form,
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+                .then(function (res) {
+                    console.log(res);
+                })
+                .catch(function (res) {
+                    console.log(res);
+                });
+            //axios.post("http://localhost:8080/test", form);
+        }
+        //this.postToAPI();
+    };
+
+    postToAPI = (event) => {
+        let form = new FormData();
+        form.append("image", event.target.files[0]);
+        axios.post("http://localhost:8080/test", form);
     };
 
     getProjectFromAPI() {
@@ -67,13 +98,18 @@ class EditProject extends React.Component {
     }
 
     render() {
-        console.log(this);
         return (
             <div className="EditProject">
                 <h2>Edit Project</h2>
                 <div className="headerImageEdit">
                     <h3>Header Image</h3>
-                    <img src={this.state.project.image} alt="Header Image" />
+                    <div
+                        className="imageHeader"
+                        style={{
+                            backgroundImage:
+                                "url('" + this.state.project.image + "')",
+                        }}
+                    ></div>
                     <div className="headerImageControls">
                         <button onClick={this.triggetHeaderImageInput}>
                             Upload
@@ -82,9 +118,33 @@ class EditProject extends React.Component {
                             ref={(inputRef) => (this.inputRef = inputRef)}
                             onChange={this.headerImageOnChange}
                             type="file"
-                            name="headerImageInput"
+                            name="headerImage"
                         />
                     </div>
+                </div>
+                <div className="projectTitleEdit">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" placeholder="Project Title"></input>
+                </div>
+                <div className="projectPostEdit">
+                    <label for="projectPost">Post</label>
+                    <div className="postEditorCon">
+                        <Editor
+                            editorState={this.state.editorState}
+                            handleKeyCommand={this.handleKeyCommand}
+                            onChange={this.onChange}
+                        />
+                    </div>
+                </div>
+
+                <div className="bottomControls">
+                    <button>Update Post</button>
+                    <button style={{ backgroundColor: "grey" }}>
+                        Clear Changes
+                    </button>
+                    <button style={{ backgroundColor: "red" }}>
+                        Delete Post
+                    </button>
                 </div>
             </div>
         );

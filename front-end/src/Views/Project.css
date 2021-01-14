@@ -9,7 +9,6 @@
 }
 
 .contentCon {
-    margin-bottom: 30px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     background-color: #242424;
@@ -105,6 +104,7 @@
 .imageHeader {
     height: 300px;
     background-size: cover;
+    background-position: center;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     background-color: grey;
