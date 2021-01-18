@@ -1,4 +1,4 @@
-# MATT_BOAN
+# matt boan
 
 This website/blog/portfolio showcases all of my most interesting projects.
 
