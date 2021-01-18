@@ -3,6 +3,7 @@ import { Editor, EditorState, RichUtils } from "draft-js";
 import axios from "axios";
 
 import "./EditProject.css";
+import API from "../Config/API";
 
 class EditProject extends React.Component {
     constructor(props) {
@@ -51,30 +52,30 @@ class EditProject extends React.Component {
                     image: URL.createObjectURL(img),
                 },
             });
-            let form = new FormData();
-            form.append("name", "Matt");
-            form.append("headerImage", img);
-            axios({
-                method: "post",
-                url: "http://localhost:8080/test",
-                data: form,
-                headers: { "Content-Type": "multipart/form-data" },
-            })
-                .then(function (res) {
-                    console.log(res);
-                })
-                .catch(function (res) {
-                    console.log(res);
-                });
-            //axios.post("http://localhost:8080/test", form);
+            this.postToAPI(img);
         }
-        //this.postToAPI();
     };
 
-    postToAPI = (event) => {
+    /**
+     * Send form: (image, project title, project post, tags) to API
+     * @param {*} image
+     */
+    postToAPI = (image, fields) => {
         let form = new FormData();
-        form.append("image", event.target.files[0]);
-        axios.post("http://localhost:8080/test", form);
+        form.append("name", "Matt");
+        form.append("headerImage", image);
+        axios({
+            method: "post",
+            url: API.url + "/test",
+            data: form,
+            headers: { "Content-Type": "multipart/form-data" },
+        })
+            .then(function (res) {
+                console.log(res);
+            })
+            .catch(function (res) {
+                console.log(res);
+            });
     };
 
     getProjectFromAPI() {

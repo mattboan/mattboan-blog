@@ -4,6 +4,8 @@ import { FaEdit } from "react-icons/fa";
 
 import "./Project.css";
 
+import Tag from "../Components/Tag";
+
 class Project extends React.Component {
     constructor(props) {
         super(props);
@@ -11,11 +13,32 @@ class Project extends React.Component {
             error: null,
             isLoaded: false,
             project: {},
+            tags: [],
         };
     }
 
     componentDidMount() {
         this.getProjectFromAPI();
+        this.loadTags();
+    }
+
+    loadTags() {
+        fetch("http://localhost:8080/tags" + this.props.match.params.id)
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        tags: result,
+                        isLoaded: true,
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error: error,
+                    });
+                }
+            );
     }
 
     getProjectFromAPI() {
@@ -23,7 +46,6 @@ class Project extends React.Component {
             .then((res) => res.json())
             .then(
                 (result) => {
-                    console.log("Project: " + JSON.stringify(result));
                     this.setState({
                         project: result[0],
                     });
@@ -45,6 +67,7 @@ class Project extends React.Component {
                     <div className="contentCon">
                         <div
                             className="imageHeader"
+                            alt="Header"
                             style={{
                                 backgroundImage:
                                     "url('" + this.state.project.image + "')",
@@ -61,6 +84,16 @@ class Project extends React.Component {
                                 >
                                     <FaEdit className="icon" />
                                 </Link>
+                            </div>
+                            <div className="ThumbnailTags">
+                                {this.state.tags.map((tag) => (
+                                    <Tag
+                                        key={tag.id}
+                                        text={tag.text}
+                                        color={tag.color}
+                                        size="12px"
+                                    />
+                                ))}
                             </div>
                             <p>{this.state.project.description}</p>
                             <p>
@@ -148,7 +181,7 @@ class Project extends React.Component {
                     <div className="sidepanel">
                         <div className="profile">
                             <div className="innerCon">
-                                <img src="../img/me2.jpg" />
+                                <img src="../img/me2.jpg" alt="Author" />
                                 <div className="author">
                                     <p className="authorName">Matt Boan</p>
                                     <p className="authorDesc">

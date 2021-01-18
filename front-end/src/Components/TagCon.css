@@ -1,7 +1,15 @@
 .TagCon-Con {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.TagCon-Con::-webkit-scrollbar {
+    display: none;
 }
