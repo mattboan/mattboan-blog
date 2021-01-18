@@ -39,4 +39,3 @@ cd front-end && npm start
 ## Screenshot
 
 <img src="img/ipad.png">
-<img src="img/phone.png">
