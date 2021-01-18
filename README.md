@@ -38,5 +38,5 @@ cd front-end && npm start
 
 ## Screenshot
 
-<img src="img/ipad.png" width="250">
-<img src="img/phone.png" width="250">
+<img src="img/ipad.png">
+<img src="img/phone.png">
