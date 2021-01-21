@@ -38,4 +38,5 @@ cd front-end && npm start
 
 ## Screenshot
 Current State: 
+
 <img src="img/ipad.png">
