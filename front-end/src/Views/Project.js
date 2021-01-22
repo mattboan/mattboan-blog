@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import { Editor, EditorState, convertFromRaw } from "draft-js";
 
 import "./Project.css";
 
@@ -14,6 +15,7 @@ class Project extends React.Component {
             isLoaded: false,
             project: {},
             tags: [],
+            editorState: null,
         };
     }
 
@@ -46,6 +48,21 @@ class Project extends React.Component {
             .then((res) => res.json())
             .then(
                 (result) => {
+                    //Get the raw post
+                    if (result[0].post) {
+                        console.log("post test: " + result[0].post);
+                        this.setState({
+                            editorState: EditorState.createWithContent(
+                                convertFromRaw(JSON.parse(result[0].post))
+                            ),
+                        });
+                        console.log("test");
+                    } else {
+                        this.setState({
+                            editorState: EditorState.createEmpty(),
+                        });
+                    }
+
                     this.setState({
                         project: result[0],
                     });
@@ -95,87 +112,20 @@ class Project extends React.Component {
                                     />
                                 ))}
                             </div>
-                            <p>{this.state.project.description}</p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.
-                                Molestie at elementum eu facilisis sed odio.
-                                Facilisi nullam vehicula ipsum a arcu cursus
-                                vitae congue mauris. Cursus euismod quis viverra
-                                nibh cras. Ac turpis egestas maecenas pharetra
-                                convallis posuere. Parturient montes nascetur
-                                ridiculus mus mauris vitae. Magna ac placerat
-                                vestibulum lectus mauris ultrices eros in
-                                cursus. Mi ipsum faucibus vitae aliquet nec
-                                ullamcorper sit amet. Aliquam sem fringilla ut
-                                morbi tincidunt. Volutpat est velit egestas dui
-                                id ornare arcu odio ut. Mi bibendum neque
-                                egestas congue quisque. Feugiat sed lectus
-                                vestibulum mattis. Id aliquet lectus proin nibh.
-                                Nisi est sit amet facilisis magna etiam tempor
-                                orci eu. Imperdiet sed euismod nisi porta lorem.
-                            </p>
+                            <div className="postcon">
+                                {(() => {
+                                    if (this.state.editorState) {
+                                        return (
+                                            <Editor
+                                                editorState={
+                                                    this.state.editorState
+                                                }
+                                                readOnly={true}
+                                            />
+                                        );
+                                    }
+                                })()}
+                            </div>
                         </div>
                     </div>
                     <div className="sidepanel">

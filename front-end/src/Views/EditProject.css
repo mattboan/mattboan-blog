@@ -69,6 +69,10 @@
     padding: 10px;
 }
 
+.EditProject input::placeholder {
+    font-style: italic;
+}
+
 .postEditorCon {
     font-size: 12pt;
     border-radius: 10px;
@@ -94,4 +98,32 @@
 .bottomControls button {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .EditProject {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .EditProject .imageHeader {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .bottomControls {
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+    }
+
+    .bottomControls button {
+        margin-left: 10px;
+    }
+}
+
+@media only screen and (min-width: 1100px) {
+    /* For desktop desktop: */
 }

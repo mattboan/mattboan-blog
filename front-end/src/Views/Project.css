@@ -150,6 +150,22 @@
     color: white;
 }
 
+.projectcon .ThumbnailTags .MainCon {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+.projectcon .ThumbnailTags {
+    margin-top: 8px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.postcon {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .Project {

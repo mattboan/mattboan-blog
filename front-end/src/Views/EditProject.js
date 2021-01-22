@@ -1,5 +1,11 @@
 import React from "react";
-import { Editor, EditorState, RichUtils } from "draft-js";
+import {
+    Editor,
+    EditorState,
+    RichUtils,
+    convertToRaw,
+    convertFromRaw,
+} from "draft-js";
 import axios from "axios";
 
 import "./EditProject.css";
@@ -9,21 +15,40 @@ class EditProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.match.params.id,
             error: null,
             isLoaded: false,
             project: {},
-            editorState: EditorState.createEmpty(),
+            editorState: null,
         };
-
-        console.log("EditProject id: " + this.props.match.params.id);
     }
 
     componentDidMount() {
         this.getProjectFromAPI();
     }
 
+    testFunction = () => {
+        console.log("testFunction: " + JSON.stringify(this.state.project));
+    };
+
+    projectTitleHandler = (event) => {
+        this.setState({
+            project: {
+                ...this.state.project,
+                name: event.target.value,
+            },
+        });
+        //        this.setState({ inputTitle: event.target.value });
+        console.log("Project name: " + this.state.project.name);
+    };
+
     onChange = (editorState) => {
         this.setState({ editorState });
+        const contentState = editorState.getCurrentContent();
+        console.log(
+            "content state",
+            JSON.stringify(convertToRaw(contentState))
+        );
     };
 
     handleKeyCommand = (command) => {
@@ -49,6 +74,7 @@ class EditProject extends React.Component {
             let img = event.target.files[0];
             this.setState({
                 project: {
+                    ...this.state.project,
                     image: URL.createObjectURL(img),
                 },
             });
@@ -78,25 +104,39 @@ class EditProject extends React.Component {
             });
     };
 
-    getProjectFromAPI() {
-        fetch("http://localhost:8080/Project" + this.props.match.params.id)
+    getProjectFromAPI = () => {
+        console.log("id: " + this.state.id);
+        fetch("http://localhost:8080/Project" + this.state.id)
             .then((res) => res.json())
-            .then(
-                (result) => {
-                    console.log("Project: " + JSON.stringify(result));
+            .then((result) => {
+                console.log("Project: " + JSON.stringify(result));
+
+                //Get the raw post
+                if (result[0].post) {
+                    console.log("post test: " + result[0].post);
                     this.setState({
-                        project: result[0],
+                        editorState: EditorState.createWithContent(
+                            convertFromRaw(JSON.parse(result[0].post))
+                        ),
                     });
-                },
-                (error) => {
-                    console.log("API call failed");
+                    console.log("test");
+                } else {
                     this.setState({
-                        isLoaded: true,
-                        error: error,
+                        editorState: EditorState.createEmpty(),
                     });
                 }
-            );
-    }
+
+                this.setState({
+                    project: result[0],
+                });
+
+                console.log("API call failed");
+                this.setState({
+                    isLoaded: true,
+                    error: "There was an error",
+                });
+            });
+    };
 
     render() {
         return (
@@ -125,22 +165,37 @@ class EditProject extends React.Component {
                 </div>
                 <div className="projectTitleEdit">
                     <label for="projectTitle">Project Title</label>
-                    <input type="text" placeholder="Project Title"></input>
+                    <input
+                        name="projectTitle"
+                        type="text"
+                        placeholder="Project Title"
+                        value={this.state.project.name}
+                        onChange={this.projectTitleHandler}
+                    ></input>
                 </div>
                 <div className="projectPostEdit">
                     <label for="projectPost">Post</label>
                     <div className="postEditorCon">
-                        <Editor
-                            editorState={this.state.editorState}
-                            handleKeyCommand={this.handleKeyCommand}
-                            onChange={this.onChange}
-                        />
+                        {(() => {
+                            if (this.state.editorState) {
+                                return (
+                                    <Editor
+                                        editorState={this.state.editorState}
+                                        handleKeyCommand={this.handleKeyCommand}
+                                        onChange={this.onChange}
+                                    />
+                                );
+                            }
+                        })()}
                     </div>
                 </div>
 
                 <div className="bottomControls">
-                    <button>Update Post</button>
-                    <button style={{ backgroundColor: "grey" }}>
+                    <button onClick={this.testFunction}>Update Post</button>
+                    <button
+                        style={{ backgroundColor: "grey" }}
+                        onClick={this.getProjectFromAPI}
+                    >
                         Clear Changes
                     </button>
                     <button style={{ backgroundColor: "red" }}>

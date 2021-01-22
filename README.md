@@ -37,6 +37,7 @@ cd front-end && npm start
 ```
 
 ## Screenshot
-Current State: 
+
+Current State:
 
 <img src="img/ipad.png">
