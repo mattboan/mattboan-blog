@@ -13,6 +13,7 @@ Install Node JS and npm:
 ```
 sudo apt install nodejs
 sudo apt install npm
+sudo npm install -g nodemon
 ```
 
 Install dependencies for both the front end and back end:
