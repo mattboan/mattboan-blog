@@ -16,6 +16,7 @@ class EditProject extends React.Component {
         super(props);
         this.state = {
             id: this.props.match.params.id,
+            image: null,
             error: null,
             isLoaded: false,
             project: {},
@@ -44,11 +45,6 @@ class EditProject extends React.Component {
 
     onChange = (editorState) => {
         this.setState({ editorState });
-        const contentState = editorState.getCurrentContent();
-        console.log(
-            "content state",
-            JSON.stringify(convertToRaw(contentState))
-        );
     };
 
     handleKeyCommand = (command) => {
@@ -73,12 +69,8 @@ class EditProject extends React.Component {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
             this.setState({
-                project: {
-                    ...this.state.project,
-                    image: URL.createObjectURL(img),
-                },
+                image: img
             });
-            this.postToAPI(img);
         }
     };
 
@@ -86,10 +78,18 @@ class EditProject extends React.Component {
      * Send form: (image, project title, project post, tags) to API
      * @param {*} image
      */
-    postToAPI = (image, fields) => {
+    postToAPI = () => {
+        console.log("postToAPI() called!");
         let form = new FormData();
-        form.append("name", "Matt");
-        form.append("headerImage", image);
+        let project = this.state.project;
+        let contentState = convertToRaw(this.state.editorState.getCurrentContent());
+
+        project.post = JSON.stringify(contentState);
+
+        console.log((project));
+
+        form.append("project", project);
+        form.append("headerImage", this.state.image);
         axios({
             method: "post",
             url: API.url + "/test",
@@ -109,15 +109,15 @@ class EditProject extends React.Component {
         fetch("http://localhost:8080/Project" + this.state.id)
             .then((res) => res.json())
             .then((result) => {
-                console.log("Project: " + JSON.stringify(result));
+                //console.log("Project: " + JSON.parse(result));
 
                 //Get the raw post
                 if (result[0].post) {
                     console.log("post test: " + result[0].post);
-                    this.setState({
+                    this.setState({/*
                         editorState: EditorState.createWithContent(
                             convertFromRaw(JSON.parse(result[0].post))
-                        ),
+                        ),*/
                     });
                     console.log("test");
                 } else {
@@ -128,10 +128,6 @@ class EditProject extends React.Component {
 
                 this.setState({
                     project: result[0],
-                });
-
-                console.log("API call failed");
-                this.setState({
                     isLoaded: true,
                     error: "There was an error",
                 });
@@ -191,7 +187,7 @@ class EditProject extends React.Component {
                 </div>
 
                 <div className="bottomControls">
-                    <button onClick={this.testFunction}>Update Post</button>
+                    <button onClick={this.postToAPI}>Update Post</button>
                     <button
                         style={{ backgroundColor: "grey" }}
                         onClick={this.getProjectFromAPI}

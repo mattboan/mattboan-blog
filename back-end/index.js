@@ -5,12 +5,24 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql");
+const path = require('path');
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const { isNullOrUndefined } = require("util");
 
 //Express init
 const app = express();
 const port = 8080;
+
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+    }
+});
+const upload = multer({ storage: storage });
+
 
 //Express middleware
 //app.use(cors());
@@ -23,7 +35,9 @@ app.use(
     })
 );
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(__dirname + '/uploads'));
+
 
 //MySQL setup
 const con = mysql.createConnection({
@@ -44,9 +58,24 @@ con.connect(); //Connect to the database
  *  -Verify that the user has permission to do this
  */
 app.post("/test", upload.single("headerImage"), (req, res) => {
-    console.log("/test image:" + req.file);
-    console.log("/test body: " + req.body.name);
-    res.json({ done: "done" });
+    //console.log("/test image:" + JSON.stringify(req.file));
+    //console.log("/test body: " + JSON.stringify(JSON.parse(req.body.project), null, 2));
+    let project = JSON.parse(req.body.project);
+
+    console.log("req.file " + req.file);
+    console.log("post: " + project.post);
+
+    if (req.file) {
+        project.image = "http://localhost:8080/" + req.file.path;;
+    }
+
+    con.query("UPDATE Projects SET name = ?, image = ?, post = ? WHERE id = ?",
+        [project.name, project.image, project.post, project.id],
+        function (err, result) {
+            if (err) res.send(err.message);
+            res.json(result);
+        }
+    );
 });
 
 //Get recent projects
@@ -62,7 +91,11 @@ app.get("/projects", (req, res) => {
     });
 });
 
-//Search projects
+/**
+ * Todo:
+ * - Need to look into tags before looking into the projects
+ * - look into the double colons - WHAT DOES THIS MEAN?
+ */
 app.get("/queryProjects::query", (req, res) => {
     console.log(req.params.query);
     con.query(

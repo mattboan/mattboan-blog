@@ -9,6 +9,7 @@ CREATE TABLE `Projects` (
 	`name` VARCHAR(350) NOT NULL DEFAULT 'Unnamed Project',
 	`image` TEXT,
 	`description` TEXT,
+    `post` TEXT,
 	`updated_ts` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `creation_ts` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`)
