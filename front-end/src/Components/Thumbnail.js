@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./Thumbnail.css";
 
 import Tag from "./Tag";
+import API from '../../../config/API';
 
 class Thumbnail extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class Thumbnail extends React.Component {
     }
 
     loadTags() {
-        fetch("http://localhost:8080/tags" + this.props.item.id)
+        fetch(API.url + "/tags" + this.props.item.id)
             .then((res) => res.json())
             .then(
                 (result) => {
