@@ -106,7 +106,7 @@ class EditProject extends React.Component {
 
     getProjectFromAPI = () => {
         console.log("id: " + this.state.id);
-        fetch("http://localhost:8080/Project" + this.state.id)
+        fetch(API.url + "/Project" + this.state.id)
             .then((res) => res.json())
             .then((result) => {
                 //console.log("Project: " + JSON.parse(result));

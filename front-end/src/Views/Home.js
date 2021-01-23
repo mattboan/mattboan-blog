@@ -5,6 +5,7 @@ import ProjectsCon from "../Components/ProjectsCon";
 
 import "./Home.css";
 import dotConfig from "../Config/DotConfig";
+import API from '../Config/API';
 
 class Home extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Home extends React.Component {
 
     //API call to retrieve highlighted projects
     loadProjects() {
-        fetch("http://localhost:8080/projects")
+        fetch(API.url + "/Projects")
             .then((res) => res.json())
             .then(
                 (result) => {

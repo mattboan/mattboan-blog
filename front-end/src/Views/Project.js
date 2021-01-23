@@ -7,6 +7,8 @@ import "./Project.css";
 
 import Tag from "../Components/Tag";
 
+import API from '../Config/API';
+
 class Project extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +27,7 @@ class Project extends React.Component {
     }
 
     loadTags() {
-        fetch("http://localhost:8080/tags" + this.props.match.params.id)
+        fetch(API.url + this.props.match.params.id)
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -44,7 +46,7 @@ class Project extends React.Component {
     }
 
     getProjectFromAPI() {
-        fetch("http://localhost:8080/Project" + this.props.match.params.id)
+        fetch(API.url + "/Project:" + this.props.match.params.id)
             .then((res) => res.json())
             .then(
                 (result) => {

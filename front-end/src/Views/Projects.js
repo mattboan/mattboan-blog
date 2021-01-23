@@ -6,6 +6,7 @@ import SearchBar from "../Components/SearchBar";
 
 import "./Projects.css";
 import dotConfig from "../Config/DotConfig";
+import API from '../Config/API';
 import TagCon from "../Components/TagCon";
 
 class Projects extends React.Component {
@@ -27,7 +28,7 @@ class Projects extends React.Component {
     search(query) {
         this.setState({ error: null, loaded: false });
         //Can now pass a query from search bar to here, need to make new API request based on query.
-        fetch("http://localhost:8080/queryProjects:" + query)
+        fetch(API.url + "/queryProjects:" + query)
             .then((res) => res.json())
             .then(
                 (result) => {
@@ -49,7 +50,7 @@ class Projects extends React.Component {
 
     //API call to retrieve projects
     loadProjects() {
-        fetch("http://localhost:8080/projects")
+        fetch(API.url + "/projects")
             .then((res) => res.json())
             .then(
                 (result) => {
