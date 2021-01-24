@@ -104,7 +104,6 @@ app.get("/tags", (req, res) => {
  * - look into the double colons - WHAT DOES THIS MEAN?
  */
 app.get("/queryProjects::query", (req, res) => {
-	console.log(req.params.query);
 	con.query(
 		"SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
 		req.params.query,
@@ -117,14 +116,16 @@ app.get("/queryProjects::query", (req, res) => {
 
 app.get("/queryTags::query", (req, res) => {
 	console.log(req.params.query);
-	con.query(
-		"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
-		req.params.query,
-		function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
-		}
-	);
+	setTimeout(function () {
+		con.query(
+			"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
+			req.params.query,
+			function (err, result) {
+				if (err) res.send(err.message);
+				res.json(result);
+			}
+		);
+	}, 1000);
 });
 
 //Get a single project

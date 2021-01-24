@@ -39,8 +39,6 @@ class Projects extends React.Component {
 					});
 				},
 				(error) => {
-					console.log(error);
-
 					this.setState({
 						loaded: true,
 						error: error,
@@ -50,6 +48,7 @@ class Projects extends React.Component {
 	}
 
 	searchTags(query) {
+		this.setState({ loaded: false, error: null });
 		fetch(API.backend + "/queryTags:" + query)
 			.then((res) => res.json())
 			.then(
@@ -60,8 +59,6 @@ class Projects extends React.Component {
 					});
 				},
 				(error) => {
-					console.log(error);
-
 					this.setState({
 						loaded: true,
 						error: error,
