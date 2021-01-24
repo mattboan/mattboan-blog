@@ -8,6 +8,7 @@ const mysql = require("mysql");
 const path = require('path');
 const multer = require("multer");
 const { isNullOrUndefined } = require("util");
+const config = require("../config/URL");
 
 //Express init
 const app = express();
@@ -30,7 +31,7 @@ app.use(bodyParser.json());
 //use cors to allow cross origin resource sharing
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: URL.frontend,
         credentials: true,
     })
 );

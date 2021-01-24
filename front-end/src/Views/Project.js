@@ -7,7 +7,7 @@ import "./Project.css";
 
 import Tag from "../Components/Tag";
 
-import API from '../Config/API';
+import API from '../../../config/URL';
 
 class Project extends React.Component {
     constructor(props) {

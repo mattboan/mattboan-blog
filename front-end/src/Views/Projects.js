@@ -6,7 +6,7 @@ import SearchBar from "../Components/SearchBar";
 
 import "./Projects.css";
 import dotConfig from "../Config/DotConfig";
-import API from '../Config/API';
+import API from '../../../config/URL';
 import TagCon from "../Components/TagCon";
 
 class Projects extends React.Component {

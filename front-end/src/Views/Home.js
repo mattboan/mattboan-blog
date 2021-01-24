@@ -5,7 +5,7 @@ import ProjectsCon from "../Components/ProjectsCon";
 
 import "./Home.css";
 import dotConfig from "../Config/DotConfig";
-import API from '../Config/API';
+import API from '../../../config/URL';
 
 class Home extends React.Component {
     constructor(props) {
@@ -40,7 +40,6 @@ class Home extends React.Component {
                 }
             );
     }
-
     render() {
         const { error, loaded, projects } = this.state;
         return (

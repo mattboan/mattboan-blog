@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 
 import "./EditProject.css";
-import API from "../Config/API";
+import API from "../../../config/URL";
 
 class EditProject extends React.Component {
     constructor(props) {
