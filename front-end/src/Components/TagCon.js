@@ -44,6 +44,8 @@ class TagCon extends React.Component {
 						id={tag.id}
 						text={tag.text}
 						onSearch={this.props.onSearch}
+						color={tag.color}
+						size="14px"
 					/>
 				))}
 			</div>
