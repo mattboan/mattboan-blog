@@ -91,6 +91,13 @@ app.get("/projects", (req, res) => {
 	});
 });
 
+app.get("/tags", (req, res) => {
+	con.query("SELECT * FROM Tags", function (err, result) {
+		if (err) res.send(err.message);
+		res.json(result);
+	});
+});
+
 /**
  * Todo:
  * - Need to look into tags before looking into the projects
@@ -100,6 +107,18 @@ app.get("/queryProjects::query", (req, res) => {
 	console.log(req.params.query);
 	con.query(
 		"SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
+		req.params.query,
+		function (err, result) {
+			if (err) res.send(err.message);
+			res.json(result);
+		}
+	);
+});
+
+app.get("/queryTags::query", (req, res) => {
+	console.log(req.params.query);
+	con.query(
+		"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
 		req.params.query,
 		function (err, result) {
 			if (err) res.send(err.message);

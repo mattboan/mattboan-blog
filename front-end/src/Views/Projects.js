@@ -19,6 +19,7 @@ class Projects extends React.Component {
 		};
 
 		this.search = this.search.bind(this);
+		this.searchTags = this.searchTags.bind(this);
 	}
 
 	componentDidMount() {
@@ -29,6 +30,27 @@ class Projects extends React.Component {
 		this.setState({ error: null, loaded: false });
 		//Can now pass a query from search bar to here, need to make new API request based on query.
 		fetch(API.backend + "/queryProjects:" + query)
+			.then((res) => res.json())
+			.then(
+				(result) => {
+					this.setState({
+						loaded: true,
+						projects: result,
+					});
+				},
+				(error) => {
+					console.log(error);
+
+					this.setState({
+						loaded: true,
+						error: error,
+					});
+				}
+			);
+	}
+
+	searchTags(query) {
+		fetch(API.backend + "/queryTags:" + query)
 			.then((res) => res.json())
 			.then(
 				(result) => {
@@ -80,7 +102,7 @@ class Projects extends React.Component {
 						onSearch={this.search}
 					/>
 				</div>
-				<TagCon />
+				<TagCon onSearch={this.searchTags} />
 				{(() => {
 					if (error) {
 						return <div>Error Loading Projects.</div>;
