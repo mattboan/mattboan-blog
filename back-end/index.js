@@ -9,18 +9,19 @@ const path = require("path");
 const multer = require("multer");
 const { isNullOrUndefined } = require("util");
 const url = require("./config/URL");
+const colors = require("colors");
 
 //Express init
 const app = express();
 const port = 8080;
 
 let storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "uploads/");
-	},
-	filename: function (req, file, cb) {
-		cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
-	},
+    destination: function (req, file, cb) {
+        cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
+    },
 });
 const upload = multer({ storage: storage });
 
@@ -29,10 +30,10 @@ const upload = multer({ storage: storage });
 app.use(bodyParser.json());
 //use cors to allow cross origin resource sharing
 app.use(
-	cors({
-		origin: url.frontend,
-		credentials: true,
-	})
+    cors({
+        origin: url.frontend,
+        credentials: true,
+    })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,10 +41,10 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 //MySQL setup
 const con = mysql.createConnection({
-	host: process.env.DB_HOST,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASS,
-	database: process.env.DB_DB,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DB,
 });
 
 con.connect(); //Connect to the database
@@ -57,25 +58,27 @@ con.connect(); //Connect to the database
  *  -Verify that the user has permission to do this
  */
 app.post("/test", upload.single("headerImage"), (req, res) => {
-	//console.log("/test image:" + JSON.stringify(req.file));
-	//console.log("/test body: " + JSON.stringify(JSON.parse(req.body.project), null, 2));
-	let project = JSON.parse(req.body.project);
+    console.log("/test called".cyan);
 
-	console.log("req.file " + req.file);
-	console.log("post: " + project.post);
+    //console.log("/test image:" + JSON.stringify(req.file));
+    //console.log("/test body: " + JSON.stringify(JSON.parse(req.body.project), null, 2));
+    let project = JSON.parse(req.body.project);
 
-	if (req.file) {
-		project.image = "http://localhost:8080/" + req.file.path;
-	}
+    console.log("req.file " + req.file);
+    console.log("post: " + project.post);
 
-	con.query(
-		"UPDATE Projects SET name = ?, image = ?, post = ? WHERE id = ?",
-		[project.name, project.image, project.post, project.id],
-		function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
-		}
-	);
+    if (req.file) {
+        project.image = "http://localhost:8080/" + req.file.path;
+    }
+
+    con.query(
+        "UPDATE Projects SET name = ?, image = ?, post = ? WHERE id = ?",
+        [project.name, project.image, project.post, project.id],
+        function (err, result) {
+            if (err) res.send(err.message);
+            res.json(result);
+        }
+    );
 });
 
 //Get recent projects
@@ -83,19 +86,22 @@ app.post("/test", upload.single("headerImage"), (req, res) => {
  * IMPORTANT - REMOVE THE setTimeout() when on live server!
  */
 app.get("/projects", (req, res) => {
-	setTimeout(function () {
-		con.query("SELECT * FROM Projects", function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
-		});
-	});
+    console.log("/projects called".cyan);
+
+    setTimeout(function () {
+        con.query("SELECT * FROM Projects", function (err, result) {
+            if (err) res.send(err.message);
+            res.json(result);
+        });
+    });
 });
 
 app.get("/tags", (req, res) => {
-	con.query("SELECT * FROM Tags", function (err, result) {
-		if (err) res.send(err.message);
-		res.json(result);
-	});
+    console.log("/tags called".cyan);
+    con.query("SELECT * FROM Tags", function (err, result) {
+        if (err) res.send(err.message);
+        res.json(result);
+    });
 });
 
 /**
@@ -104,53 +110,58 @@ app.get("/tags", (req, res) => {
  * - look into the double colons - WHAT DOES THIS MEAN?
  */
 app.get("/queryProjects::query", (req, res) => {
-	con.query(
-		"SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
-		req.params.query,
-		function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
-		}
-	);
+    console.log("/queryProjects called - query = ".cyan + req.params.query);
+    con.query(
+        "SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
+        req.params.query,
+        function (err, result) {
+            if (err) res.send(err.message);
+            res.json(result);
+        }
+    );
 });
 
 app.get("/queryTags::query", (req, res) => {
-	console.log(req.params.query);
-	setTimeout(function () {
-		con.query(
-			"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
-			req.params.query,
-			function (err, result) {
-				if (err) res.send(err.message);
-				res.json(result);
-			}
-		);
-	}, 1000);
+    console.log("/queryTags called - query = ".cyan + req.params.query);
+    setTimeout(function () {
+        con.query(
+            "SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
+            req.params.query,
+            function (err, result) {
+                if (err) res.send(err.message);
+                res.json(result);
+            }
+        );
+    }, 1000);
 });
 
 //Get a single project
 app.get("/project:id", (req, res) => {
-	con.query(
-		"SELECT * FROM Projects WHERE id = ?",
-		req.params.id,
-		function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
-		}
-	);
+    console.log("/project called - id = ".cyan + req.params.id);
+
+    con.query(
+        "SELECT * FROM Projects WHERE id = ?",
+        req.params.id,
+        function (err, result) {
+            if (err) res.send(err.message);
+            res.json(result);
+        }
+    );
 });
 
 //Get tags for a project
 app.get("/tags:id", (req, res) => {
-	con.query(
-		"SELECT Tags.id, Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = ?",
-		req.params.id,
-		function (err, tags) {
-			res.json(tags);
-		}
-	);
+    console.log("/project called - id = ".cyan + req.params.id);
+
+    con.query(
+        "SELECT Tags.id, Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = ?",
+        req.params.id,
+        function (err, tags) {
+            res.json(tags);
+        }
+    );
 });
 
 app.listen(port, () => {
-	console.log(`Server started at ${port}`);
+    console.log(`Server started at ${port}`);
 });
