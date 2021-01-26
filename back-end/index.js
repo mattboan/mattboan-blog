@@ -60,17 +60,8 @@ con.connect(); //Connect to the database
 app.post("/test", upload.single("headerImage"), (req, res) => {
 	console.log("/test called".cyan);
 
-	console.log("/test image:" + JSON.stringify(req.file));
-	console.log(
-		"/test project: " +
-			JSON.stringify(JSON.parse(req.body.project, null, 2))
-	);
-
-	var project = JSON.parse(req.body.project);
-
-	console.log("req.file " + req.file);
-	console.log("post: " + JSON.stringify(project.post));
-	console.log("project.image: " + project.image);
+	var project = JSON.parse(req.body.project); //Need to parse the stringyfied project
+	var post = JSON.stringify(project.post); //Need to extract this from the project and stringify it
 
 	if (req.file) {
 		project.image = "http://localhost:8080/" + req.file.path;
@@ -78,7 +69,7 @@ app.post("/test", upload.single("headerImage"), (req, res) => {
 
 	con.query(
 		"UPDATE Projects SET name = ?, image = ?, post = ? WHERE id = ?",
-		[project.name, project.image, JSON.stringify(project.post), project.id],
+		[project.name, project.image, post, project.id],
 		function (err, result) {
 			if (err) res.send(err.message);
 			res.json(result);
