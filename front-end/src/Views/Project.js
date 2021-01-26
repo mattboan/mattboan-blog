@@ -6,7 +6,6 @@ import { Editor, EditorState, convertFromRaw } from "draft-js";
 import "./Project.css";
 
 import Tag from "../Components/Tag";
-
 import API from "../Config/URL";
 
 class Project extends React.Component {

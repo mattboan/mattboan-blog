@@ -19,8 +19,8 @@ class EditProject extends React.Component {
 			image: null,
 			error: null,
 			isLoaded: false,
-			project: {},
-			editorState: null,
+			project: { name: "" },
+			editorState: undefined,
 		};
 	}
 
@@ -79,18 +79,17 @@ class EditProject extends React.Component {
 	 * @param {*} image
 	 */
 	postToAPI = () => {
-		console.log("postToAPI() called!");
+		console.log("postToAPI() called");
 		let form = new FormData();
 		let project = this.state.project;
+
 		let contentState = convertToRaw(
 			this.state.editorState.getCurrentContent()
 		);
 
-		project.post = JSON.stringify(contentState);
+		project.post = contentState;
 
-		console.log(project);
-
-		form.append("project", project);
+		form.append("project", JSON.stringify(project));
 		form.append("headerImage", this.state.image);
 		axios({
 			method: "post",
@@ -107,34 +106,31 @@ class EditProject extends React.Component {
 	};
 
 	getProjectFromAPI = () => {
-		console.log("id: " + this.state.id);
-		fetch(API.url + "/Project" + this.state.id)
+		fetch(API.backend + "/Project" + this.props.match.params.id)
 			.then((res) => res.json())
-			.then((result) => {
-				//console.log("Project: " + JSON.parse(result));
+			.then(
+				(result) => {
+					if (result[0]) {
+						console.log(
+							"result: " + JSON.stringify(result[0], null, 2)
+						);
+						let tempEditorState = result[0].post
+							? EditorState.createWithContent(
+									convertFromRaw(JSON.parse(result[0].post))
+							  )
+							: EditorState.createEmpty();
 
-				//Get the raw post
-				if (result[0].post) {
-					console.log("post test: " + result[0].post);
-					this.setState({
-						/*
-                        editorState: EditorState.createWithContent(
-                            convertFromRaw(JSON.parse(result[0].post))
-                        ),*/
-					});
-					console.log("test");
-				} else {
-					this.setState({
-						editorState: EditorState.createEmpty(),
-					});
+						this.setState({
+							project: result[0],
+							editorState: tempEditorState,
+							isLoaded: true,
+						});
+					}
+				},
+				(error) => {
+					console.log("Error /Project: " + error);
 				}
-
-				this.setState({
-					project: result[0],
-					isLoaded: true,
-					error: "There was an error",
-				});
-			});
+			);
 	};
 
 	render() {
@@ -162,7 +158,7 @@ class EditProject extends React.Component {
 					</div>
 				</div>
 				<div className="projectTitleEdit">
-					<label for="projectTitle">Project Title</label>
+					<label>Project Title</label>
 					<input
 						name="projectTitle"
 						type="text"
@@ -171,7 +167,7 @@ class EditProject extends React.Component {
 						onChange={this.projectTitleHandler}></input>
 				</div>
 				<div className="projectPostEdit">
-					<label for="projectPost">Post</label>
+					<label>Post</label>
 					<div className="postEditorCon">
 						{(() => {
 							if (this.state.editorState) {
