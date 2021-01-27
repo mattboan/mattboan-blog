@@ -10,6 +10,7 @@ import axios from "axios";
 
 import "./EditProject.css";
 import API from "../Config/URL";
+import BSToolbar, { getBlockStyle } from "../BlockStyles/BSToolbar";
 
 class EditProject extends React.Component {
 	constructor(props) {
@@ -20,7 +21,7 @@ class EditProject extends React.Component {
 			error: null,
 			isLoaded: false,
 			project: { name: "" },
-			editorState: undefined,
+			editorState: EditorState.createEmpty(),
 		};
 	}
 
@@ -72,6 +73,30 @@ class EditProject extends React.Component {
 				image: img,
 			});
 		}
+	};
+
+	onUnderlineClick = () => {
+		this.onChange(
+			RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE")
+		);
+	};
+
+	onBoldClick = () => {
+		this.onChange(
+			RichUtils.toggleInlineStyle(this.state.editorState, "BOLD")
+		);
+	};
+
+	onItalicClick = () => {
+		this.onChange(
+			RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC")
+		);
+	};
+
+	toggleBlockType = (blockType) => {
+		this.onChange(
+			RichUtils.toggleBlockType(this.state.editorState, blockType)
+		);
 	};
 
 	/**
@@ -168,12 +193,27 @@ class EditProject extends React.Component {
 				</div>
 				<div className="projectPostEdit">
 					<label>Post</label>
+					<div className="toolbar-con">
+						<BSToolbar
+							editorState={this.state.editorState}
+							onToggle={this.toggleBlockType}
+						/>
+						<button onClick={this.onUnderlineClick}>U</button>
+						<button onClick={this.onBoldClick}>
+							<b>B</b>
+						</button>
+						<button onClick={this.onItalicClick}>
+							<em>I</em>
+						</button>
+					</div>
+
 					<div className="postEditorCon">
 						{(() => {
 							if (this.state.editorState) {
 								return (
 									<Editor
 										editorState={this.state.editorState}
+										blockStyleFn={getBlockStyle}
 										handleKeyCommand={this.handleKeyCommand}
 										onChange={this.onChange}
 									/>

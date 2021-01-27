@@ -1,129 +1,152 @@
 .EditProject {
-    margin-left: 15px;
-    margin-right: 15px;
-    margin-bottom: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 15px;
 }
 
 .headerImageEdit h3 {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .EditProject .imageHeader {
-    height: 300px;
-    background-size: cover;
-    border-radius: 15px;
-    background-color: grey;
-    background-position: center;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	height: 300px;
+	background-size: cover;
+	border-radius: 15px;
+	background-color: grey;
+	background-position: center;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .headerImageControls {
-    margin-top: 15px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: flex-end;
+	margin-top: 15px;
+	margin-bottom: 30px;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .EditProject button {
-    background-color: #dd5404;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    padding: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    font-size: 12pt;
-    font-weight: bold;
-    cursor: pointer;
-    outline: none;
+	background-color: #dd5404;
+	color: white;
+	border-radius: 5px;
+	border: none;
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 12pt;
+	font-weight: bold;
+	cursor: pointer;
+	outline: none;
 }
 
 .headerImageControls input {
-    display: none;
+	display: none;
 }
 
 .projectTitleEdit {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .EditProject label {
-    font-size: 14pt;
+	font-size: 14pt;
 }
 
 .EditProject input {
-    font-size: 12pt;
-    border-radius: 10px;
-    border: 0px;
-    border-color: none;
-    border: none;
-    outline: none;
-    -webkit-box-shadow: 0px 0px 10px 0px #222222;
-    -moz-box-shadow: 0px 0px 10px 0px #222222;
-    box-shadow: 0px 0px 10px 0px #222222;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    padding: 10px;
+	font-size: 12pt;
+	border-radius: 10px;
+	border: 0px;
+	border-color: none;
+	border: none;
+	outline: none;
+	-webkit-box-shadow: 0px 0px 10px 0px #222222;
+	-moz-box-shadow: 0px 0px 10px 0px #222222;
+	box-shadow: 0px 0px 10px 0px #222222;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
 }
 
 .EditProject input::placeholder {
-    font-style: italic;
+	font-style: italic;
 }
 
 .postEditorCon {
-    font-size: 12pt;
-    border-radius: 10px;
-    border: 0px;
-    border-color: none;
-    border: none;
-    outline: none;
-    background-color: white;
-    color: black;
-    -webkit-box-shadow: 0px 0px 10px 0px #222222;
-    -moz-box-shadow: 0px 0px 10px 0px #222222;
-    box-shadow: 0px 0px 10px 0px #222222;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    padding: 10px;
+	font-size: 12pt;
+	border-radius: 10px;
+	border: 0px;
+	border-color: none;
+	border: none;
+	outline: none;
+	background-color: white;
+	color: black;
+	-webkit-box-shadow: 0px 0px 10px 0px #222222;
+	-moz-box-shadow: 0px 0px 10px 0px #222222;
+	box-shadow: 0px 0px 10px 0px #222222;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
 }
 
 .bottomControls {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .bottomControls button {
-    margin-top: 5px;
-    margin-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.toolbar-con {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.toolbar-con button,
+.BSButton {
+	margin-right: 5px;
+	background-color: #dd5404;
+	color: white;
+	border-radius: 5px;
+	border: none;
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 12pt;
+	font-weight: bold;
+	cursor: pointer;
+	outline: none;
 }
 
 @media only screen and (min-width: 768px) {
-    /* For desktop: */
-    .EditProject {
-        width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+	/* For desktop: */
+	.EditProject {
+		width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
-    .EditProject .imageHeader {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
+	.EditProject .imageHeader {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
-    .bottomControls {
-        flex-direction: row-reverse;
-        justify-content: flex-start;
-    }
+	.bottomControls {
+		flex-direction: row-reverse;
+		justify-content: flex-start;
+	}
 
-    .bottomControls button {
-        margin-left: 10px;
-    }
+	.bottomControls button {
+		margin-left: 10px;
+	}
 }
 
 @media only screen and (min-width: 1100px) {
-    /* For desktop desktop: */
+	/* For desktop desktop: */
 }

@@ -64,7 +64,7 @@ app.post("/test", upload.single("headerImage"), (req, res) => {
 	var post = JSON.stringify(project.post); //Need to extract this from the project and stringify it
 
 	if (req.file) {
-		project.image = "http://localhost:8080/" + req.file.path;
+		project.image = url.backend + "/" + req.file.path;
 	}
 
 	con.query(
