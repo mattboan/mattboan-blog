@@ -1,6 +1,8 @@
 import React from "react";
-import "./ContactMe.css";
 import BigButton from "./BigButton";
+
+//Styles
+import "./Styles/ContactMe.css";
 
 class ContactMe extends React.Component {
 	constructor() {

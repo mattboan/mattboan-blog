@@ -1,12 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { Editor, EditorState, convertFromRaw } from "draft-js";
+import { EditorState, convertFromRaw } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import addLinkPlugin from "../EditorPlugins/EditorLinkPlugin";
+import { mediaBlockRenderer } from "../EditorPlugins/MediaBlockRenderer";
 
-import "./Project.css";
-
+//Config
 import Tag from "../Components/Tag";
 import API from "../Config/URL";
+
+//Styles
+import "./Styles/Project.css";
 
 class Project extends React.Component {
 	constructor(props) {
@@ -18,12 +23,18 @@ class Project extends React.Component {
 			tags: [],
 			editorState: null,
 		};
+
+		this.plugins = [addLinkPlugin];
 	}
 
 	componentDidMount() {
 		this.getProjectFromAPI();
 		this.loadTags();
 	}
+
+	onChange = (editorState) => {
+		this.setState({ editorState });
+	};
 
 	loadTags() {
 		fetch(API.backend + "/tags" + this.props.match.params.id)
@@ -121,6 +132,11 @@ class Project extends React.Component {
 													this.state.editorState
 												}
 												readOnly={true}
+												plugins={this.plugins}
+												onChange={this.onChange}
+												blockRendererFn={
+													mediaBlockRenderer
+												}
 											/>
 										);
 									}

@@ -1,6 +1,8 @@
 import React from "react";
-import "./SearchBar.css";
 import { FaSearch } from "react-icons/fa";
+
+//Styles
+import "./Styles/SearchBar.css";
 
 class SearchBar extends React.Component {
 	constructor(props) {

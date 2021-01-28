@@ -121,6 +121,16 @@
 	font-weight: bold;
 	cursor: pointer;
 	outline: none;
+	display: flex;
+}
+
+.public-DraftStyleDefault-pre {
+	background-color: #3a3a3a;
+	color: white;
+	border-radius: 15px;
+	padding: 5px;
+	padding-left: 25px;
+	overflow: scroll;
 }
 
 @media only screen and (min-width: 768px) {

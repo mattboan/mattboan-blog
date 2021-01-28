@@ -1,13 +1,15 @@
 import React from "react";
-
 import DotLoader from "react-spinners/DotLoader";
 import ProjectCon from "../Components/ProjectsCon";
 import SearchBar from "../Components/SearchBar";
+import TagCon from "../Components/TagCon";
 
-import "./Projects.css";
+//Config
 import dotConfig from "../Config/DotConfig";
 import API from "../Config/URL";
-import TagCon from "../Components/TagCon";
+
+//Styles
+import "./Styles/Project.css";
 
 class Projects extends React.Component {
 	constructor(props) {

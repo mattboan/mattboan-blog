@@ -1,32 +1,46 @@
 import React from "react";
 import {
-	Editor,
 	EditorState,
 	RichUtils,
 	convertToRaw,
 	convertFromRaw,
+	AtomicBlockUtils,
 } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import addLinkPlugin from "../EditorPlugins/EditorLinkPlugin";
+import { mediaBlockRenderer } from "../EditorPlugins/MediaBlockRenderer";
 import axios from "axios";
-
-import "./EditProject.css";
-import API from "../Config/URL";
+import { FaBold, FaItalic, FaUnderline, FaLink, FaImage } from "react-icons/fa";
 import BSToolbar, { getBlockStyle } from "../BlockStyles/BSToolbar";
+import EditTags from "../Components/EditTags";
+
+//Config
+import API from "../Config/URL";
+
+//Styles
+import "./Styles/EditProject.css";
 
 class EditProject extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			id: this.props.match.params.id,
 			image: null,
+			previewImage: null,
 			error: null,
 			isLoaded: false,
 			project: { name: "" },
-			editorState: EditorState.createEmpty(),
+			tags: [],
+			editorState: EditorState.createEmpty(this.decorator),
 		};
+
+		this.plugins = [addLinkPlugin];
 	}
 
 	componentDidMount() {
 		this.getProjectFromAPI();
+		this.getTagsFromAPI();
 	}
 
 	testFunction = () => {
@@ -71,8 +85,67 @@ class EditProject extends React.Component {
 			let img = event.target.files[0];
 			this.setState({
 				image: img,
+				previewImage: URL.createObjectURL(img),
 			});
 		}
+	};
+
+	onAddLink = () => {
+		const editorState = this.state.editorState;
+		const selection = editorState.getSelection();
+		const link = window.prompt("Paste the link -");
+		if (!link) {
+			this.onChange(RichUtils.toggleLink(editorState, selection, null));
+			return "handled";
+		}
+		const content = editorState.getCurrentContent();
+		const contentWithEntity = content.createEntity("LINK", "MUTABLE", {
+			url: link,
+		});
+		const newEditorState = EditorState.push(
+			editorState,
+			contentWithEntity,
+			"create-entity"
+		);
+		const entityKey = contentWithEntity.getLastCreatedEntityKey();
+		this.onChange(
+			RichUtils.toggleLink(newEditorState, selection, entityKey)
+		);
+		return "handled";
+	};
+
+	onURLChange = (e) => this.setState({ urlValue: e.target.value });
+
+	focus = () => this.refs.editor.focus();
+
+	onAddImage = (e) => {
+		e.preventDefault();
+		const editorState = this.state.editorState;
+		const urlValue = window.prompt("Paste Image Link");
+		const contentState = editorState.getCurrentContent();
+		const contentStateWithEntity = contentState.createEntity(
+			"image",
+			"IMMUTABLE",
+			{ src: urlValue }
+		);
+		const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+		const newEditorState = EditorState.set(
+			editorState,
+			{ currentContent: contentStateWithEntity },
+			"create-entity"
+		);
+		this.setState(
+			{
+				editorState: AtomicBlockUtils.insertAtomicBlock(
+					newEditorState,
+					entityKey,
+					" "
+				),
+			},
+			() => {
+				setTimeout(() => this.focus(), 0);
+			}
+		);
 	};
 
 	onUnderlineClick = () => {
@@ -94,6 +167,7 @@ class EditProject extends React.Component {
 	};
 
 	toggleBlockType = (blockType) => {
+		console.log("blockType: " + blockType);
 		this.onChange(
 			RichUtils.toggleBlockType(this.state.editorState, blockType)
 		);
@@ -141,16 +215,31 @@ class EditProject extends React.Component {
 						);
 						let tempEditorState = result[0].post
 							? EditorState.createWithContent(
-									convertFromRaw(JSON.parse(result[0].post))
+									convertFromRaw(JSON.parse(result[0].post)),
+									this.decorator
 							  )
-							: EditorState.createEmpty();
+							: EditorState.createEmpty(this.decorator);
 
 						this.setState({
 							project: result[0],
+							previewImage: result[0].image,
 							editorState: tempEditorState,
 							isLoaded: true,
 						});
 					}
+				},
+				(error) => {
+					console.log("Error /Project: " + error);
+				}
+			);
+	};
+
+	getTagsFromAPI = () => {
+		fetch(API.backend + "/Tags" + this.props.match.params.id)
+			.then((res) => res.json())
+			.then(
+				(result) => {
+					this.setState({ tags: result });
 				},
 				(error) => {
 					console.log("Error /Project: " + error);
@@ -168,7 +257,7 @@ class EditProject extends React.Component {
 						className="imageHeader"
 						style={{
 							backgroundImage:
-								"url('" + this.state.project.image + "')",
+								"url('" + this.state.previewImage + "')",
 						}}></div>
 					<div className="headerImageControls">
 						<button onClick={this.triggetHeaderImageInput}>
@@ -191,6 +280,13 @@ class EditProject extends React.Component {
 						value={this.state.project.name}
 						onChange={this.projectTitleHandler}></input>
 				</div>
+				<div className="tagsEdit">
+					<label>Tags</label>
+					<EditTags
+						tags={this.state.tags}
+						projectID={this.state.project.id}
+					/>
+				</div>
 				<div className="projectPostEdit">
 					<label>Post</label>
 					<div className="toolbar-con">
@@ -198,24 +294,39 @@ class EditProject extends React.Component {
 							editorState={this.state.editorState}
 							onToggle={this.toggleBlockType}
 						/>
-						<button onClick={this.onUnderlineClick}>U</button>
+						<button onClick={this.onUnderlineClick}>
+							<FaUnderline />
+						</button>
 						<button onClick={this.onBoldClick}>
-							<b>B</b>
+							<FaBold />
 						</button>
 						<button onClick={this.onItalicClick}>
-							<em>I</em>
+							<FaItalic />
+						</button>
+						<button
+							id="link_url"
+							onClick={this.onAddLink}
+							className="add-link">
+							<FaLink />
+						</button>
+						<button onClick={this.onAddImage}>
+							<FaImage />
 						</button>
 					</div>
 
 					<div className="postEditorCon">
 						{(() => {
+							//This could be removed? could set the init value of the editorState to createEmpty() then overwrite with a new one from the API
 							if (this.state.editorState) {
 								return (
 									<Editor
+										blockRendererFn={mediaBlockRenderer}
 										editorState={this.state.editorState}
 										blockStyleFn={getBlockStyle}
 										handleKeyCommand={this.handleKeyCommand}
 										onChange={this.onChange}
+										plugins={this.plugins}
+										ref="editor"
 									/>
 								);
 							}

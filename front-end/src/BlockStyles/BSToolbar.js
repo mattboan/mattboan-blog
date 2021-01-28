@@ -1,14 +1,19 @@
 import React from "react";
-import { EditorState, Editor, RichUtils, AtomicBlockUtils } from "draft-js";
 import BSButton from "./BSButton";
 import HSDropDown from "./HSDropDown";
+import { FaQuoteLeft, FaListOl, FaListUl, FaCode } from "react-icons/fa";
+
+//Styles
+import "./Styles/BSToolbar.css";
 
 export const BLOCK_TYPES = [
-	{ label: " “ ” ", style: "blockquote" },
-	{ label: "UL", style: "unordered-list-item" },
-	{ label: "OL", style: "ordered-list-item" },
-	{ label: "{ }", style: "code-block" },
+	{ label: <FaQuoteLeft />, style: "blockquote" },
+	{ label: <FaListUl />, style: "unordered-list-item" },
+	{ label: <FaListOl />, style: "ordered-list-item" },
+	{ label: <FaCode />, style: "code-block" },
 ];
+
+export const LINE_TYPES = [{ label: "B", style: "BOLD" }];
 
 export const HEADER_TYPES = [
 	{ label: "(None)", style: "unstyled" },
@@ -37,6 +42,11 @@ class BSToolbar extends React.Component {
 			.getCurrentContent()
 			.getBlockForKey(selection.getStartKey())
 			.getType();
+
+		const inlineType = editorState.getCurrentInlineStyle();
+
+		console.log("BSToolbar blockType from props: " + blockType);
+		console.log("BSToolbar inlineType from props: " + inlineType);
 
 		return (
 			<span className="RichEditor-controls">

@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-import "./Thumbnail.css";
-
 import Tag from "./Tag";
+
+//Config
 import API from "../Config/URL";
+
+//Styles
+import "./Styles/Thumbnail.css";
 
 class Thumbnail extends React.Component {
 	constructor(props) {

@@ -1,11 +1,13 @@
 import React from "react";
 import DotLoader from "react-spinners/DotLoader";
-
 import ProjectsCon from "../Components/ProjectsCon";
 
-import "./Home.css";
+//Config
 import dotConfig from "../Config/DotConfig";
 import API from "../Config/URL";
+
+//Styles
+import "./Styles/Home.css";
 
 class Home extends React.Component {
 	constructor(props) {

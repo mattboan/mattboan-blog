@@ -1,15 +1,17 @@
 import React from "react";
-import "./SocialIcon.css";
+
+//Styles
+import "./Styles/SocialIcon.css";
 
 class SocialIcon extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
 
-  render() {
-    return <div className="SocialIcon">{this.props.icon}</div>;
-  }
+	render() {
+		return <div className="SocialIcon">{this.props.icon}</div>;
+	}
 }
 
 export default SocialIcon;

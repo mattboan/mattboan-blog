@@ -1,0 +1,17 @@
+.HSDropDown {
+	margin-right: 5px;
+	border-radius: 5px;
+	width: 142px;
+	background-color: #dd5404;
+	color: white;
+
+	margin-right: 5px;
+	background-color: #dd5404;
+	color: white;
+	border-radius: 5px;
+	border: none;
+	padding: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	outline: none;
+}

@@ -1,8 +1,11 @@
 import React from "react";
-import "./TagCon.css";
 import Tag from "./Tag";
 
+//Config
 import API from "../Config/URL";
+
+//Styles
+import "./Styles/TagCon.css";
 
 class TagCon extends React.Component {
 	constructor(props) {
