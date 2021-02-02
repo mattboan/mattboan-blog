@@ -112,18 +112,18 @@ class Project extends React.Component {
 	render() {
 		const progressMainWrapper = {
 			background: "rgba(255, 255, 255, 0)",
-			width: "5px",
+			height: "5px",
 			position: "fixed",
 			top: 0,
-			right: 0,
+			left: 0,
 			zIndex: 101,
-			height: "100%",
+			width: "100%",
 		};
 
 		const progressMainStyle = {
-			width: "5px",
+			height: "5px",
 			background: "#dd5404",
-			height: this.state.scroll,
+			width: this.state.scroll,
 		};
 
 		return (
