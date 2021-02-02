@@ -1,0 +1,46 @@
+.Banner {
+	display: flex;
+	flex-direction: row;
+	margin: 20px;
+	margin-top: 60px;
+	margin-bottom: 40px;
+	background-color: #222222;
+	border-radius: 15px;
+	padding: 15px;
+}
+
+.BannerText {
+	font-size: 36pt;
+	width: 50%;
+}
+
+.BannerText h3 {
+	margin: 0;
+	position: relative;
+	width: fit-content;
+	z-index: 1;
+}
+
+.BannerTextLastLine::after {
+	content: " ";
+	background-color: #dd5405;
+	width: 100%;
+	height: 20px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.BannerImage {
+	width: 45%;
+	margin-top: -20px;
+	margin-right: 0;
+	margin-top: -40px;
+	margin-right: 25px;
+	margin-bottom: -15px;
+}
+
+.BannerImage img {
+	width: 100%;
+}

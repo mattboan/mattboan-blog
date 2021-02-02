@@ -1,6 +1,7 @@
 import React from "react";
 import DotLoader from "react-spinners/DotLoader";
 import ProjectsCon from "../Components/ProjectsCon";
+import Banner from "../Components/Banner";
 
 //Config
 import dotConfig from "../Config/DotConfig";
@@ -46,6 +47,7 @@ class Home extends React.Component {
 		const { error, loaded, projects } = this.state;
 		return (
 			<div className="Home">
+				<Banner />
 				<h2>Projects</h2>
 				{(() => {
 					if (error) {

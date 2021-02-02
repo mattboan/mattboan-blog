@@ -38,6 +38,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use("/images", express.static(__dirname + "/images"));
 
 //MySQL setup
 const con = mysql.createConnection({
