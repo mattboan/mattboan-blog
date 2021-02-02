@@ -1,6 +1,8 @@
 import React from "react";
 import Tag from "./Tag";
 
+import "./Styles/EditTags.css";
+
 //Styles
 
 /**
@@ -9,40 +11,40 @@ import Tag from "./Tag";
  * Projects tags
  */
 class EditTags extends React.Component {
-	constructor(props) {
-		super(props);
-		console.log("EditTags: " + JSON.stringify(props.tags));
-	}
+    constructor(props) {
+        super(props);
+    }
 
-	onRemove = (id) => {
-		console.log(
-			"Remove " + id + " from the parent id of: " + this.props.projectID
-		);
-	};
+    onRemove = (id) => {
+        /* console.log(
+            "Remove " + id + " from the parent id of: " + this.props.projectID
+        ); */
+    };
 
-	render() {
-		return (
-			<div className="EditTags">
-				<div className="EditTags-TagsCon">
-					{this.props.tags.map((tag) => (
-						<Tag
-							id={tag.id}
-							text={tag.text}
-							color={tag.color}
-							onSearch={null}
-							size="14px"
-							mutable={true}
-							onRemove={this.onRemove}
-						/>
-					))}
-				</div>
-				<div className="EditTags-input">
-					<input type="text" />
-					<button>Add</button>
-				</div>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div className="EditTags">
+                <div className="EditTags-TagsCon">
+                    {this.props.tags.map((tag, index) => (
+                        <Tag
+                            id={tag.id}
+                            text={tag.text}
+                            color={tag.color}
+                            onSearch={null}
+                            size="14px"
+                            mutable={true}
+                            key={index}
+                            onRemove={this.onRemove}
+                        />
+                    ))}
+                </div>
+                <div className="EditTags-input">
+                    <input type="text" />
+                    <button>Add</button>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default EditTags;
