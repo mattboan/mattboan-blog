@@ -1,4 +1,5 @@
 import React from "react";
+import Modal from "react-modal";
 import { convertToRaw, convertFromRaw } from "draft-js";
 import addLinkPlugin from "../EditorPlugins/EditorLinkPlugin";
 import axios from "axios";
@@ -14,9 +15,24 @@ import dotConfig from "../Config/DotConfig";
 //Styles
 import "./Styles/EditProject.css";
 
+const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+    },
+};
+
+Modal.setAppElement("#root");
+
 class EditProject extends React.Component {
     constructor(props) {
         super(props);
+
+        var subtitle;
 
         this.state = {
             id: this.props.match.params.id,
@@ -27,6 +43,7 @@ class EditProject extends React.Component {
             project: { name: "" },
             tags: [],
             contentState: null,
+            modalIsOpen: false,
         };
 
         this.plugins = [addLinkPlugin];
@@ -36,6 +53,14 @@ class EditProject extends React.Component {
         this.getProjectFromAPI();
         this.getTagsFromAPI();
     }
+
+    openModal = () => {
+        this.setState({ modalIsOpen: true });
+    };
+
+    closeModal = () => {
+        this.setState({ modalIsOpen: false });
+    };
 
     //Pass this to the PostEditor Comp.
     getContentState = (tempContentState) => {
@@ -197,10 +222,30 @@ class EditProject extends React.Component {
                     >
                         Clear Changes
                     </button>
-                    <button style={{ backgroundColor: "red" }}>
+                    <button
+                        style={{ backgroundColor: "red" }}
+                        onClick={this.openModal}
+                    >
                         Delete Post
                     </button>
                 </div>
+
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >
+                    <button onClick={this.closeModal}>close</button>
+                    <div>I am a modal</div>
+                    <form>
+                        <input />
+                        <button>tab navigation</button>
+                        <button>stays</button>
+                        <button>inside</button>
+                        <button>the modal</button>
+                    </form>
+                </Modal>
             </div>
         );
     }
