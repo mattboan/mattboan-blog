@@ -1,17 +1,20 @@
 .Banner {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	margin: 20px;
-	margin-top: 60px;
 	margin-bottom: 40px;
 	background-color: #222222;
 	border-radius: 15px;
 	padding: 15px;
+	-webkit-box-shadow: 0px 0px 45px -19px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 45px -19px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 45px -19px rgba(0, 0, 0, 0.75);
+	overflow: hidden;
 }
 
 .BannerText {
-	font-size: 36pt;
-	width: 50%;
+	font-size: 42pt;
+	width: 100%;
 }
 
 .BannerText h3 {
@@ -19,28 +22,120 @@
 	position: relative;
 	width: fit-content;
 	z-index: 1;
+	margin-top: -10px;
 }
 
 .BannerTextLastLine::after {
 	content: " ";
 	background-color: #dd5405;
+	background: linear-gradient(90deg, #dd5405, rgb(255 129 0));
 	width: 100%;
-	height: 20px;
+	height: 10px;
 	position: absolute;
-	bottom: 0;
+	bottom: -5px;
 	left: 0;
 	z-index: -1;
+	border-radius: 16px;
+	opacity: 100%;
+	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+	-moz-animation: fadein 1s; /* Firefox < 16 */
+	-ms-animation: fadein 1s; /* Internet Explorer */
+	-o-animation: fadein 1s; /* Opera < 12.1 */
+	animation: fadein 1s;
 }
 
 .BannerImage {
-	width: 45%;
-	margin-top: -20px;
-	margin-right: 0;
-	margin-top: -40px;
-	margin-right: 25px;
-	margin-bottom: -15px;
+	width: 100%;
+	margin: 0;
+	margin-bottom: -20px;
+	margin-top: 45px;
 }
 
 .BannerImage img {
 	width: 100%;
+}
+
+@keyframes fadein {
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.Banner {
+		display: flex;
+		flex-direction: row;
+		margin: 20px;
+		margin-top: 60px;
+		margin-bottom: 40px;
+		background-color: #222222;
+		border-radius: 15px;
+		padding: 15px;
+	}
+
+	.BannerText {
+		font-size: 36pt;
+		width: 50%;
+		margin-left: 10px;
+	}
+
+	.BannerImage {
+		width: 45%;
+		margin-top: -20px;
+		margin-right: 0;
+		margin-top: -40px;
+		margin-right: 25px;
+		margin-bottom: -15px;
+	}
+}
+
+/* Anything bigger than a tablet screen */
+@media only screen and (min-width: 1000px) {
+	.ProjectCon {
+		max-width: 420px;
+	}
+	.BannerText h3 {
+		font-size: 65pt;
+	}
 }
