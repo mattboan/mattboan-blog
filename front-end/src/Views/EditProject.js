@@ -37,6 +37,7 @@ class EditProject extends React.Component {
         this.getTagsFromAPI();
     }
 
+    //Pass this to the PostEditor Comp.
     getContentState = (tempContentState) => {
         console.log("Got Content State: " + tempContentState);
         if (tempContentState) {
