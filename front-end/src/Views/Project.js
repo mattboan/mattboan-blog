@@ -22,6 +22,7 @@ class Project extends React.Component {
 			project: {},
 			tags: [],
 			editorState: null,
+			scroll: 0,
 		};
 
 		this.plugins = [addLinkPlugin];
@@ -30,7 +31,25 @@ class Project extends React.Component {
 	componentDidMount() {
 		this.getProjectFromAPI();
 		this.loadTags();
+		window.addEventListener("scroll", this.progressBar);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener("scroll", this.progressBar);
+	}
+
+	progressBar = () => {
+		const scrollTotal = document.documentElement.scrollTop;
+		const heightWin =
+			document.documentElement.scrollHeight -
+			document.documentElement.clientHeight;
+		const scroll = `${(scrollTotal / heightWin) * 100}%`;
+
+		this.setState({
+			scroll: scroll,
+		});
+		console.log("scroll: " + scroll);
+	};
 
 	onChange = (editorState) => {
 		this.setState({ editorState });
@@ -91,8 +110,27 @@ class Project extends React.Component {
 	}
 
 	render() {
+		const progressMainWrapper = {
+			background: "rgba(255, 255, 255, 0)",
+			width: "5px",
+			position: "fixed",
+			top: 0,
+			right: 0,
+			zIndex: 101,
+			height: "100%",
+		};
+
+		const progressMainStyle = {
+			width: "5px",
+			background: "#dd5404",
+			height: this.state.scroll,
+		};
+
 		return (
 			<div className="Project">
+				<div className="progress-bar" style={progressMainWrapper}>
+					<div style={progressMainStyle} />
+				</div>
 				<div className="flexCon">
 					<div className="contentCon">
 						<div

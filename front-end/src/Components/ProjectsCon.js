@@ -1,6 +1,5 @@
 import React from "react";
 import Thumbnail from "./Thumbnail";
-import BigButton from "./BigButton";
 
 //Styles
 import "./Styles/ProjecsCon.css";
