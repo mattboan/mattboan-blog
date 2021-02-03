@@ -125,10 +125,12 @@ class EditProject extends React.Component {
 			.then(
 				(result) => {
 					if (result[0]) {
-						//Get the ContentState for the PostEditor Component
-						let tempContentState = convertFromRaw(
-							JSON.parse(result[0].post)
-						);
+						let tempContentState = null;
+						if (result[0].post) {
+							tempContentState = convertFromRaw(
+								JSON.parse(result[0].post)
+							);
+						}
 
 						this.setState({
 							project: result[0],
