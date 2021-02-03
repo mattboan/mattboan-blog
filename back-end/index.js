@@ -50,14 +50,6 @@ const con = mysql.createConnection({
 
 con.connect(); //Connect to the database
 
-/**
- * TODO:
- *  -Need to limit the size of the file uploads, downsample them if needed
- *  -Add the temp uploads to a designated destination folder
- *  -Add the image path to the appropriate mysql table record
- *  -Update all of the attributes in the mysql table record
- *  -Verify that the user has permission to do this
- */
 app.post("/test", upload.single("headerImage"), (req, res) => {
 	console.log("/test called".cyan);
 
@@ -78,6 +70,19 @@ app.post("/test", upload.single("headerImage"), (req, res) => {
 	);
 });
 
+//We need to create a new project and then just return the ID
+app.post("/CreateNewProject", (req, res) => {
+	console.log("CreateNewProject called".cyan);
+
+	con.query(
+		"INSERT INTO Projects () VALUES ()",
+		function (err, result, fields) {
+			if (err) res.send(err.message);
+			res.json(result.insertId);
+		}
+	);
+});
+
 //Get recent projects
 /**
  * IMPORTANT - REMOVE THE setTimeout() when on live server!
@@ -85,11 +90,9 @@ app.post("/test", upload.single("headerImage"), (req, res) => {
 app.get("/projects", (req, res) => {
 	console.log("/projects called".cyan);
 
-	setTimeout(function () {
-		con.query("SELECT * FROM Projects", function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
-		});
+	con.query("SELECT * FROM Projects", function (err, result) {
+		if (err) res.send(err.message);
+		res.json(result);
 	});
 });
 
@@ -101,11 +104,6 @@ app.get("/tags", (req, res) => {
 	});
 });
 
-/**
- * Todo:
- * - Need to look into tags before looking into the projects
- * - look into the double colons - WHAT DOES THIS MEAN?
- */
 app.get("/queryProjects::query", (req, res) => {
 	console.log("/queryProjects called - query = ".cyan + req.params.query);
 	con.query(
@@ -120,16 +118,14 @@ app.get("/queryProjects::query", (req, res) => {
 
 app.get("/queryTags::query", (req, res) => {
 	console.log("/queryTags called - query = ".cyan + req.params.query);
-	setTimeout(function () {
-		con.query(
-			"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
-			req.params.query,
-			function (err, result) {
-				if (err) res.send(err.message);
-				res.json(result);
-			}
-		);
-	}, 1000);
+	con.query(
+		"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
+		req.params.query,
+		function (err, result) {
+			if (err) res.send(err.message);
+			res.json(result);
+		}
+	);
 });
 
 //Get a single project

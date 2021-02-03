@@ -42,13 +42,14 @@ class TagCon extends React.Component {
 		console.log("Tag Props: " + JSON.stringify(this.props, null, 2));
 		return (
 			<div className="TagCon-Con">
-				{this.state.tags.map((tag) => (
+				{this.state.tags.map((tag, index) => (
 					<Tag
 						id={tag.id}
 						text={tag.text}
 						onSearch={this.props.onSearch}
 						color={tag.color}
 						size="14px"
+						key={index}
 					/>
 				))}
 			</div>

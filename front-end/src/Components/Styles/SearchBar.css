@@ -1,40 +1,47 @@
 .SearchBar {
-  width: 100%;
-  display: flex;
-  margin-top: 10px;
-  margin-bottom: 10px;
+	width: 100%;
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .SearchBar input {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border: 2px solid white;
-  border-color: none;
-  border: none;
-  outline: none;
-  -webkit-box-shadow: 0px 0px 10px 0px #222222;
-  -moz-box-shadow: 0px 0px 10px 0px #222222;
-  box-shadow: 0px 0px 10px 0px #222222;
-  padding: 10px;
-  font-size: 10pt;
-  margin-left: 10px;
-  flex-grow: 2;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border: 2px solid white;
+	border-color: none;
+	border: none;
+	outline: none;
+	-webkit-box-shadow: 0px 0px 10px 0px #222222;
+	-moz-box-shadow: 0px 0px 10px 0px #222222;
+	box-shadow: 0px 0px 10px 0px #222222;
+	padding: 10px;
+	font-size: 10pt;
+	margin-left: 10px;
+	flex-grow: 2;
 }
 
 .SearchBar button {
-  padding: 10px;
-  padding-right: 25px;
-  padding-left: 25px;
-  border: none;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background-color: #dd5405;
-  color: white;
-  font-weight: bold;
-  font-size: 12pt;
-  margin-right: 10px;
+	padding: 10px;
+	padding-right: 25px;
+	padding-left: 25px;
+	border: none;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: #dd5405;
+	color: white;
+	font-weight: bold;
+	font-size: 12pt;
+	margin-right: 10px;
+	cursor: pointer;
+	outline: none;
+	transition: 0.2s ease-in-out;
+}
+
+.SearchBar button:hover {
+	background-color: #eb691e;
 }
 
 .SearchBar .FaSearch {
-  vertical-align: middle;
+	vertical-align: middle;
 }

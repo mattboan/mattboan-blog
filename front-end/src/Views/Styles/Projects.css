@@ -1,26 +1,54 @@
 .Projects h2 {
-  margin-right: 10px;
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 0px;
+	margin: 0;
 }
 
 .searchBarWrapper {
-  margin-left: 0px;
-  margin-right: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
 }
 
-.Projects p {
+.ProjectsHeader {
+	margin: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+}
+
+.ProjectsHeaderButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 100px;
+	height: 30px;
+	border: none;
+	background-color: #dd5404;
+	color: white;
+	padding-left: 10px;
+	padding-right: 10px;
+	outline: none;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.ProjectsHeaderButton:hover {
+	background-color: #eb691e;
+}
+
+.ProjectsHeaderButton span {
+	margin-left: 5px;
 }
 
 @media only screen and (min-width: 600px) {
-  .Projects h2 {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+	.searchBarWrapper {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
 
-  .searchBarWrapper {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+	.ProjectsHeader {
+		margin-left: 20px;
+		margin-right: 20px;
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+	}
 }

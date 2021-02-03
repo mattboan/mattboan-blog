@@ -1,15 +1,17 @@
 import React from "react";
+import axios from "axios";
 import DotLoader from "react-spinners/DotLoader";
 import ProjectCon from "../Components/ProjectsCon";
 import SearchBar from "../Components/SearchBar";
 import TagCon from "../Components/TagCon";
+import { FaPlus } from "react-icons/fa";
 
 //Config
 import dotConfig from "../Config/DotConfig";
 import API from "../Config/URL";
 
 //Styles
-import "./Styles/Project.css";
+import "./Styles/Projects.css";
 
 class Projects extends React.Component {
 	constructor(props) {
@@ -26,6 +28,30 @@ class Projects extends React.Component {
 
 	componentDidMount() {
 		this.loadProjects();
+	}
+
+	//Create a new Project - Just request a new project empty contents -> get the returned ID
+	//-> route to EditProject with the new ID
+	createNewProject() {
+		console.log("createNewProject()");
+
+		//When authentication is added (set the auth token here before making the request)
+		let form = new FormData();
+		form.append("username", "mattboan");
+
+		axios({
+			method: "post",
+			url: API.backend + "/CreateNewProject",
+			data: form,
+			headers: { "Content-Type": "multipart/form-data" },
+		})
+			.then(function (res) {
+				//This will be where the ID of the newly created project will passed to the EditProject React Route
+				console.log(res);
+			})
+			.catch(function (res) {
+				console.log(res);
+			});
 	}
 
 	search(query) {
@@ -94,7 +120,16 @@ class Projects extends React.Component {
 
 		return (
 			<div className="Projects">
-				<h2>Projects</h2>
+				<div className="ProjectsHeader">
+					<h2>Projects</h2>
+					<button
+						className="ProjectsHeaderButton"
+						onClick={this.createNewProject}>
+						<FaPlus />
+						<span>Project</span>
+					</button>
+				</div>
+
 				<div className="searchBarWrapper">
 					<SearchBar
 						placeholder="Search Projects"
