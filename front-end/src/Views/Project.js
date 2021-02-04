@@ -55,6 +55,8 @@ class Project extends React.Component {
 		this.setState({ editorState });
 	};
 
+	goToAboutMe() {}
+
 	loadTags() {
 		fetch(API.backend + "/tags" + this.props.match.params.id)
 			.then((res) => res.json())
@@ -183,7 +185,7 @@ class Project extends React.Component {
 						</div>
 					</div>
 					<div className="sidepanel">
-						<div className="profile">
+						<Link className="profile" to="/AboutMe">
 							<div className="innerCon">
 								<img src="../img/me2.jpg" alt="Author" />
 								<div className="author">
@@ -193,13 +195,17 @@ class Project extends React.Component {
 									</p>
 								</div>
 							</div>
-						</div>
+						</Link>
+
+						{/*
+						//This can be implemented later as a nice to have
 						<div className="moreFromTheAuthor">
 							<div className="innerCon">
 								<h3>More From the Author</h3>
 								<p>Another one.</p>
 							</div>
 						</div>
+						*/}
 					</div>
 				</div>
 			</div>

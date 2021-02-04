@@ -39,8 +39,8 @@ class EditProject extends React.Component {
 			previewImage: null,
 			error: null,
 			isLoaded: false,
+			tagsLoaded: false,
 			project: { name: "" },
-			tags: [],
 			contentState: null,
 			modalIsOpen: false,
 		};
@@ -48,7 +48,6 @@ class EditProject extends React.Component {
 
 	componentDidMount() {
 		this.getProjectFromAPI();
-		this.getTagsFromAPI();
 	}
 
 	openModal = () => {
@@ -107,7 +106,7 @@ class EditProject extends React.Component {
 		form.append("headerImage", this.state.image);
 		axios({
 			method: "post",
-			url: API.backend + "/test",
+			url: API.backend + "/UpdateProject",
 			data: form,
 			headers: { "Content-Type": "multipart/form-data" },
 		})
@@ -139,19 +138,6 @@ class EditProject extends React.Component {
 							isLoaded: true,
 						});
 					}
-				},
-				(error) => {
-					console.log("Error /Project: " + error);
-				}
-			);
-	};
-
-	getTagsFromAPI = () => {
-		fetch(API.backend + "/Tags" + this.props.match.params.id)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({ tags: result });
 				},
 				(error) => {
 					console.log("Error /Project: " + error);
@@ -194,10 +180,7 @@ class EditProject extends React.Component {
 				</div>
 				<div className="tagsEdit">
 					<label>Tags</label>
-					<EditTags
-						tags={this.state.tags}
-						projectID={this.state.project.id}
-					/>
+					<EditTags projectID={this.props.match.params.id} />
 				</div>
 
 				{this.state.isLoaded ? (

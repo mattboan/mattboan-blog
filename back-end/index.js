@@ -24,10 +24,16 @@ let storage = multer.diskStorage({
 	},
 });
 const upload = multer({ storage: storage });
+const body = multer();
 
 //Express middleware
-//app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use("/images", express.static(__dirname + "/images"));
+
 //use cors to allow cross origin resource sharing
 app.use(
 	cors({
@@ -35,10 +41,6 @@ app.use(
 		credentials: true,
 	})
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use("/images", express.static(__dirname + "/images"));
 
 //MySQL setup
 const con = mysql.createConnection({
@@ -50,8 +52,8 @@ const con = mysql.createConnection({
 
 con.connect(); //Connect to the database
 
-app.post("/test", upload.single("headerImage"), (req, res) => {
-	console.log("/test called".cyan);
+app.post("/UpdateProject", upload.single("headerImage"), (req, res) => {
+	console.log("/UpdateProject called".cyan);
 
 	var project = JSON.parse(req.body.project); //Need to parse the stringyfied project
 	var post = JSON.stringify(project.post); //Need to extract this from the project and stringify it
@@ -69,6 +71,82 @@ app.post("/test", upload.single("headerImage"), (req, res) => {
 		}
 	);
 });
+
+/*
+				NEED To refactor this function! -> split up the nesteed queries
+
+				THE NESTED FUNCTIONS NEED TO IMPLEMENT THE CALLBACKS!!!!!!!!!!!!!!!!! await whatever the fuck get rid off it
+*/
+//Update the tags for a project
+app.post("/UpdateTags", body.single(), (req, res) => {
+	console.log("/UpdateTags called".cyan);
+	//Parse the passed in tags and project id
+	var tags = JSON.parse(req.body.tags);
+	var projectID = req.body.projectID;
+	console.log(tags);
+	console.log(projectID);
+
+	//Check if tag already exists
+	tags.forEach((tag) => {
+		con.query(
+			"SELECT id FROM Tags WHERE text = ?",
+			[tag],
+			(err, result, fields) => {
+				//If tag is there check if its in the joining table ProjectTags
+				if (result[0]) {
+					CheckProjectTags(
+						result[0].id,
+						projectID,
+						(isThere, error) => {
+							if (error) console.log(error.message);
+							if (!isThere) {
+								InsertIntoProjectTags(
+									result[0].id,
+									projectID,
+									(iiptError) => {
+										if (iiptError)
+											console.log(iiptError.message);
+									}
+								);
+							}
+						}
+					);
+				}
+				//If the tag is not there
+				else {
+				}
+			}
+		);
+	});
+	//con.query("SELECT id FROM Tags WHERE text = ?", [])
+});
+
+function CheckProjectTags(tag_id, project_id, callback) {
+	con.query(
+		"SELECT id FROM ProjectsTags WHERE tag_id = ? AND project_id = ?",
+		[tag_id, project_id],
+		(err, result, fields) => {
+			if (err) callback(null, err);
+			if (result[0]) {
+				callback(true, null);
+			}
+			//The tag exists but isnt linked to the project specified
+			else {
+				callback(false, null);
+			}
+		}
+	);
+}
+
+function InsertIntoProjectTags(tag_id, project_id, callback) {
+	con.query(
+		"INSERT INTO ProjectsTags (tag_id, project_id) VALUES (?, ?)",
+		[tag_id, project_id],
+		(err, result, fields) => {
+			if (err) callback(err);
+		}
+	);
+}
 
 //We need to create a new project and then just return the ID
 app.post("/CreateNewProject", (req, res) => {
