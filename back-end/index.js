@@ -137,67 +137,6 @@ app.post("/InsertIntoProjectsTags", body.single(), (req, res) => {
     );
 });
 
-/*
-				NEED To refactor this function! -> split up the nesteed queries
-
-				THE NESTED FUNCTIONS NEED TO IMPLEMENT THE CALLBACKS!!!!!!!!!!!!!!!!! await whatever the fuck get rid off it
-*/
-//Update the tags for a project
-app.post("/UpdateTags", body.single(), (req, res) => {
-    console.log("/UpdateTags called".cyan);
-    //Parse the passed in tags and project id
-    var tags = JSON.parse(req.body.tags);
-    var projectID = req.body.projectID;
-    console.log(tags);
-    console.log(projectID);
-
-    //Check if tag already exists
-    tags.forEach((tag) => {
-        con.query(
-            "SELECT id FROM Tags WHERE text = ?",
-            [tag.text],
-            (err, result, fields) => {
-                //If tag is there check if its in the joining table ProjectTags
-                if (result[0]) {
-                    CheckProjectTags(
-                        result[0].id,
-                        projectID,
-                        (isThere, error) => {
-                            if (error) console.log(error.message);
-                            if (!isThere) {
-                                InsertIntoProjectTags(
-                                    result[0].id,
-                                    projectID,
-                                    (iiptError) => {
-                                        if (iiptError)
-                                            console.log(iiptError.message);
-                                    }
-                                );
-                            }
-                        }
-                    );
-                }
-                //If the tag is not there
-                else {
-                    //Insert into tags then insert into ProjectTags
-                    InsertIntoTags(tag, (id, err) => {
-                        if (err) console.log(err);
-                        else {
-                            InsertIntoProjectTags(
-                                id,
-                                projectID,
-                                (iiptError) => {
-                                    if (iiptError) console.log(err.message);
-                                }
-                            );
-                        }
-                    });
-                }
-            }
-        );
-    });
-});
-
 app.post("/DeleteTag", body.single(), (req, res) => {
     con.query(
         "DELETE FROM ProjectsTags WHERE tag_id = ?",
@@ -208,45 +147,6 @@ app.post("/DeleteTag", body.single(), (req, res) => {
         }
     );
 });
-
-function CheckProjectTags(tag_id, project_id, callback) {
-    con.query(
-        "SELECT id FROM ProjectsTags WHERE tag_id = ? AND project_id = ?",
-        [tag_id, project_id],
-        (err, result, fields) => {
-            if (err) callback(null, err);
-            if (result[0]) {
-                callback(true, null);
-            }
-            //The tag exists but isnt linked to the project specified
-            else {
-                callback(false, null);
-            }
-        }
-    );
-}
-
-function InsertIntoTags(tag, callback) {
-    con.query(
-        "INSERT INTO Tags (text, color) VALUES (?, ?)",
-        [tag.text, tag.color],
-        (err, result, fields) => {
-            if (err) callback(null, err);
-            //If insertion is good send back the insertedID
-            callback(result.insertId, null);
-        }
-    );
-}
-
-function InsertIntoProjectTags(tag_id, project_id, callback) {
-    con.query(
-        "INSERT INTO ProjectsTags (tag_id, project_id) VALUES (?, ?)",
-        [tag_id, project_id],
-        (err, result, fields) => {
-            if (err) callback(err);
-        }
-    );
-}
 
 //We need to create a new project and then just return the ID
 app.post("/CreateNewProject", (req, res) => {
