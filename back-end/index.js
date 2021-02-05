@@ -7,7 +7,6 @@ const cors = require("cors");
 const mysql = require("mysql");
 const path = require("path");
 const multer = require("multer");
-const { isNullOrUndefined } = require("util");
 const url = require("./config/URL");
 const colors = require("colors");
 const { RSA_NO_PADDING } = require("constants");

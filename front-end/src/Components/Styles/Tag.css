@@ -1,6 +1,7 @@
 .MainCon {
     line-height: 0px;
     padding-bottom: 0px;
+    padding-top: 2px;
     display: flex;
     flex-direction: row;
     width: fit-content;

@@ -1,22 +1,26 @@
 .TagCon-Con {
-	margin-left: 10px;
-	margin-right: 10px;
-	display: flex;
-	flex-direction: row;
-	overflow: scroll;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.TagCon-Con .MainCon {
+    padding-top: 0px !important;
 }
 
 .TagCon-Con::-webkit-scrollbar {
-	display: none;
+    display: none;
 }
 
 @media only screen and (min-width: 600px) {
-	.TagCon-Con {
-		margin-left: 15px;
-		margin-right: 15px;
-	}
+    .TagCon-Con {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
 }
