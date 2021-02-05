@@ -79,8 +79,8 @@ CREATE TABLE `ProjectsTags` (
     `project_id` INT unsigned NOT NULL,
     `tag_id` INT unsigned NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`project_id`) REFERENCES Projects(id),
-    FOREIGN KEY (`tag_id`) REFERENCES Tags(id)
+    FOREIGN KEY (`project_id`) REFERENCES Projects(id) ON DELETE CASCADE,
+    FOREIGN KEY (`tag_id`) REFERENCES Tags(id) ON DELETE CASCADE
 );
 
 /* Note that the ids of the foreign keys will need to be different */
