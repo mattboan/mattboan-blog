@@ -109,46 +109,12 @@ class EditTags extends React.Component {
         });
 
         this.state.tempTags.forEach((tag) => {
-            this.tagExists(tag);
+            this.updateTags(tag);
         });
-
-        /*
-            axios({
-                method: "post",
-                url: API.backend + "/TagExists",
-                data: form,
-                headers: { "Content-Type": "multipart/form-data" },
-            })
-                .then(function (res) {
-                    console.log(
-                        "Tag exists: " + JSON.stringify(res.data.tagExists)
-                    );
-
-                    if (!res.data.tagExists) {
-                        form.delete("text");
-                        form.append("tag", JSON.stringify(tag));
-                        axios({
-                            method: "post",
-                            url: API.backend + "/InsertTag",
-                            data: form,
-                            headers: { "Content-Type": "multipart/form-data" },
-                        })
-                            .then((res) => {
-                                console.log("inserted tags: " + res.data);
-                            })
-                            .catch((res) => {
-                                console.log(res);
-                            });
-                    }
-                })
-                .catch(function (res) {
-                    console.log(res);
-                });
-        });
-        */
     }
 
-    async tagExists(tag) {
+    //Long list of API calls :)
+    async updateTags(tag) {
         var tagExistsFrom = new FormData();
         tagExistsFrom.append("text", tag.text);
 
@@ -214,46 +180,13 @@ class EditTags extends React.Component {
             });
     }
 
-    postToAPI = () => {
-        console.log("postToAPI() called");
-        let form = new FormData();
-        let tempTags = this.state.tempTags;
-        let self = this;
-        this.setState({ tempTags: [] });
-
-        console.log(tempTags);
-        form.append("tags", JSON.stringify(tempTags));
-        form.append("projectID", this.props.projectID);
-
-        axios({
-            method: "post",
-            url: API.backend + "/UpdateTags",
-            data: form,
-            headers: { "Content-Type": "multipart/form-data" },
-        })
-            .then(function (res) {
-                console.log("here");
-                self.getTagsFromAPI();
-                console.log(res);
-            })
-            .catch(function (res) {
-                console.log(res);
-            });
-    };
-
     getTagsFromAPI = () => {
-        console.log("getTagsFromAPI()");
-        fetch(API.backend + "/Tags" + this.props.projectID)
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    console.log("result");
-                    this.setState({ tags: result });
-                },
-                (error) => {
-                    console.log("Error /Project: " + error);
-                }
-            );
+        axios.get(API.backend + "/Tags" + this.props.projectID).then((res) => {
+            this.setState({
+                tags: res.data,
+                tempTags: [],
+            });
+        });
     };
 
     render() {
