@@ -50,6 +50,11 @@
     flex-direction: column;
 }
 
+.projectDescEdit {
+    display: flex;
+    flex-direction: column;
+}
+
 .EditProject label {
     font-size: 14pt;
 }

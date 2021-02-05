@@ -64,8 +64,8 @@ app.post("/UpdateProject", upload.single("headerImage"), (req, res) => {
     }
 
     con.query(
-        "UPDATE Projects SET name = ?, image = ?, post = ? WHERE id = ?",
-        [project.name, project.image, post, project.id],
+        "UPDATE Projects SET name = ?, description = ?, image = ?, post = ? WHERE id = ?",
+        [project.name, project.description, project.image, post, project.id],
         function (err, result) {
             if (err) res.send(err.message);
             res.json(result);
