@@ -14,101 +14,101 @@ import "./Styles/EditTags.css";
  * Projects tags
  */
 class EditTags extends React.Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state = {
-            tagTextInput: "",
-            tagColorInput: "",
-            boxColor: "#1f1",
-            loaded: true,
-            uploaded: false,
-            tags: [],
-            tempTags: [],
-        };
-    }
+		this.state = {
+			tagTextInput: "",
+			tagColorInput: "",
+			boxColor: "#1f1",
+			loaded: true,
+			uploaded: false,
+			tags: [],
+			tempTags: [],
+		};
 
-    componentDidMount() {
-        this.getTagsFromAPI();
-    }
+		this.onAdd = this.onAdd.bind(this);
+	}
 
-    //Validate color
-    isHexColor = (hex) => {
-        console.log("checking: " + hex);
-        return (
-            typeof hex === "string" &&
-            hex.length === 6 &&
-            !isNaN(Number("0x" + hex))
-        );
-    };
+	componentDidMount() {
+		this.getTagsFromAPI();
+	}
 
-    //Handle the text input changing
-    handleTagTextInput = (event) => {
-        this.setState({
-            tagTextInput: event.target.value,
-        });
-    };
+	//Validate color
+	isHexColor = (hex) => {
+		console.log("checking: " + hex);
+		return (
+			typeof hex === "string" &&
+			hex.length === 6 &&
+			!isNaN(Number("0x" + hex))
+		);
+	};
 
-    //Handle the color input changing
-    handleTagColorInput = (event) => {
-        this.setState({
-            tagColorInput: event.target.value,
-        });
+	//Handle the text input changing
+	handleTagTextInput = (event) => {
+		this.setState({
+			tagTextInput: event.target.value,
+		});
+	};
 
-        if (this.isHexColor(event.target.value.substring(1))) {
-            console.log("is valid!");
-            this.setState({ boxColor: event.target.value });
-        }
-    };
+	//Handle the color input changing
+	handleTagColorInput = (event) => {
+		this.setState({
+			tagColorInput: event.target.value,
+		});
 
-    onRemove = (id) => {
-        console.log("onRemove() called");
-        let form = new FormData();
-        let self = this;
+		if (this.isHexColor(event.target.value.substring(1))) {
+			console.log("is valid!");
+			this.setState({ boxColor: event.target.value });
+		}
+	};
 
-        form.append("id", id);
+	onRemove = (id) => {
+		console.log("onRemove() called");
+		let form = new FormData();
+		let self = this;
 
-        axios({
-            method: "post",
-            url: API.backend + "/DeleteTag",
-            data: form,
-            headers: { "Content-Type": "multipart/form-data" },
-        })
-            .then(function (res) {
-                self.getTagsFromAPI();
-                console.log(res);
-            })
-            .catch(function (res) {
-                console.log(res);
-            });
-    };
+		form.append("id", id);
 
-    onAdd = () => {
-        this.setState({ uploaded: false });
+		axios({
+			method: "post",
+			url: API.backend + "/DeleteTag",
+			data: form,
+			headers: { "Content-Type": "multipart/form-data" },
+		})
+			.then(function (res) {
+				self.getTagsFromAPI();
+				console.log(res);
+			})
+			.catch(function (res) {
+				console.log(res);
+			});
+	};
 
-        //Strip tags of the color attribute
-        let test = JSON.parse(JSON.stringify(this.state.tags));
-        test.forEach((tag) => {
-            delete tag["id"];
-            this.state.tempTags.push(tag);
-        });
+	onAdd(state) {
+		//Strip tags of the color attribute
+		let test = JSON.parse(JSON.stringify(this.state.tags));
+		test.forEach((tag) => {
+			delete tag["id"];
+			this.state.tempTags.push(tag);
+		});
 
-        if (this.state.tagTextInput) {
-            console.log("Invalid Text Input");
-        }
+		if (this.state.tagTextInput) {
+			console.log("Invalid Text Input");
+		}
 
-        //Push the input value into the tags aswell - NOTE doesnt need setState because
-        //we dont need a re-render here
-        this.state.tempTags.push({
-            text: this.state.tagTextInput,
-            color: this.state.boxColor,
-        });
+		//Push the input value into the tags aswell - NOTE doesnt need setState because
+		//we dont need a re-render here
+		this.state.tempTags.push({
+			text: this.state.tagTextInput,
+			color: this.state.boxColor,
+		});
 
-        //See if tag exists
-        this.state.tempTags.forEach((tag) => {
-            var form = new FormData();
-            form.append("text", tag.text);
+		this.state.tempTags.forEach((tag) => {
+			this.tagExists(tag);
+		});
 
+		/*
             axios({
                 method: "post",
                 url: API.backend + "/TagExists",
@@ -141,100 +141,152 @@ class EditTags extends React.Component {
                     console.log(res);
                 });
         });
-    };
+        */
+	}
 
-    tagExists = () => {};
+	async tagExists(tag) {
+		var tagExistsFrom = new FormData();
+		tagExistsFrom.append("text", tag.text);
 
-    postToAPI = () => {
-        console.log("postToAPI() called");
-        let form = new FormData();
-        let tempTags = this.state.tempTags;
-        let self = this;
-        this.setState({ tempTags: [] });
+		var inserTagForm = new FormData();
+		inserTagForm.append("tag", JSON.stringify(tag));
 
-        console.log(tempTags);
-        form.append("tags", JSON.stringify(tempTags));
-        form.append("projectID", this.props.projectID);
-
-        axios({
-            method: "post",
-            url: API.backend + "/UpdateTags",
-            data: form,
-            headers: { "Content-Type": "multipart/form-data" },
-        })
-            .then(function (res) {
-                console.log("here");
-                self.getTagsFromAPI();
-                console.log(res);
+		//First check if tag exists
+		axios({
+			method: "post",
+			url: API.backend + "/TagExists",
+			data: tagExistsFrom,
+			headers: { "Content-Type": "multipart/form-data" },
+		})
+			.then((res) => {
+				//Second if tag doesnt exists insert it into the Tags table
+				//console.log("res1: " + JSON.stringify(res));
+				if (!res.data.tagExists)
+					return axios({
+						method: "post",
+						url: API.backend + "/InsertTag",
+						data: inserTagForm,
+						headers: { "Content-Type": "multipart/form-data" },
+					});
+				else return res;
+			})
+			.then((res) => {
+				//Third check if Tag exists in the ProjectsTags table
+				var PTExistsForm = new FormData();
+				PTExistsForm.append("tagId", res.data.id);
+				PTExistsForm.append("projectId", this.props.projectID);
+				return axios({
+					method: "post",
+					url: API.backend + "/ProjectsTagsExists",
+					data: PTExistsForm,
+					headers: { "Content-Type": "multipart/form-data" },
+				});
+			})
+			.then((res) => {
+                //Fourth if the tag doesnt exist in the ProjectsTags table then insert it
+                console.log()
+				var insertForm = new FormData();
+				insertForm.append("tagId", res.data.id);
+				insertForm.append("projectId", this.props.projectID);
+				if (!res.data.linkExists)
+					return axios({
+						method: "post",
+						url: API.backend + "/InsertIntoProjectsTags",
+						data: insertForm,
+						headers: { "Content-Type": "multipart/form-data" },
+					});
+			}).then((res) => {
+                console.log ("/InsertIntoProjectsTags: " + res);
             })
-            .catch(function (res) {
-                console.log(res);
-            });
-    };
+	}
 
-    getTagsFromAPI = () => {
-        console.log("getTagsFromAPI()");
-        fetch(API.backend + "/Tags" + this.props.projectID)
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    console.log("result");
-                    this.setState({ tags: result });
-                },
-                (error) => {
-                    console.log("Error /Project: " + error);
-                }
-            );
-    };
+	postToAPI = () => {
+		console.log("postToAPI() called");
+		let form = new FormData();
+		let tempTags = this.state.tempTags;
+		let self = this;
+		this.setState({ tempTags: [] });
 
-    render() {
-        return (
-            <div className="EditTags">
-                <div className="EditTags-TagsCon">
-                    {this.state.tags.map((tag, index) => (
-                        <Tag
-                            id={tag.id}
-                            text={tag.text}
-                            color={tag.color}
-                            onSearch={null}
-                            size="14px"
-                            mutable={true}
-                            key={index}
-                            onRemove={this.onRemove}
-                        />
-                    ))}
-                </div>
-                <div className="EditTags-input">
-                    <label>Tag Name</label>
-                    <input
-                        type="text"
-                        value={this.state.tagTextInput}
-                        onChange={this.handleTagTextInput}
-                    ></input>
-                    <label>Tag Color</label>
-                    <div className="EditTags-ColorPicker">
-                        <div
-                            className="EditTags-ColorPickerColorBlock"
-                            style={{
-                                backgroundColor: this.state.boxColor,
-                            }}
-                        />
-                        <input
-                            type="text"
-                            value={this.state.tagColorInput}
-                            onChange={this.handleTagColorInput}
-                        ></input>
-                        <button
-                            className="EditTags-Button"
-                            onClick={this.onAdd}
-                        >
-                            Update Tags
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+		console.log(tempTags);
+		form.append("tags", JSON.stringify(tempTags));
+		form.append("projectID", this.props.projectID);
+
+		axios({
+			method: "post",
+			url: API.backend + "/UpdateTags",
+			data: form,
+			headers: { "Content-Type": "multipart/form-data" },
+		})
+			.then(function (res) {
+				console.log("here");
+				self.getTagsFromAPI();
+				console.log(res);
+			})
+			.catch(function (res) {
+				console.log(res);
+			});
+	};
+
+	getTagsFromAPI = () => {
+		console.log("getTagsFromAPI()");
+		fetch(API.backend + "/Tags" + this.props.projectID)
+			.then((res) => res.json())
+			.then(
+				(result) => {
+					console.log("result");
+					this.setState({ tags: result });
+				},
+				(error) => {
+					console.log("Error /Project: " + error);
+				}
+			);
+	};
+
+	render() {
+		return (
+			<div className="EditTags">
+				<div className="EditTags-TagsCon">
+					{this.state.tags.map((tag, index) => (
+						<Tag
+							id={tag.id}
+							text={tag.text}
+							color={tag.color}
+							onSearch={null}
+							size="14px"
+							mutable={true}
+							key={index}
+							onRemove={this.onRemove}
+						/>
+					))}
+				</div>
+				<div className="EditTags-input">
+					<label>Tag Name</label>
+					<input
+						type="text"
+						value={this.state.tagTextInput}
+						onChange={this.handleTagTextInput}></input>
+					<label>Tag Color</label>
+					<div className="EditTags-ColorPicker">
+						<div
+							className="EditTags-ColorPickerColorBlock"
+							style={{
+								backgroundColor: this.state.boxColor,
+							}}
+						/>
+						<input
+							type="text"
+							value={this.state.tagColorInput}
+							onChange={this.handleTagColorInput}></input>
+						<button
+							className="EditTags-Button"
+							onClick={this.onAdd}>
+							Update Tags
+						</button>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default EditTags;
