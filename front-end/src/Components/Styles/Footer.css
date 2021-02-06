@@ -1,60 +1,60 @@
 .footerconmain {
-  display: flex;
-  flex-direction: column;
-  background-color: #dd5405;
-  margin: 0;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-bottom: 15px;
+	display: flex;
+	flex-direction: column;
+	background-color: #dd5405;
+	margin: 0;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-bottom: 15px;
 }
 
 .footercon {
-  display: flex;
-  flex-direction: column;
-  background-color: #dd5405;
-}
-
-.footercon-col ul {
-  padding: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.footercon-col ul li {
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  padding-top: 5px;
-  padding-bottom: 5px;
+	display: flex;
+	flex-direction: column;
+	background-color: #dd5405;
 }
 
 .footercon-col h3 {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 
-.footercon-col ul li p {
-  margin: 0;
-  padding-left: 6px;
-  font-size: 12pt;
+.footercon-col a {
+	color: white;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	transition: 1.5s ease-in-out;
+}
+
+.footercon-col svg {
+	transition: 0.2s ease-in-out;
+}
+
+.footercon-col a:hover > svg {
+	transform: translateX(-5px);
 }
 
 .footerconmain p {
-  margin-bottom: 0px;
-  font-size: 10pt;
-  text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+	font-size: 10pt;
+	text-align: center;
 }
 
 /* ------------------------------------- */
 /* Anything bigger than a phone */
 @media only screen and (min-width: 600px) {
-  .footercon {
-    flex-direction: row;
-    justify-content: space-around;
-  }
+	.footercon {
+		flex-direction: row;
+		justify-content: space-around;
+	}
 
-  .footercon-col {
-    min-width: 20vw;
-  }
+	.footercon-col {
+		min-width: 20vw;
+	}
 }
 
 /* Anything bigger than a tablet screen */

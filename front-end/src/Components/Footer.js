@@ -9,6 +9,7 @@ import {
 	FaGithub,
 	FaGit,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import ContactMe from "./ContactMe";
 
 //Styles
@@ -25,33 +26,26 @@ class Footer extends React.Component {
 				<div className="footercon">
 					<div className="footercon-col">
 						<h3>Quicklinks</h3>
-						<ul>
-							<li>
-								<FaHome /> <p>Home</p>
-							</li>
-							<li>
-								<FaDraftingCompass /> <p>Projects</p>
-							</li>
-							<li>
-								<FaAddressCard /> <p>About Me</p>
-							</li>
-							<li>
-								<FaMugHot /> <p>Misc.</p>
-							</li>
-						</ul>
+						<Link to="/Home">
+							<FaHome /> <p>Home</p>
+						</Link>
+						<Link to="/Projects">
+							<FaDraftingCompass /> <p>Projects</p>
+						</Link>
+						<Link to="/AboutMe">
+							<FaAddressCard /> <p>About Me</p>
+						</Link>
 					</div>
 					<div className="footercon-col">
 						<h3>Socials</h3>
-						<ul>
-							<li>
-								<FaLinkedin />
-								<p>LinkedIn</p>
-							</li>
-							<li>
-								<FaGithub />
-								<p>Github</p>
-							</li>
-						</ul>
+						<a href="https://www.linkedin.com/in/matt-boan-656561129/">
+							<FaLinkedin />
+							<p>LinkedIn</p>
+						</a>
+						<a href="https://www.github.com/mattboan">
+							<FaGithub />
+							<p>Github</p>
+						</a>
 					</div>
 					<div className="footercon-col">
 						<ContactMe />
