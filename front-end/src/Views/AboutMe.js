@@ -40,12 +40,26 @@ class AboutMe extends React.Component {
 						all into what I do.
 					</p>
 				</div>
+				<div className="creds">
+					<h2>Credentials</h2>
+					<ul>
+						<li>Certificate III in Graphic Design</li>
+						<li>Certificate IV in Graphic Design</li>
+						<li>
+							Bachelors Degree - Double Major in Computer Science
+							&amp; Web and Mobile Design
+						</li>
+					</ul>
+				</div>
 				<div className="socials">
 					<h2>Get in touch</h2>
+					<p>
+						Want to reach out? Great contact me via any social media
+						platform you prefer!
+					</p>
 					<div className="socialsCon">
 						<SocialIcon icon={<FaLinkedin className="icon" />} />
 						<SocialIcon icon={<FaGithub className="icon" />} />
-						<SocialIcon icon={<FaDribbble className="icon" />} />
 						<SocialIcon icon={<FaEnvelope className="icon" />} />
 					</div>
 				</div>

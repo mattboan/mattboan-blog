@@ -67,10 +67,6 @@ class Home extends React.Component {
 						return <ProjectsCon projects={projects} />;
 					}
 				})()}
-				<h2>Blog Posts</h2>
-				<FadeInSection>
-					<Awards />
-				</FadeInSection>
 			</div>
 		);
 	}
