@@ -123,6 +123,7 @@ class Project extends React.Component {
 		};
 
 		const progressMainStyle = {
+			borderRadius: "10px",
 			transition: "0.1s ease",
 			height: "5px",
 			background: "#dd5404",

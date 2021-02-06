@@ -15,7 +15,7 @@ class Banner extends React.Component {
 				</div>
 				<div className="BannerImage">
 					<img
-						src={URL.backend + "/images/placeholder.svg"}
+						src={URL.backend + "/images/minime2.svg"}
 						alt="Banner"
 					/>
 				</div>
