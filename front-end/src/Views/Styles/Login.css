@@ -1,0 +1,48 @@
+.Login {
+	min-height: 85vh;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 100px;
+}
+
+.Login form {
+	display: flex;
+	flex-direction: column;
+}
+
+.Login button {
+	border: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 5px;
+	font-weight: bold;
+	padding: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: 15px;
+	color: #dd5404;
+}
+
+.Login input {
+	border: none;
+	outline: none;
+	padding: 8px;
+	border-radius: 5px;
+	margin-bottom: 15px;
+}
+
+.Login label {
+	margin-bottom: 5px;
+}
+
+.Login .onSubmitRow {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.Login .onSubmitRow p {
+	margin: 0;
+}

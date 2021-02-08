@@ -39,7 +39,7 @@ function deauthenitcateToken(req, res, next) {
 }
 
 function generateAccessToken(userID, secret) {
-	return jwt.sign(userID, secret, { expiresIn: "60s" });
+	return jwt.sign(userID, secret, { expiresIn: "2000s" });
 }
 
 const auth = {

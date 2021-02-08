@@ -4,6 +4,7 @@ import { convertToRaw, convertFromRaw } from "draft-js";
 import axios from "axios";
 import DotLoader from "react-spinners/DotLoader";
 import PostEditor from "../Components/PostEditor";
+import { getToken, isLogin } from "../Config/Auth";
 
 import EditTags from "../Components/EditTags";
 
@@ -104,7 +105,10 @@ class EditProject extends React.Component {
 	 * @param {*} image
 	 */
 	postToAPI = () => {
-		console.log("postToAPI() called");
+		let authHead = null;
+		if (isLogin()) {
+			authHead = `Bearer ${getToken()}`;
+		}
 		let form = new FormData();
 		let project = this.state.project;
 
@@ -121,7 +125,10 @@ class EditProject extends React.Component {
 			method: "post",
 			url: API.backend + "/UpdateProject",
 			data: form,
-			headers: { "Content-Type": "multipart/form-data" },
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: authHead,
+			},
 		})
 			.then(function (res) {
 				console.log(res);
@@ -158,16 +165,22 @@ class EditProject extends React.Component {
 
 	//This needs authentication.
 	deleteProject = () => {
-		console.log("deleteProject() called");
-		let form = new FormData();
+		let authHead = null;
+		if (isLogin()) {
+			authHead = `Bearer ${getToken()}`;
+		}
 
+		let form = new FormData();
 		form.append("id", this.props.match.params.id);
 
 		axios({
 			method: "post",
 			url: API.backend + "/DeleteProject",
 			data: form,
-			headers: { "Content-Type": "multipart/form-data" },
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: authHead,
+			},
 		})
 			.then(function (res) {
 				console.log(res);

@@ -4,6 +4,7 @@ import Tag from "./Tag";
 
 //Config
 import API from "../Config/URL";
+import { getToken, isLogin } from "../Config/Auth";
 
 //Styles
 import "./Styles/EditTags.css";
@@ -64,17 +65,22 @@ class EditTags extends React.Component {
 	};
 
 	onRemove = (id) => {
-		console.log("onRemove() called");
-		let form = new FormData();
-		let self = this;
+		let authHead = null;
+		if (isLogin()) {
+			authHead = `Bearer ${getToken()}`;
+		}
 
+		let form = new FormData();
 		form.append("id", id);
 
 		axios({
 			method: "post",
 			url: API.backend + "/DeleteTag",
 			data: form,
-			headers: { "Content-Type": "multipart/form-data" },
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: authHead,
+			},
 		})
 			.then((res) => {
 				//Get the new tags and set the state
@@ -115,6 +121,11 @@ class EditTags extends React.Component {
 
 	//Long list of API calls :)
 	async updateTags(tag) {
+		var authHead = null;
+		if (isLogin()) {
+			authHead = `Bearer ${getToken()}`;
+		}
+
 		var tagExistsFrom = new FormData();
 		tagExistsFrom.append("text", tag.text);
 
@@ -138,7 +149,10 @@ class EditTags extends React.Component {
 						method: "post",
 						url: API.backend + "/InsertTag",
 						data: inserTagForm,
-						headers: { "Content-Type": "multipart/form-data" },
+						headers: {
+							"Content-Type": "multipart/form-data",
+							Authorization: authHead,
+						},
 					});
 				else return res;
 			})
@@ -166,7 +180,10 @@ class EditTags extends React.Component {
 						method: "post",
 						url: API.backend + "/InsertIntoProjectsTags",
 						data: insertForm,
-						headers: { "Content-Type": "multipart/form-data" },
+						headers: {
+							"Content-Type": "multipart/form-data",
+							Authorization: authHead,
+						},
 					});
 			})
 			.then((res) => {

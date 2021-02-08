@@ -1,5 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PrivateRoute from "./Routes/PrivateRoute";
+import PublicRoute from "./Routes/PublicRoute";
 
 //Components
 import Header from "./Components/Header";
@@ -12,45 +14,62 @@ import AboutMe from "./Views/AboutMe";
 import Project from "./Views/Project";
 import Projects from "./Views/Projects";
 import EditProject from "./Views/EditProject";
+import Login from "./Views/Login";
 
 function App() {
-    return (
-        <Router>
-            <ScrollToTop>
-                <div>
-                    <div className="AppContent">
-                        <div className="HeaderWrapper">
-                            <Header></Header>
-                        </div>
-                        <div className="dynamicCon">
-                            <Switch>
-                                <Route
-                                    path="/EditProject/:id"
-                                    render={(props) => (
-                                        <EditProject {...props} />
-                                    )}
-                                />
-                                <Route path="/Projects">
-                                    <Projects />
-                                </Route>
-                                <Route
-                                    path="/Project/:id"
-                                    render={(props) => <Project {...props} />}
-                                ></Route>
-                                <Route path="/AboutMe">
-                                    <AboutMe />
-                                </Route>
-                                <Route path="/">
-                                    <Home />
-                                </Route>
-                            </Switch>
-                        </div>
-                    </div>
-                    <Footer></Footer>
-                </div>
-            </ScrollToTop>
-        </Router>
-    );
+	return (
+		<Router>
+			<ScrollToTop>
+				<div>
+					<div className="AppContent">
+						<div className="HeaderWrapper">
+							<Header></Header>
+						</div>
+						<div className="dynamicCon">
+							<Switch>
+								<PublicRoute
+									restricted={true}
+									component={Login}
+									path="/Login"
+									exact
+								/>
+								<PublicRoute
+									restricted={false}
+									component={Home}
+									path="/Home"
+									exact
+								/>
+								<PublicRoute
+									restricted={false}
+									component={Projects}
+									path="/Projects"
+									exact
+								/>
+								<PublicRoute
+									restricted={false}
+									component={AboutMe}
+									path="/AboutMe"
+									exact
+								/>
+								<PublicRoute
+									restricted={false}
+									component={Project}
+									path="/Project/:id"
+									exact
+								/>
+								<PrivateRoute
+									component={EditProject}
+									path="/EditProject/:id"
+									exact
+								/>
+							</Switch>
+						</div>
+					</div>
+					<Footer></Footer>
+				</div>
+			</ScrollToTop>
+		</Router>
+	);
 }
 
 export default App;

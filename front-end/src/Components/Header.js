@@ -30,7 +30,7 @@ class Header extends React.Component {
 		return (
 			<div>
 				<header className="App-header">
-					<a className="App-header-text" href="/">
+					<a className="App-header-text" href="/Home">
 						matt boan
 					</a>
 					<Hamburger
@@ -48,7 +48,7 @@ class Header extends React.Component {
 							? "dropDown slideDown"
 							: "dropDown slideUp"
 					}>
-					<Link to="/" onClick={this.onMenuClick}>
+					<Link to="/Home" onClick={this.onMenuClick}>
 						<FaHome /> <p>Home</p>
 					</Link>
 					<Link to="/Projects" onClick={this.onMenuClick}>

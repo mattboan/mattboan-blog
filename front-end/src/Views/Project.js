@@ -10,6 +10,7 @@ import axios from "axios";
 //Config
 import Tag from "../Components/Tag";
 import API from "../Config/URL";
+import { isLogin } from "../Config/Auth";
 
 //Styles
 import "./Styles/Project.css";
@@ -138,13 +139,17 @@ class Project extends React.Component {
 						<div className="projectcon">
 							<div className="headerCon">
 								<h2>{this.state.project.name}</h2>
-								<Link
-									to={{
-										pathname: `/EditProject/${this.props.match.params.id}`,
-									}}
-									className="editButton">
-									<FaEdit className="icon" />
-								</Link>
+								{isLogin() ? (
+									<Link
+										to={{
+											pathname: `/EditProject/${this.props.match.params.id}`,
+										}}
+										className="editButton">
+										<FaEdit className="icon" />
+									</Link>
+								) : (
+									<div />
+								)}
 							</div>
 							<div className="ThumbnailTags">
 								{this.state.tags.map((tag) => (

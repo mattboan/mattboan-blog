@@ -83,7 +83,6 @@ app.get("/", function (req, res) {
 });
 
 app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
-	console.log("/api/register");
 	console.log("username: " + req.body.username);
 	console.log("password: " + req.body.password);
 
@@ -103,7 +102,10 @@ app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
 	});
 });
 
-app.post("/Login", (req, res) => {
+app.post("/Login", body.single(), (req, res) => {
+	console.log("username: " + req.body.username);
+	console.log("password: " + req.body.password);
+
 	con.query(
 		"SELECT password, id FROM Users WHERE username = ?",
 		[req.body.username],
@@ -118,8 +120,10 @@ app.post("/Login", (req, res) => {
 							{ userID: result[0].id },
 							process.env.TOKEN_SECRET
 						);
+						console.log(token);
 						res.json({ token: token, status: "good" });
 					} else {
+						console.log("failed");
 						res.send({ status: "bad" });
 					}
 				}
@@ -198,15 +202,26 @@ app.post(
 	}
 );
 
-app.post("/DeleteProject", body.single(), (req, res) => {
-	console.log("/DeleteProjects called".cyan);
+app.post(
+	"/DeleteProject",
+	[auth.authenticateToken, body.single()],
+	(req, res) => {
+		console.log("/DeleteProjects called id: ".cyan + req.body.id);
 
-	con.query("DELETE FROM Projects WHERE id", [req.body.id], (err, result) => {
-		if (err) res.json({ error: err.message });
-		if (result.length) res.json({ deleted: true });
-		else res.json({ delete: false });
-	});
-});
+		con.query(
+			"DELETE FROM Projects WHERE id = ?",
+			[req.body.id],
+			(err, result) => {
+				console.log(
+					"Result: " + JSON.stringify(result) + " Error: " + err
+				);
+				if (err) res.json({ error: err.message });
+				if (result.affectedRows === 1) res.json({ deleted: true });
+				else res.json({ delete: false });
+			}
+		);
+	}
+);
 
 app.post("/TagExists", body.single(), (req, res) => {
 	console.log("/TagExists called: ".cyan + req.body.text);
@@ -223,7 +238,7 @@ app.post("/TagExists", body.single(), (req, res) => {
 });
 
 //Insert into the Tags
-app.post("/InsertTag", body.single(), (req, res) => {
+app.post("/InsertTag", [auth.authenticateToken, body.single()], (req, res) => {
 	var tag = JSON.parse(req.body.tag);
 	con.query(
 		"INSERT INTO Tags (text, color) VALUES (?, ?)",
@@ -256,23 +271,27 @@ app.post("/ProjectsTagsExists", body.single(), (req, res) => {
 	);
 });
 
-app.post("/InsertIntoProjectsTags", body.single(), (req, res) => {
-	console.log("/InsertIntoProjectsTags called".cyan);
-	con.query(
-		"INSERT INTO ProjectsTags (tag_id, project_id) VALUES (?, ?)",
-		[req.body.tagId, req.body.projectId],
-		(err, result) => {
-			if (err) {
-				res.json({ error: "Failed insertion." });
-				console.log(err.message);
+app.post(
+	"/InsertIntoProjectsTags",
+	[auth.authenticateToken, body.single()],
+	(req, res) => {
+		console.log("/InsertIntoProjectsTags called".cyan);
+		con.query(
+			"INSERT INTO ProjectsTags (tag_id, project_id) VALUES (?, ?)",
+			[req.body.tagId, req.body.projectId],
+			(err, result) => {
+				if (err) {
+					res.json({ error: "Failed insertion." });
+					console.log(err.message);
+				}
+				console.log(result);
+				res.json(result);
 			}
-			console.log(result);
-			res.json(result);
-		}
-	);
-});
+		);
+	}
+);
 
-app.post("/DeleteTag", body.single(), (req, res) => {
+app.post("/DeleteTag", [auth.authenticateToken, body.single()], (req, res) => {
 	con.query(
 		"DELETE FROM ProjectsTags WHERE tag_id = ?",
 		[req.body.id],
@@ -284,7 +303,7 @@ app.post("/DeleteTag", body.single(), (req, res) => {
 });
 
 //We need to create a new project and then just return the ID
-app.post("/CreateNewProject", (req, res) => {
+app.post("/CreateNewProject", auth.authenticateToken, (req, res) => {
 	console.log("CreateNewProject called".cyan);
 
 	con.query(

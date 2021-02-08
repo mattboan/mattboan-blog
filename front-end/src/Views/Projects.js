@@ -9,6 +9,7 @@ import { FaPlus } from "react-icons/fa";
 //Config
 import dotConfig from "../Config/DotConfig";
 import API from "../Config/URL";
+import { getToken, isLogin } from "../Config/Auth";
 
 //Styles
 import "./Styles/Projects.css";
@@ -33,6 +34,11 @@ class Projects extends React.Component {
 	//Create a new Project - Just request a new project empty contents -> get the returned ID
 	//-> route to EditProject with the new ID
 	createNewProject() {
+		var authHead = null;
+		if (isLogin()) {
+			authHead = `Bearer ${getToken()}`;
+		}
+
 		console.log("createNewProject()");
 
 		//When authentication is added (set the auth token here before making the request)
@@ -43,7 +49,10 @@ class Projects extends React.Component {
 			method: "post",
 			url: API.backend + "/CreateNewProject",
 			data: form,
-			headers: { "Content-Type": "multipart/form-data" },
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: authHead,
+			},
 		})
 			.then(function (res) {
 				//This will be where the ID of the newly created project will passed to the EditProject React Route
@@ -116,12 +125,16 @@ class Projects extends React.Component {
 			<div className="Projects">
 				<div className="ProjectsHeader">
 					<h2>Projects</h2>
-					<button
-						className="ProjectsHeaderButton"
-						onClick={this.createNewProject}>
-						<FaPlus />
-						<span>Project</span>
-					</button>
+					{isLogin() ? (
+						<button
+							className="ProjectsHeaderButton"
+							onClick={this.createNewProject}>
+							<FaPlus />
+							<span>Project</span>
+						</button>
+					) : (
+						<div />
+					)}
 				</div>
 
 				<div className="searchBarWrapper">

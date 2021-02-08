@@ -37,6 +37,7 @@ class Home extends React.Component {
 				this.setState({ loaded: true, error: err });
 			});
 	}
+
 	render() {
 		const { error, loaded, projects } = this.state;
 		return (

@@ -1,40 +1,43 @@
 .EditTags-TagsCon {
-    display: flex;
-    margin-top: 5px;
-    margin-bottom: 10px;
+	display: flex;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	overflow: scroll;
 }
 
 .EditTags-TagsCon .MainCon {
-    padding-top: 0px;
+	padding-top: 0px;
 }
 
 .EditTags-input {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 .EditTags-input button {
-    align-self: flex-end !important;
+	align-self: flex-end !important;
+	min-width: 125px;
 }
 
 .EditTags-ColorPicker {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 5px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 5px;
 }
 
 .EditTags-ColorPicker input {
-    max-width: 130px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
+	max-width: 130px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	min-width: 85px;
 }
 
 .EditTags-ColorPickerColorBlock {
-    min-width: 38px !important;
-    height: 38px !important;
-    border-radius: 5px;
-    background-color: white;
-    border-radius: 100%;
+	min-width: 38px !important;
+	height: 38px !important;
+	border-radius: 5px;
+	background-color: white;
+	border-radius: 100%;
 }
