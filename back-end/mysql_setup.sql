@@ -4,6 +4,13 @@ FLUSH PRIVILEGES;
 
 CREATE DATABASE blog_dev;
 
+CREATE TABLE `Users` (
+	`id` INT unsigned NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(255) NOT NULL,
+	`password` TEXT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `Projects` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(350) NOT NULL DEFAULT 'Unnamed Project',

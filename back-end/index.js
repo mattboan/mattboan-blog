@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mysql = require("mysql");
 const path = require("path");
@@ -11,8 +12,14 @@ const url = require("./config/URL");
 const colors = require("colors");
 const { RSA_NO_PADDING } = require("constants");
 const nodemailer = require("nodemailer");
-const xoauth2 = require("xoauth2");
+
+//Authentication
 const { env } = require("process");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const auth = require("./middleware/auth");
+
+const saltRounds = 10;
 
 var transport = nodemailer.createTransport({
 	service: "gmail",
@@ -41,6 +48,7 @@ const upload = multer({ storage: storage });
 const body = multer();
 
 //Express middleware
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
@@ -65,6 +73,60 @@ const con = mysql.createConnection({
 });
 
 con.connect(); //Connect to the database
+
+//Allow static access to the front-end
+app.use(express.static(`${__dirname}/front-end/build`));
+
+//Match any route if a predefined route doesn't exist
+app.get("/", function (req, res) {
+	res.sendFile(`${__dirname}/front-end/build/index.html`);
+});
+
+app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
+	console.log("/api/register");
+	console.log("username: " + req.body.username);
+	console.log("password: " + req.body.password);
+
+	if (!req.body.username || !req.body.password) {
+		res.json({ error: "error" });
+	}
+
+	bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+		con.query(
+			"INSERT INTO Users (username, password) VALUES (?, ?)",
+			[req.body.username, hash],
+			function (err, result) {
+				if (err) res.json({ success: false });
+				res.json({ success: true });
+			}
+		);
+	});
+});
+
+app.post("/Login", (req, res) => {
+	con.query(
+		"SELECT password, id FROM Users WHERE username = ?",
+		[req.body.username],
+		function (err, result) {
+			bcrypt.compare(
+				req.body.password,
+				result[0].password,
+				function (err, authed) {
+					if (authed) {
+						//If authenticated send back the jwt token
+						const token = auth.generateAccessToken(
+							{ userID: result[0].id },
+							process.env.TOKEN_SECRET
+						);
+						res.json({ token: token, status: "good" });
+					} else {
+						res.send({ status: "bad" });
+					}
+				}
+			);
+		}
+	);
+});
 
 app.post("/SendEmail", body.single(), (req, res) => {
 	const message = {
@@ -106,25 +168,35 @@ function SendConfirmationEmail(req) {
 	});
 }
 
-app.post("/UpdateProject", upload.single("headerImage"), (req, res) => {
-	console.log("/UpdateProject called".cyan);
+app.post(
+	"/UpdateProject",
+	[auth.authenticateToken, upload.single("headerImage")],
+	(req, res) => {
+		console.log("/UpdateProject called".cyan);
 
-	var project = JSON.parse(req.body.project); //Need to parse the stringyfied project
-	var post = JSON.stringify(project.post); //Need to extract this from the project and stringify it
+		var project = JSON.parse(req.body.project); //Need to parse the stringyfied project
+		var post = JSON.stringify(project.post); //Need to extract this from the project and stringify it
 
-	if (req.file) {
-		project.image = url.backend + "/" + req.file.path;
-	}
-
-	con.query(
-		"UPDATE Projects SET name = ?, description = ?, image = ?, post = ? WHERE id = ?",
-		[project.name, project.description, project.image, post, project.id],
-		function (err, result) {
-			if (err) res.send(err.message);
-			res.json(result);
+		if (req.file) {
+			project.image = url.backend + "/" + req.file.path;
 		}
-	);
-});
+
+		con.query(
+			"UPDATE Projects SET name = ?, description = ?, image = ?, post = ? WHERE id = ?",
+			[
+				project.name,
+				project.description,
+				project.image,
+				post,
+				project.id,
+			],
+			function (err, result) {
+				if (err) res.send(err.message);
+				res.json(result);
+			}
+		);
+	}
+);
 
 app.post("/DeleteProject", body.single(), (req, res) => {
 	console.log("/DeleteProjects called".cyan);
