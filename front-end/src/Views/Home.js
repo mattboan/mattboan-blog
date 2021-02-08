@@ -3,8 +3,6 @@ import DotLoader from "react-spinners/DotLoader";
 import axios from "axios";
 import ProjectsCon from "../Components/ProjectsCon";
 import Banner from "../Components/Banner";
-import FadeInSection from "../Components/FadeInSection";
-import Awards from "../Components/Awards";
 
 //Config
 import dotConfig from "../Config/DotConfig";

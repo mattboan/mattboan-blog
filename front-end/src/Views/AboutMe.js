@@ -42,12 +42,19 @@ class AboutMe extends React.Component {
 				</div>
 				<div className="creds">
 					<h2>Credentials</h2>
+					<p>
+						I love learning, and then applying various skills
+						together to create some unique, interesting, and
+						exciting. Below is a list of my professional learning
+						credentials however, I never stop learning and always
+						aiming to improve myself!
+					</p>
 					<ul>
-						<li>Certificate III in Graphic Design</li>
-						<li>Certificate IV in Graphic Design</li>
+						<li>🎨 Certificate III in Graphic Design</li>
+						<li>🎨 Certificate IV in Graphic Design</li>
 						<li>
-							Bachelors Degree - Double Major in Computer Science
-							&amp; Web and Mobile Design
+							💻 Bachelors Degree - Double Major in Computer
+							Science &amp; Web and Mobile Design
 						</li>
 					</ul>
 				</div>

@@ -10,6 +10,20 @@ const multer = require("multer");
 const url = require("./config/URL");
 const colors = require("colors");
 const { RSA_NO_PADDING } = require("constants");
+const nodemailer = require("nodemailer");
+const xoauth2 = require("xoauth2");
+const { env } = require("process");
+
+var transport = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		type: "OAuth2",
+		user: process.env.EMAIL_USER,
+		clientId: process.env.EMAIL_ID,
+		clientSecret: process.env.EMAIL_SECRET,
+		refreshToken: process.env.EMAIL_REF_TOK,
+	},
+});
 
 //Express init
 const app = express();
@@ -51,6 +65,46 @@ const con = mysql.createConnection({
 });
 
 con.connect(); //Connect to the database
+
+app.post("/SendEmail", body.single(), (req, res) => {
+	const message = {
+		from: process.env.EMAIL_USER, // Sender address
+		to: process.env.EMAIL_DEST, // List of recipients
+		subject: req.body.subject, // Subject line
+		text: "From: " + req.body.from + "\n" + req.body.msg, // Plain text body
+	};
+
+	//Send the message to my DEST EMAIL
+	transport.sendMail(message, function (err, info) {
+		if (err) {
+			console.log(err);
+			res.json({ status: "fail" });
+		} else {
+			console.log(info);
+			SendConfirmationEmail(req);
+			res.json({ status: "sent" });
+		}
+	});
+});
+
+function SendConfirmationEmail(req) {
+	const message = {
+		from: process.env.EMAIL_USER, // Sender address
+		to: req.body.from, // List of recipients
+		subject: "Confirmation from mattboan.com", // Subject line
+		text:
+			"Thanks for getting in touch, I will get back to you as soon as possible!", // Plain text body
+	};
+
+	//Send the message to my DEST EMAIL
+	transport.sendMail(message, function (err, info) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(info);
+		}
+	});
+}
 
 app.post("/UpdateProject", upload.single("headerImage"), (req, res) => {
 	console.log("/UpdateProject called".cyan);
