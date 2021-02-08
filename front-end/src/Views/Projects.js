@@ -56,63 +56,57 @@ class Projects extends React.Component {
 
 	search(query) {
 		this.setState({ error: null, loaded: false });
-		//Can now pass a query from search bar to here, need to make new API request based on query.
-		fetch(API.backend + "/queryProjects:" + query)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						loaded: true,
-						projects: result,
-					});
-				},
-				(error) => {
-					this.setState({
-						loaded: true,
-						error: error,
-					});
-				}
-			);
+
+		axios
+			.get(API.backend + "/queryProjects:" + query)
+			.then((res) => {
+				this.setState({
+					loaded: true,
+					projects: res.data,
+				});
+			})
+			.catch((err) => {
+				this.setState({
+					loaded: true,
+					error: err,
+				});
+			});
 	}
 
 	searchTags(query) {
 		this.setState({ loaded: false, error: null });
-		fetch(API.backend + "/queryTags:" + query)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						loaded: true,
-						projects: result,
-					});
-				},
-				(error) => {
-					this.setState({
-						loaded: true,
-						error: error,
-					});
-				}
-			);
+		axios
+			.get(API.backend + "/queryTags:" + query)
+			.then((res) => {
+				this.setState({
+					loaded: true,
+					projects: res.data,
+				});
+			})
+			.catch((err) => {
+				this.setState({
+					loaded: true,
+					error: err,
+				});
+			});
 	}
 
 	//API call to retrieve projects
 	loadProjects() {
-		fetch(API.backend + "/projects")
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						loaded: true,
-						projects: result,
-					});
-				},
-				(error) => {
-					this.setState({
-						loaded: true,
-						error: error,
-					});
-				}
-			);
+		axios
+			.get(API.backend + "/projects")
+			.then((res) => {
+				this.setState({
+					loaded: true,
+					projects: res.data,
+				});
+			})
+			.catch((err) => {
+				this.setState({
+					loaded: true,
+					error: err,
+				});
+			});
 	}
 
 	render() {

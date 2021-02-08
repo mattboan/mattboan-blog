@@ -1,8 +1,8 @@
 import React from "react";
 import DotLoader from "react-spinners/DotLoader";
+import axios from "axios";
 import ProjectsCon from "../Components/ProjectsCon";
 import Banner from "../Components/Banner";
-
 import FadeInSection from "../Components/FadeInSection";
 import Awards from "../Components/Awards";
 
@@ -29,22 +29,15 @@ class Home extends React.Component {
 
 	//API call to retrieve highlighted projects
 	loadProjects() {
-		fetch(API.backend + "/Projects")
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						loaded: true,
-						projects: result,
-					});
-				},
-				(error) => {
-					this.setState({
-						loaded: true,
-						error: error,
-					});
-				}
-			);
+		axios
+			.get(API.backend + "/Projects")
+			.then((res) => {
+				console.log(res);
+				this.setState({ loaded: true, projects: res.data });
+			})
+			.catch((err) => {
+				this.setState({ loaded: true, error: err });
+			});
 	}
 	render() {
 		const { error, loaded, projects } = this.state;
@@ -53,9 +46,8 @@ class Home extends React.Component {
 				<Banner />
 				<h2>Projects</h2>
 				{(() => {
-					if (error) {
-						return <div>Error Loading Projects.</div>;
-					} else if (!loaded) {
+					if (error) return <div>Error Loading Projects....</div>;
+					else if (!loaded)
 						return (
 							<DotLoader
 								css={dotConfig}
@@ -63,9 +55,7 @@ class Home extends React.Component {
 								color={"#dd5405"}
 							/>
 						);
-					} else {
-						return <ProjectsCon projects={projects} />;
-					}
+					else return <ProjectsCon projects={projects} />;
 				})()}
 			</div>
 		);

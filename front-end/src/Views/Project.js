@@ -5,6 +5,7 @@ import { EditorState, convertFromRaw } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import addLinkPlugin from "../EditorPlugins/EditorLinkPlugin";
 import { mediaBlockRenderer } from "../EditorPlugins/MediaBlockRenderer";
+import axios from "axios";
 
 //Config
 import Tag from "../Components/Tag";
@@ -48,67 +49,57 @@ class Project extends React.Component {
 		this.setState({
 			scroll: scroll,
 		});
-		console.log("scroll: " + scroll);
 	};
 
 	onChange = (editorState) => {
 		this.setState({ editorState });
 	};
 
-	goToAboutMe() {}
-
 	loadTags() {
-		fetch(API.backend + "/tags" + this.props.match.params.id)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						tags: result,
-						isLoaded: true,
-					});
-				},
-				(error) => {
-					this.setState({
-						isLoaded: true,
-						error: error,
-					});
-				}
-			);
+		axios
+			.get(API.backend + "/tags" + this.props.match.params.id)
+			.then((res) => {
+				this.setState({
+					tags: res.data,
+					isLoaded: true,
+				});
+			})
+			.catch((err) => {
+				this.setState({
+					isLoaded: true,
+					error: err,
+				});
+			});
 	}
 
 	getProjectFromAPI() {
-		fetch(API.backend + "/Project" + this.props.match.params.id)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					console.log(result[0]);
-					//Get the raw post
-					if (result[0].post) {
-						console.log("post test: " + result[0].post);
-						this.setState({
-							editorState: EditorState.createWithContent(
-								convertFromRaw(JSON.parse(result[0].post))
-							),
-						});
-						console.log("test");
-					} else {
-						this.setState({
-							editorState: EditorState.createEmpty(),
-						});
-					}
-
+		axios
+			.get(API.backend + "/Project" + this.props.match.params.id)
+			.then((res) => {
+				if (res.data[0].post) {
+					console.log("post test: " + res.data[0].post);
 					this.setState({
-						project: result[0],
+						editorState: EditorState.createWithContent(
+							convertFromRaw(JSON.parse(res.data[0].post))
+						),
 					});
-				},
-				(error) => {
-					console.log("API call failed");
+					console.log("test");
+				} else {
 					this.setState({
-						isLoaded: true,
-						error: error,
+						editorState: EditorState.createEmpty(),
 					});
 				}
-			);
+
+				this.setState({
+					project: res.data[0],
+				});
+			})
+			.catch((err) => {
+				this.setState({
+					isLoaded: true,
+					error: err,
+				});
+			});
 	}
 
 	render() {
