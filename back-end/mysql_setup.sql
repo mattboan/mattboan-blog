@@ -8,6 +8,8 @@ CREATE TABLE `Users` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(255) NOT NULL,
 	`password` TEXT NOT NULL,
+    `LAI` INT unsigned DEFAULT 0,
+    `LAT` TEXT,
 	PRIMARY KEY (`id`)
 );
 

@@ -1,6 +1,9 @@
 "use strict";
 require("dotenv").config();
 
+const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -12,12 +15,20 @@ const url = require("./config/URL");
 const colors = require("colors");
 const { RSA_NO_PADDING } = require("constants");
 const nodemailer = require("nodemailer");
+const history = require("connect-history-api-fallback");
+var db = require("./db");
 
 //Authentication
 const { env } = require("process");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const auth = require("./middleware/auth");
+var bouncer = require("express-bouncer")(12000, 900000); //min=2min max=10min
+
+//HTTPS Config
+const privateKey = fs.readFileSync("key/server.key", "utf8");
+const certificate = fs.readFileSync("key/server.cert", "utf8");
+const credentials = { key: privateKey, cert: certificate };
 
 const saltRounds = 10;
 
@@ -55,6 +66,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/images", express.static(__dirname + "/images"));
+app.use(
+	history({
+		verbose: false,
+	})
+);
 
 //use cors to allow cross origin resource sharing
 app.use(
@@ -64,23 +80,8 @@ app.use(
 	})
 );
 
-//MySQL setup
-const con = mysql.createConnection({
-	host: process.env.DB_HOST,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASS,
-	database: process.env.DB_DB,
-});
-
-con.connect(); //Connect to the database
-
 //Allow static access to the front-end
-app.use(express.static(`${__dirname}/front-end/build`));
-
-//Match any route if a predefined route doesn't exist
-app.get("/", function (req, res) {
-	res.sendFile(`${__dirname}/front-end/build/index.html`);
-});
+app.use(express.static(`${__dirname}/build`));
 
 app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
 	console.log("username: " + req.body.username);
@@ -91,7 +92,7 @@ app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
 	}
 
 	bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-		con.query(
+		db.query(
 			"INSERT INTO Users (username, password) VALUES (?, ?)",
 			[req.body.username, hash],
 			function (err, result) {
@@ -102,14 +103,28 @@ app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
 	});
 });
 
-app.post("/Login", body.single(), (req, res) => {
+// In case we want to supply our own error (optional)
+bouncer.blocked = function (req, res, next, remaining) {
+	console.log("in bouncer.blocked");
+	res.send(
+		429,
+		"Too many requests have been made, " +
+			"please wait " +
+			remaining / 1000 +
+			" seconds"
+	);
+};
+
+app.post("/Login", [bouncer.block, body.single()], (req, res) => {
 	console.log("username: " + req.body.username);
 	console.log("password: " + req.body.password);
 
-	con.query(
-		"SELECT password, id FROM Users WHERE username = ?",
+	db.query(
+		"SELECT id, password FROM Users WHERE username = ?",
 		[req.body.username],
 		function (err, result) {
+			if (err) res.send({ error: err });
+
 			bcrypt.compare(
 				req.body.password,
 				result[0].password,
@@ -120,11 +135,10 @@ app.post("/Login", body.single(), (req, res) => {
 							{ userID: result[0].id },
 							process.env.TOKEN_SECRET
 						);
-						console.log(token);
+
 						res.json({ token: token, status: "good" });
 					} else {
-						console.log("failed");
-						res.send({ status: "bad" });
+						res.json({ status: "bad" });
 					}
 				}
 			);
@@ -185,7 +199,7 @@ app.post(
 			project.image = url.backend + "/" + req.file.path;
 		}
 
-		con.query(
+		db.query(
 			"UPDATE Projects SET name = ?, description = ?, image = ?, post = ? WHERE id = ?",
 			[
 				project.name,
@@ -208,7 +222,7 @@ app.post(
 	(req, res) => {
 		console.log("/DeleteProjects called id: ".cyan + req.body.id);
 
-		con.query(
+		db.query(
 			"DELETE FROM Projects WHERE id = ?",
 			[req.body.id],
 			(err, result) => {
@@ -226,7 +240,7 @@ app.post(
 app.post("/TagExists", body.single(), (req, res) => {
 	console.log("/TagExists called: ".cyan + req.body.text);
 
-	con.query(
+	db.query(
 		"SELECT id FROM Tags WHERE text = ?",
 		[req.body.text],
 		(err, result) => {
@@ -240,7 +254,7 @@ app.post("/TagExists", body.single(), (req, res) => {
 //Insert into the Tags
 app.post("/InsertTag", [auth.authenticateToken, body.single()], (req, res) => {
 	var tag = JSON.parse(req.body.tag);
-	con.query(
+	db.query(
 		"INSERT INTO Tags (text, color) VALUES (?, ?)",
 		[tag.text, tag.color],
 		(err, result) => {
@@ -258,7 +272,7 @@ app.post("/InsertTag", [auth.authenticateToken, body.single()], (req, res) => {
 //Check if the tag id is linked to the project id
 app.post("/ProjectsTagsExists", body.single(), (req, res) => {
 	console.log("t: " + req.body.tagId + " - p: " + req.body.projectId);
-	con.query(
+	db.query(
 		"SELECT tag_id FROM ProjectsTags WHERE tag_id = ? AND project_id = ?",
 		[req.body.tagId, req.body.projectId],
 		(err, result) => {
@@ -276,7 +290,7 @@ app.post(
 	[auth.authenticateToken, body.single()],
 	(req, res) => {
 		console.log("/InsertIntoProjectsTags called".cyan);
-		con.query(
+		db.query(
 			"INSERT INTO ProjectsTags (tag_id, project_id) VALUES (?, ?)",
 			[req.body.tagId, req.body.projectId],
 			(err, result) => {
@@ -292,7 +306,7 @@ app.post(
 );
 
 app.post("/DeleteTag", [auth.authenticateToken, body.single()], (req, res) => {
-	con.query(
+	db.query(
 		"DELETE FROM ProjectsTags WHERE tag_id = ?",
 		[req.body.id],
 		(err, result) => {
@@ -306,7 +320,7 @@ app.post("/DeleteTag", [auth.authenticateToken, body.single()], (req, res) => {
 app.post("/CreateNewProject", auth.authenticateToken, (req, res) => {
 	console.log("CreateNewProject called".cyan);
 
-	con.query(
+	db.query(
 		"INSERT INTO Projects () VALUES ()",
 		function (err, result, fields) {
 			if (err) res.send(err.message);
@@ -322,7 +336,7 @@ app.post("/CreateNewProject", auth.authenticateToken, (req, res) => {
 app.get("/projects", (req, res) => {
 	console.log("/projects called".cyan);
 
-	con.query("SELECT * FROM Projects", function (err, result) {
+	db.query("SELECT * FROM Projects", function (err, result) {
 		if (err) res.send(err.message);
 		res.json(result);
 	});
@@ -330,7 +344,7 @@ app.get("/projects", (req, res) => {
 
 app.get("/tags", (req, res) => {
 	console.log("/tags called".cyan);
-	con.query("SELECT * FROM Tags", function (err, result) {
+	db.query("SELECT * FROM Tags", function (err, result) {
 		if (err) res.send(err.message);
 		res.json(result);
 	});
@@ -338,7 +352,7 @@ app.get("/tags", (req, res) => {
 
 app.get("/queryProjects::query", (req, res) => {
 	console.log("/queryProjects called - query = ".cyan + req.params.query);
-	con.query(
+	db.query(
 		"SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
 		req.params.query,
 		function (err, result) {
@@ -350,7 +364,7 @@ app.get("/queryProjects::query", (req, res) => {
 
 app.get("/queryTags::query", (req, res) => {
 	console.log("/queryTags called - query = ".cyan + req.params.query);
-	con.query(
+	db.query(
 		"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
 		req.params.query,
 		function (err, result) {
@@ -364,7 +378,7 @@ app.get("/queryTags::query", (req, res) => {
 app.get("/project:id", (req, res) => {
 	console.log("/project called - id = ".cyan + req.params.id);
 
-	con.query(
+	db.query(
 		"SELECT * FROM Projects WHERE id = ?",
 		req.params.id,
 		function (err, result) {
@@ -378,7 +392,7 @@ app.get("/project:id", (req, res) => {
 app.get("/tags:id", (req, res) => {
 	console.log("/project called - id = ".cyan + req.params.id);
 
-	con.query(
+	db.query(
 		"SELECT Tags.id, Tags.text, Tags.color FROM Tags INNER JOIN ProjectsTags ON  ProjectsTags.tag_id = Tags.id WHERE ProjectsTags.project_id = ?",
 		req.params.id,
 		function (err, tags) {
@@ -387,6 +401,8 @@ app.get("/tags:id", (req, res) => {
 	);
 });
 
-app.listen(port, () => {
-	console.log(`Server started at ${port}`);
-});
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(80);
+httpsServer.listen(8443);

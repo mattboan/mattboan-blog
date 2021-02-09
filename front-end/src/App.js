@@ -29,6 +29,12 @@ function App() {
 							<Switch>
 								<PublicRoute
 									restricted={true}
+									component={Home}
+									exact
+									path="/"
+								/>
+								<PublicRoute
+									restricted={true}
 									component={Login}
 									path="/Login"
 									exact

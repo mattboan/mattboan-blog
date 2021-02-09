@@ -30,9 +30,9 @@ class Header extends React.Component {
 		return (
 			<div>
 				<header className="App-header">
-					<a className="App-header-text" href="/Home">
+					<Link className="App-header-text" to="/">
 						matt boan
-					</a>
+					</Link>
 					<Hamburger
 						rounded
 						className="menubtn"
@@ -56,9 +56,6 @@ class Header extends React.Component {
 					</Link>
 					<Link to="/AboutMe" onClick={this.onMenuClick}>
 						<FaAddressCard /> <p>About Me</p>
-					</Link>
-					<Link to="/Misc" onClick={this.onMenuClick}>
-						<FaMugHot /> <p>Misc.</p>
 					</Link>
 				</div>
 			</div>
