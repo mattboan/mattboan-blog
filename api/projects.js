@@ -1,6 +1,6 @@
 const auth = require("../middleware/auth");
 const multer = require("multer");
-const project = require("../logic/project");
+const project = require("../logic/projects");
 var express = require("express");
 var router = express.Router();
 const log = require("../logs/routes");
@@ -49,6 +49,41 @@ router.get("/api/project::id", async (req, res) => {
 });
 
 /**
+ * This route gets all projects with a specific tag
+ */
+router.get("/api/project-with-tag::id", async (req, res) => {
+	log.route("/api/project-with-tag::id");
+
+	var id = req.params.id;
+
+	try {
+		var result = await project.getWithTag(id);
+		res.json({ projects: result });
+	} catch (err) {
+		log.error("/api/project-with-tag::id", err);
+		res.status(500).send();
+	}
+});
+
+/**
+ * This route gets projects based off a query
+ * @TODO - Should limit the size of the query
+ */
+router.get("/api/project-query::query", async (req, res) => {
+	log.route("/api/project-query");
+
+	var query = req.params.query;
+
+	try {
+		var result = await project.getWithQuery(query);
+		res.json({ projects: result });
+	} catch (err) {
+		log.error("/api/project-query::query", err);
+		res.status(500).send();
+	}
+});
+
+/**
  * This route creates an empty project then returns the new projects id
  * @TODO - Need to add authentication middleware
  */
@@ -68,11 +103,13 @@ router.post("/api/create-project", async (req, res) => {
  * This route deletes a project based off an id
  * @TODO - Need to add authentication middleware
  */
-router.post("/api/remove-project", body.single(), async (req, res) => {
+router.delete("/api/remove-project::id", async (req, res) => {
 	log.route("/api/remove-project");
 
+	var id = req.params.id;
+
 	try {
-		var result = await project.remove(req.body.id);
+		var result = await project.remove(id);
 		res.json({ deleted: result });
 	} catch (err) {
 		log.error("/api/remove-project", err);

@@ -14,7 +14,7 @@ async function startServer() {
 			console.log("ERROR: " + err);
 			return;
 		}
-		console.log(`Your server is ready !`);
+		console.log("🍦 Server is ready to serve!");
 	});
 }
 

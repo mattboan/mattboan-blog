@@ -19,6 +19,28 @@ const get = async (id) => {
 	}
 };
 
+const getWithQuery = async (q) => {
+	try {
+		return await query(
+			"SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
+			q
+		);
+	} catch (err) {
+		throw err;
+	}
+};
+
+const getWithTag = async (id) => {
+	try {
+		return await query(
+			"SELECT * FROM Projects WHERE id = (SELECT ProjectsTags.project_id FROM ProjectsTags WHERE ProjectsTags.tag_id = ?)",
+			id
+		);
+	} catch (err) {
+		throw err;
+	}
+};
+
 const create = async () => {
 	try {
 		const result = await query("INSERT INTO Projects () VALUES ()");
@@ -52,6 +74,8 @@ const remove = async (id) => {
 module.exports = {
 	gets,
 	get,
+	getWithTag,
+	getWithQuery,
 	create,
 	edit,
 	remove,
