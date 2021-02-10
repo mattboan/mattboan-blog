@@ -18,14 +18,7 @@ function authenticateToken(req, res, next) {
 		console.log(err);
 		if (err) return res.sendStatus(403);
 
-		db.query("SELECT id FROM Users WHERE id = 2", (err, result) => {
-			if (err) {
-				console.log(err);
-				return res.sendStatus(403);
-			}
-
-			if (!result.length) return next(); //pass the execution off to whatever request the client intended
-		});
+		return next();
 	});
 }
 
@@ -47,8 +40,8 @@ function deauthenitcateToken(req, res, next) {
 	});
 }
 
-function generateAccessToken(userID, secret) {
-	return jwt.sign(userID, secret, { expiresIn: "2000s" });
+function generateAccessToken(username, secret) {
+	return jwt.sign(username, secret, { expiresIn: "2000s" });
 }
 
 const auth = {

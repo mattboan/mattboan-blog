@@ -1,6 +1,9 @@
 const expressLoader = require("./express");
-const mysqlLoader = require("./mysql");
 const colors = require("colors");
+
+function initing(module) {
+	console.log("⏳ Initiating: " + module);
+}
 
 function inited(module) {
 	console.log("✅ Initialized: " + module.green);
@@ -11,9 +14,9 @@ function notinited(module) {
 }
 
 module.exports = async (app) => {
-	console.log("⏳ Initiating Express");
 	//Try to initialize express
 	try {
+		initing("Express");
 		await expressLoader(app);
 		inited("Express");
 	} catch (err) {

@@ -7,6 +7,7 @@ const url = require("../config/URL");
 const projectRoutes = require("../api/projects");
 const tagRoutes = require("../api/tags");
 const projectsTagsRoutes = require("../api/projectsTags");
+const usersRoutes = require("../api/users");
 
 function added(module) {
 	console.log("\t✅ " + module.green);
@@ -35,12 +36,20 @@ module.exports = async (app) => {
 		notadded("Tag Routes");
 	}
 
-	//Handle Projects Tags
+	//Handle Projects Tags Routes
 	try {
 		app.use(projectsTagsRoutes);
 		added("ProjectsTags Routes");
 	} catch (err) {
 		notadded("Projects Tags Routes");
+	}
+
+	//Handle Users Routes
+	try {
+		app.use(usersRoutes);
+		added("Users Routes");
+	} catch (err) {
+		notadded("Users Routes");
 	}
 
 	try {

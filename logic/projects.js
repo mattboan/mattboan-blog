@@ -19,11 +19,11 @@ const get = async (id) => {
 	}
 };
 
-const getWithQuery = async (q) => {
+const getWithQuery = async (projectQuery) => {
 	try {
 		return await query(
 			"SELECT * FROM Projects WHERE MATCH(name, description) against (? IN BOOLEAN MODE)",
-			q
+			projectQuery
 		);
 	} catch (err) {
 		throw err;

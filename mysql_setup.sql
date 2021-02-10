@@ -6,7 +6,7 @@ CREATE DATABASE blog_dev;
 
 CREATE TABLE `Users` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
-	`username` VARCHAR(255) NOT NULL,
+	`username` VARCHAR(255) NOT NULL UNIQUE, 
 	`password` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
 );
