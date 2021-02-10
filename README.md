@@ -20,7 +20,7 @@ Install dependencies for both the front end and back end:
 
 ```
 cd front-end && sudo npm install
-cd back-end sudo npm install
+sudo npm install
 ```
 
 ## Running the application
@@ -28,7 +28,7 @@ cd back-end sudo npm install
 Running the back end:
 
 ```
-cd back-end && npm start
+npm start
 ```
 
 Running the front end:
@@ -37,8 +37,16 @@ Running the front end:
 cd front-end && npm start
 ```
 
+## Building the Front End
+
+To build the front end so that the back end can server the client run this command:
+
+```
+cd front-end && npm run build
+```
+
 ## Screenshot
 
 Current State:
 
-<img src="img/ipad.png">
+<img src="README_img/ipad.png">

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 
-var db = require("../db");
+var db = require("../loaders/mysql");
 
 function authenticateToken(req, res, next) {
 	// Gather the jwt access token from the request header

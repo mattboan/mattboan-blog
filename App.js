@@ -1,6 +1,26 @@
 "use strict";
 require("dotenv").config();
 
+const express = require("express");
+const loaders = require("./loaders");
+
+async function startServer() {
+	const app = express();
+
+	await loaders(app);
+
+	app.listen(process.env.PORT, (err) => {
+		if (err) {
+			console.log("ERROR: " + err);
+			return;
+		}
+		console.log(`Your server is ready !`);
+	});
+}
+
+startServer();
+
+/*
 const http = require("http");
 const https = require("https");
 const fs = require("fs");
@@ -16,7 +36,7 @@ const colors = require("colors");
 const { RSA_NO_PADDING } = require("constants");
 const nodemailer = require("nodemailer");
 const history = require("connect-history-api-fallback");
-var db = require("./db");
+var db = require("./loaders/mysql");
 
 //Authentication
 const { env } = require("process");
@@ -72,31 +92,6 @@ let storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 const body = multer();
-
-//Express middleware
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use("/images", express.static(__dirname + "/images"));
-app.use(
-	history({
-		verbose: false,
-	})
-);
-
-//use cors to allow cross origin resource sharing
-app.use(
-	cors({
-		origin: url.frontend,
-		credentials: true,
-	})
-);
-
-//Allow static access to the front-end
-app.use(express.static(`${__dirname}/build`));
 
 app.post("/RegisterUser", auth.deauthenitcateToken, (req, res) => {
 	console.log("username: " + req.body.username);
@@ -345,9 +340,6 @@ app.post("/CreateNewProject", auth.authenticateToken, (req, res) => {
 });
 
 //Get recent projects
-/**
- * IMPORTANT - REMOVE THE setTimeout() when on live server!
- */
 app.get("/projects", (req, res) => {
 	console.log("/projects called".cyan);
 
@@ -421,3 +413,4 @@ var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(80);
 httpsServer.listen(443);
+*/
