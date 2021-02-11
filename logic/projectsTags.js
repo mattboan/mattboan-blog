@@ -25,8 +25,6 @@ const exists = async (tag_id, project_id) => {
 			(returnResult.id = result[0].id), (returnResult.tag_id = result[0].tag_id);
 		}
 
-		console.log(returnResult);
-
 		return returnResult;
 	} catch (err) {
 		throw err;

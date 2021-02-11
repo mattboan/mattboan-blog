@@ -58,7 +58,6 @@ module.exports = async (app) => {
 	}
 
 	try {
-		console.log(__dirname);
 		//Allow static access to the front-end
 		app.use(express.static(`${process.env.PROJ_PATH}/front-end/build`));
 		//Express middleware

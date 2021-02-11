@@ -18,9 +18,6 @@ router.get("/api/projects-tags-exists", async (req, res) => {
 		res.status(400).send();
 	}
 
-	console.log(tag_id);
-	console.log(project_id);
-
 	try {
 		var result = await projectsTags.exists(tag_id, project_id);
 		console.log(result);

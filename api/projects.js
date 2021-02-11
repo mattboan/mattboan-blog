@@ -130,7 +130,6 @@ router.post("/api/update-project", upload.single("header-image"), async (req, re
 	try {
 		var proj = JSON.parse(req.body.project);
 		if (req.file) proj.image = url.backend + "/" + req.file.path;
-		console.log(proj.image);
 	} catch (err) {
 		log.error("/api/update-project", "404 error: " + err);
 		return res.status(400).send(); //Need to return this so the other responses don't get called
