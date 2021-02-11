@@ -1,6 +1,7 @@
 const express = require("express");
 const log = require("../logs/routes");
 const users = require("../logic/users");
+const bodyParser = require("body-parser");
 const bouncer = require("express-bouncer")(12000, 900000); //min=2min max=10min
 const router = express.Router();
 

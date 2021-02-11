@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-	FaHome,
-	FaDraftingCompass,
-	FaAddressCard,
-	FaMugHot,
-} from "react-icons/fa";
+import { FaHome, FaDraftingCompass, FaAddressCard, FaMugHot } from "react-icons/fa";
 import Hamburger from "hamburger-react";
 
 //Styles
@@ -21,7 +16,6 @@ class Header extends React.Component {
 	}
 
 	onMenuClick() {
-		console.log("Clicked Menu!");
 		const menuState = this.state.menuOpen;
 		this.setState({ menuOpen: !menuState });
 	}
@@ -42,12 +36,7 @@ class Header extends React.Component {
 						hideOutline={true}
 					/>
 				</header>
-				<div
-					className={
-						this.state.menuOpen
-							? "dropDown slideDown"
-							: "dropDown slideUp"
-					}>
+				<div className={this.state.menuOpen ? "dropDown slideDown" : "dropDown slideUp"}>
 					<Link to="/Home" onClick={this.onMenuClick}>
 						<FaHome /> <p>Home</p>
 					</Link>

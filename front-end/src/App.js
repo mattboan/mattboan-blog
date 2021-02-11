@@ -27,12 +27,7 @@ function App() {
 						</div>
 						<div className="dynamicCon">
 							<Switch>
-								<PublicRoute
-									restricted={true}
-									component={Home}
-									exact
-									path="/"
-								/>
+								<PublicRoute restricted={true} component={Home} exact path="/" />
 								<PublicRoute
 									restricted={true}
 									component={Login}

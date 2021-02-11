@@ -33,12 +33,12 @@ class Thumbnail extends React.Component {
 	}
 
 	loadTags() {
-		fetch(API.backend + "/tags" + this.props.item.id)
+		fetch(API.backend + "/api/projects-tags:" + this.props.item.id)
 			.then((res) => res.json())
 			.then(
 				(result) => {
 					this.setState({
-						tags: result,
+						tags: result.tags,
 						isLoaded: true,
 					});
 				},
@@ -55,9 +55,7 @@ class Thumbnail extends React.Component {
 		const classes = this.state.hidden ? "Thumbnail hide" : "Thumbnail";
 
 		return (
-			<Link
-				to={{ pathname: `${this.props.link}/${this.props.item.id}` }}
-				className={classes}>
+			<Link to={{ pathname: `${this.props.link}/${this.props.item.id}` }} className={classes}>
 				<div
 					className="ThumbnailImage"
 					style={{
@@ -72,12 +70,7 @@ class Thumbnail extends React.Component {
 
 				<div className="ThumbnailTags">
 					{this.state.tags.map((tag) => (
-						<Tag
-							key={tag.id}
-							text={tag.text}
-							color={tag.color}
-							size="12px"
-						/>
+						<Tag key={tag.id} text={tag.text} color={tag.color} size="12px" />
 					))}
 				</div>
 			</Link>

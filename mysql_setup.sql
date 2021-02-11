@@ -26,7 +26,7 @@ ALTER TABLE `Projects` ADD FULLTEXT(name, description);
 
 CREATE TABLE `Tags` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
-	`text` VARCHAR(100) NOT NULL,
+	`text` VARCHAR(100) NOT NULL UNIQUE,
 	`color` VARCHAR(8) NOT NULL DEFAULT '#FFFFFF',
 	PRIMARY KEY (`id`)
 );

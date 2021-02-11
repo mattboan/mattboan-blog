@@ -32,17 +32,13 @@ class EditTags extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getTagsFromAPI();
+		this.getTags();
 	}
 
 	//Validate color
 	isHexColor = (hex) => {
 		console.log("checking: " + hex);
-		return (
-			typeof hex === "string" &&
-			hex.length === 6 &&
-			!isNaN(Number("0x" + hex))
-		);
+		return typeof hex === "string" && hex.length === 6 && !isNaN(Number("0x" + hex));
 	};
 
 	//Handle the text input changing
@@ -70,25 +66,26 @@ class EditTags extends React.Component {
 			authHead = `Bearer ${getToken()}`;
 		}
 
-		let form = new FormData();
-		form.append("id", id);
+		const params = new URLSearchParams();
+		params.append("tag_id", id);
+		params.append("project_id", this.props.projectID);
 
 		axios({
-			method: "post",
-			url: API.backend + "/DeleteTag",
-			data: form,
+			method: "delete",
+			url: API.backend + "/api/delete-projects-tags",
+			data: params,
 			headers: {
-				"Content-Type": "multipart/form-data",
+				"Content-Type": "application/x-www-form-urlencoded",
 				Authorization: authHead,
 			},
 		})
 			.then((res) => {
-				//Get the new tags and set the state
-				return axios.get(API.backend + "/Tags" + this.props.projectID);
 				console.log(res);
+				//Get the new tags and set the state
+				return axios.get(API.backend + "/api/projects-tags:" + this.props.projectID);
 			})
 			.then((res) => {
-				this.setState({ tags: res.data });
+				this.setState({ tags: res.data.tags });
 			})
 			.catch(function (res) {
 				console.log(res);
@@ -100,19 +97,17 @@ class EditTags extends React.Component {
 		let test = JSON.parse(JSON.stringify(this.state.tags));
 		test.forEach((tag) => {
 			delete tag["id"];
-			this.state.tempTags.push(tag);
+			if (tag.text !== "") this.state.tempTags.push(tag);
 		});
-
-		if (this.state.tagTextInput) {
-			console.log("Invalid Text Input");
-		}
 
 		//Push the input value into the tags aswell - NOTE doesnt need setState because
 		//we dont need a re-render here
-		this.state.tempTags.push({
-			text: this.state.tagTextInput,
-			color: this.state.boxColor,
-		});
+		if (this.state.tagTextInput !== "") {
+			this.state.tempTags.push({
+				text: this.state.tagTextInput,
+				color: this.state.boxColor,
+			});
+		}
 
 		this.state.tempTags.forEach((tag) => {
 			this.updateTags(tag);
@@ -126,81 +121,85 @@ class EditTags extends React.Component {
 			authHead = `Bearer ${getToken()}`;
 		}
 
-		var tagExistsFrom = new FormData();
-		tagExistsFrom.append("text", tag.text);
+		var tag_id = 0;
+		const insertTagParams = new URLSearchParams();
+		insertTagParams.append("text", tag.text);
+		insertTagParams.append("color", tag.color);
 
-		var inserTagForm = new FormData();
-		inserTagForm.append("tag", JSON.stringify(tag));
-
-		var tag_id;
-
-		//First check if tag exists
+		//1. Check if tag exists
 		axios({
-			method: "post",
-			url: API.backend + "/TagExists",
-			data: tagExistsFrom,
-			headers: { "Content-Type": "multipart/form-data" },
+			method: "get",
+			url: API.backend + "/api/tag-exists:" + tag.text,
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
 		})
+			//2. If tag doesn't exists create one, if it does exists move to next api call
 			.then((res) => {
-				//Second if tag doesnt exists insert it into the Tags table
-				//console.log("res1: " + JSON.stringify(res));
-				if (!res.data.tagExists)
+				//If the tag exsits then it will return the id of the tag or 0 if it doesn't exists
+				if (!res.data.tag_id) {
 					return axios({
 						method: "post",
-						url: API.backend + "/InsertTag",
-						data: inserTagForm,
+						url: API.backend + "/api/create-tag",
+						data: insertTagParams,
 						headers: {
-							"Content-Type": "multipart/form-data",
+							"Content-Type": "application/x-www-form-urlencoded",
 							Authorization: authHead,
 						},
 					});
-				else return res;
+				} else {
+					return res;
+				}
 			})
+			//3. Check if tag exists in the projects tags
 			.then((res) => {
-				//Third check if Tag exists in the ProjectsTags table
-				tag_id = res.data.id;
-				var PTExistsForm = new FormData();
-				PTExistsForm.append("tagId", res.data.id);
-				PTExistsForm.append("projectId", this.props.projectID);
+				tag_id = res.data.tag_id;
+				const projsTagsParams = new URLSearchParams();
+				projsTagsParams.append("tag_id", tag_id);
+				projsTagsParams.append("project_id", this.props.projectID);
+
 				return axios({
-					method: "post",
-					url: API.backend + "/ProjectsTagsExists",
-					data: PTExistsForm,
-					headers: { "Content-Type": "multipart/form-data" },
+					method: "get",
+					url: API.backend + "/api/projects-tags-exists",
+					data: projsTagsParams,
+					headers: { "Content-Type": "application/x-www-form-urlencoded" },
 				});
 			})
+			//4. If the tag is not linked to the project then insert it into the projects tags table
 			.then((res) => {
-				//Fourth if the tag doesnt exist in the ProjectsTags table then insert it
-				console.log("/ProjectsTagsExists: " + JSON.stringify(res));
-				var insertForm = new FormData();
-				insertForm.append("tagId", tag_id);
-				insertForm.append("projectId", this.props.projectID);
-				if (!res.data.linkExists)
+				console.log("/api/projects-tags-exists");
+				if (res.data.id === 0) {
+					const params = new URLSearchParams();
+					params.append("tag_id", tag_id);
+					params.append("project_id", this.props.projectID);
+
 					return axios({
 						method: "post",
-						url: API.backend + "/InsertIntoProjectsTags",
-						data: insertForm,
+						url: API.backend + "/api/create-projects-tags",
+						data: params,
 						headers: {
-							"Content-Type": "multipart/form-data",
+							"Content-Type": "application/x-www-form-urlencoded",
 							Authorization: authHead,
 						},
 					});
+				} else {
+					return res;
+				}
 			})
 			.then((res) => {
 				//Get the new tags and set the state
-				return axios.get(API.backend + "/Tags" + this.props.projectID);
-				console.log("/InsertIntoProjectsTags: " + JSON.stringify(res));
+				return axios.get(API.backend + "/api/projects-tags:" + this.props.projectID);
 			})
 			.then((res) => {
-				this.setState({ tags: res.data });
+				this.setState({ tags: res.data.tags });
 				this.setState({ tempTags: [] });
 			});
+
+		this.setState({ tempTags: [] });
 	}
 
-	getTagsFromAPI = () => {
-		axios.get(API.backend + "/Tags" + this.props.projectID).then((res) => {
+	getTags = () => {
+		axios.get(API.backend + "/api/projects-tags:" + this.props.projectID).then((res) => {
 			this.setState({
-				tags: res.data,
+				tags: res.data.tags,
 				tempTags: [],
 			});
 		});
@@ -241,9 +240,7 @@ class EditTags extends React.Component {
 							type="text"
 							value={this.state.tagColorInput}
 							onChange={this.handleTagColorInput}></input>
-						<button
-							className="EditTags-Button"
-							onClick={this.onAdd}>
+						<button className="EditTags-Button" onClick={this.onAdd}>
 							Update Tags
 						</button>
 					</div>

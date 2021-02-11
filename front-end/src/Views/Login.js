@@ -31,19 +31,18 @@ class Login extends React.Component {
 	loginAPI = (e) => {
 		e.preventDefault();
 		logout();
-		console.log("Login Called!");
-		alert(this.state.username);
-		alert(this.state.password);
-		let form = new FormData();
 
-		form.append("username", this.state.username);
-		form.append("password", this.state.password);
+		const params = new URLSearchParams();
+		params.append("username", this.state.username);
+		params.append("password", this.state.password);
 
 		axios({
 			method: "post",
-			url: API.backend + "/Login",
-			data: form,
-			headers: { "Content-Type": "multipart/form-data" },
+			url: API.backend + "/api/login-user",
+			data: params,
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
 		})
 			.then(function (res) {
 				console.log(res);
@@ -60,9 +59,7 @@ class Login extends React.Component {
 				<h3>Login</h3>
 				<form onSubmit={this.loginAPI}>
 					<label>Username</label>
-					<input
-						value={this.state.username}
-						onChange={this.handleUsernameChange}></input>
+					<input value={this.state.username} onChange={this.handleUsernameChange}></input>
 					<label>Password</label>
 					<input
 						type="password"

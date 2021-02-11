@@ -28,10 +28,9 @@ class Home extends React.Component {
 	//API call to retrieve highlighted projects
 	loadProjects() {
 		axios
-			.get(API.backend + "/Projects")
+			.get(API.backend + "/api/projects")
 			.then((res) => {
-				console.log(res);
-				this.setState({ loaded: true, projects: res.data });
+				this.setState({ loaded: true, projects: res.data.projects });
 			})
 			.catch((err) => {
 				this.setState({ loaded: true, error: err });
@@ -47,13 +46,7 @@ class Home extends React.Component {
 				{(() => {
 					if (error) return <div>Error Loading Projects....</div>;
 					else if (!loaded)
-						return (
-							<DotLoader
-								css={dotConfig}
-								size={55}
-								color={"#dd5405"}
-							/>
-						);
+						return <DotLoader css={dotConfig} size={55} color={"#dd5405"} />;
 					else return <ProjectsCon projects={projects} />;
 				})()}
 			</div>

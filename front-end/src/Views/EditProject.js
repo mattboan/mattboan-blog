@@ -49,7 +49,7 @@ class EditProject extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getProjectFromAPI();
+		this.getProject();
 	}
 
 	openModal = () => {
@@ -104,7 +104,7 @@ class EditProject extends React.Component {
 	 * Send form: (image, project title, project post, tags) to API
 	 * @param {*} image
 	 */
-	postToAPI = () => {
+	updateProject = () => {
 		let authHead = null;
 		if (isLogin()) {
 			authHead = `Bearer ${getToken()}`;
@@ -113,17 +113,17 @@ class EditProject extends React.Component {
 		let project = this.state.project;
 
 		//Trim down the decsription
-		project.description = project.description.slice(0, DES_LEN);
+		if (project.description) project.description = project.description.slice(0, DES_LEN);
 
 		//Append converted content state to the form item project
 		let tempContentState = convertToRaw(this.state.contentState);
 		project.post = tempContentState;
 
 		form.append("project", JSON.stringify(project));
-		form.append("headerImage", this.state.image);
+		form.append("header-image", this.state.image);
 		axios({
 			method: "post",
-			url: API.backend + "/UpdateProject",
+			url: API.backend + "/api/update-project",
 			data: form,
 			headers: {
 				"Content-Type": "multipart/form-data",
@@ -138,21 +138,19 @@ class EditProject extends React.Component {
 			});
 	};
 
-	getProjectFromAPI = () => {
+	getProject = () => {
 		axios
-			.get(API.backend + "/Project" + this.props.match.params.id)
+			.get(API.backend + "/api/project:" + this.props.match.params.id)
 			.then((res) => {
-				if (res.data[0]) {
+				if (res.data.project[0]) {
 					let tempContentState = null;
-					if (res.data[0].post) {
-						tempContentState = convertFromRaw(
-							JSON.parse(res.data[0].post)
-						);
+					if (res.data.project[0].post) {
+						tempContentState = convertFromRaw(JSON.parse(res.data.project[0].post));
 					}
 
 					this.setState({
-						project: res.data[0],
-						previewImage: res.data[0].image,
+						project: res.data.project[0],
+						previewImage: res.data.project[0].image,
 						contentState: tempContentState,
 						isLoaded: true,
 					});
@@ -169,16 +167,10 @@ class EditProject extends React.Component {
 		if (isLogin()) {
 			authHead = `Bearer ${getToken()}`;
 		}
-
-		let form = new FormData();
-		form.append("id", this.props.match.params.id);
-
 		axios({
 			method: "post",
-			url: API.backend + "/DeleteProject",
-			data: form,
+			url: API.backend + "/api/delete-project" + this.props.match.params.id,
 			headers: {
-				"Content-Type": "multipart/form-data",
 				Authorization: authHead,
 			},
 		})
@@ -199,8 +191,7 @@ class EditProject extends React.Component {
 					<div
 						className="imageHeader"
 						style={{
-							backgroundImage:
-								"url('" + this.state.previewImage + "')",
+							backgroundImage: "url('" + this.state.previewImage + "')",
 						}}></div>
 					<div className="headerImageControls">
 						<button onClick={this.triggetHeaderImageInput}>
@@ -247,15 +238,11 @@ class EditProject extends React.Component {
 				)}
 
 				<div className="bottomControls">
-					<button onClick={this.postToAPI}>Update Post</button>
-					<button
-						style={{ backgroundColor: "grey" }}
-						onClick={this.getProjectFromAPI}>
+					<button onClick={this.updateProject}>Update Post</button>
+					<button style={{ backgroundColor: "grey" }} onClick={this.getProject}>
 						Clear Changes
 					</button>
-					<button
-						style={{ backgroundColor: "red" }}
-						onClick={this.openModal}>
+					<button style={{ backgroundColor: "red" }} onClick={this.openModal}>
 						Delete Post
 					</button>
 				</div>

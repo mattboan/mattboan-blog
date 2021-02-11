@@ -8,12 +8,26 @@ const query = util.promisify(mysql.query).bind(mysql);
  * @TODO - Limit this response to a number of tags
  */
 const exists = async (tag_id, project_id) => {
+	const returnResult = {
+		passed_tag_id: tag_id,
+		passed_project_id: project_id,
+		id: 0,
+		tag_id: 0,
+	};
+
 	try {
 		var result = await query(
-			"SELECT tag_id FROM ProjectsTags WHERE tag_id = ? AND project_id = ?",
+			"SELECT DISTINCT id, tag_id FROM ProjectsTags WHERE tag_id = ? AND project_id = ?",
 			[tag_id, project_id]
 		);
-		return result.length;
+
+		if (result[0]) {
+			(returnResult.id = result[0].id), (returnResult.tag_id = result[0].tag_id);
+		}
+
+		console.log(returnResult);
+
+		return returnResult;
 	} catch (err) {
 		throw err;
 	}

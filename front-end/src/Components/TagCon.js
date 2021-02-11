@@ -20,12 +20,12 @@ class TagCon extends React.Component {
 	}
 
 	loadTags() {
-		fetch(API.backend + "/tags")
+		fetch(API.backend + "/api/tags")
 			.then((res) => res.json())
 			.then(
 				(result) => {
 					this.setState({
-						tags: result,
+						tags: result.tags,
 						isLoaded: true,
 					});
 				},
@@ -39,7 +39,6 @@ class TagCon extends React.Component {
 	}
 
 	render() {
-		console.log("Tag Props: " + JSON.stringify(this.props, null, 2));
 		return (
 			<div className="TagCon-Con">
 				{this.state.tags.map((tag, index) => (

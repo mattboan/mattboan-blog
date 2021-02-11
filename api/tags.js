@@ -21,7 +21,7 @@ router.get("/api/tags", async (req, res) => {
 /**
  * This route gets all the tags associated with a specific project (determined by the passed id)
  */
-router.get("/api/project-tags::id", async (req, res) => {
+router.get("/api/projects-tags::id", async (req, res) => {
 	log.route("/api/tag::id");
 
 	var id = req.params.id;
@@ -55,7 +55,7 @@ router.post("/api/create-tag", async (req, res) => {
 	//Insert into database
 	try {
 		var result = await tags.create(tag);
-		res.json({ id: result });
+		res.json({ tag_id: result });
 	} catch (err) {
 		log.error("/api/create-tag", err);
 		res.status(500).send();
@@ -72,7 +72,7 @@ router.get("/api/tag-exists::text", async (req, res) => {
 
 	try {
 		var result = await tags.exists(text);
-		res.json({ exists: result });
+		res.json({ tag_id: result });
 	} catch (err) {
 		log.error("/api/tag-exists::text", err);
 		res.status(500).send();

@@ -65,8 +65,8 @@ const remove = async (id) => {
  */
 const exists = async (text) => {
 	try {
-		const result = await query("SELECT id FROM Tags WHERE text = ?", text);
-		return result;
+		const result = await query("SELECT DISTINCT id FROM Tags WHERE text = ?", text);
+		return result[0] ? result[0].id : 0;
 	} catch (err) {
 		throw err;
 	}

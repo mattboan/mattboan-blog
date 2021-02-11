@@ -52,9 +52,10 @@ const create = async () => {
 
 const edit = async (project) => {
 	try {
+		var post = JSON.stringify(project.post);
 		const result = await query(
 			"UPDATE Projects SET name = ?, description = ?, image = ?, post = ? WHERE id = ?",
-			[project.name, project.description, project.image, project.post, project.id]
+			[project.name, project.description, project.image, post, project.id]
 		);
 		return result.affectedRows;
 	} catch (err) {

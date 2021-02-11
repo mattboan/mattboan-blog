@@ -39,8 +39,6 @@ class Projects extends React.Component {
 			authHead = `Bearer ${getToken()}`;
 		}
 
-		console.log("createNewProject()");
-
 		//When authentication is added (set the auth token here before making the request)
 		let form = new FormData();
 		form.append("username", "mattboan");
@@ -53,25 +51,20 @@ class Projects extends React.Component {
 				"Content-Type": "multipart/form-data",
 				Authorization: authHead,
 			},
-		})
-			.then(function (res) {
-				//This will be where the ID of the newly created project will passed to the EditProject React Route
-				console.log(res);
-			})
-			.catch(function (res) {
-				console.log(res);
-			});
+		}).then(function (res) {
+			//This will be where the ID of the newly created project will passed to the EditProject React Route
+		});
 	}
 
 	search(query) {
 		this.setState({ error: null, loaded: false });
 
 		axios
-			.get(API.backend + "/queryProjects:" + query)
+			.get(API.backend + "/api/project-query:" + query)
 			.then((res) => {
 				this.setState({
 					loaded: true,
-					projects: res.data,
+					projects: res.data.projects,
 				});
 			})
 			.catch((err) => {
@@ -85,11 +78,11 @@ class Projects extends React.Component {
 	searchTags(query) {
 		this.setState({ loaded: false, error: null });
 		axios
-			.get(API.backend + "/queryTags:" + query)
+			.get(API.backend + "/api/project-with-tag:" + query)
 			.then((res) => {
 				this.setState({
 					loaded: true,
-					projects: res.data,
+					projects: res.data.projects,
 				});
 			})
 			.catch((err) => {
@@ -103,11 +96,11 @@ class Projects extends React.Component {
 	//API call to retrieve projects
 	loadProjects() {
 		axios
-			.get(API.backend + "/projects")
+			.get(API.backend + "/api/projects")
 			.then((res) => {
 				this.setState({
 					loaded: true,
-					projects: res.data,
+					projects: res.data.projects,
 				});
 			})
 			.catch((err) => {
@@ -126,9 +119,7 @@ class Projects extends React.Component {
 				<div className="ProjectsHeader">
 					<h2>Projects</h2>
 					{isLogin() ? (
-						<button
-							className="ProjectsHeaderButton"
-							onClick={this.createNewProject}>
+						<button className="ProjectsHeaderButton" onClick={this.createNewProject}>
 							<FaPlus />
 							<span>Project</span>
 						</button>
@@ -138,23 +129,14 @@ class Projects extends React.Component {
 				</div>
 
 				<div className="searchBarWrapper">
-					<SearchBar
-						placeholder="Search Projects"
-						onSearch={this.search}
-					/>
+					<SearchBar placeholder="Search Projects" onSearch={this.search} />
 				</div>
 				<TagCon onSearch={this.searchTags} />
 				{(() => {
 					if (error) {
 						return <div>Error Loading Projects.</div>;
 					} else if (!loaded) {
-						return (
-							<DotLoader
-								css={dotConfig}
-								size={55}
-								color={"#dd5405"}
-							/>
-						);
+						return <DotLoader css={dotConfig} size={55} color={"#dd5405"} />;
 					} else {
 						return <ProjectCon projects={projects} />;
 					}

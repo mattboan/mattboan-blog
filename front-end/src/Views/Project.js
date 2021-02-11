@@ -31,8 +31,8 @@ class Project extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getProjectFromAPI();
-		this.loadTags();
+		this.getProjects();
+		this.getTags();
 		window.addEventListener("scroll", this.progressBar);
 	}
 
@@ -43,8 +43,7 @@ class Project extends React.Component {
 	progressBar = () => {
 		const scrollTotal = document.documentElement.scrollTop;
 		const heightWin =
-			document.documentElement.scrollHeight -
-			document.documentElement.clientHeight;
+			document.documentElement.scrollHeight - document.documentElement.clientHeight;
 		const scroll = `${(scrollTotal / heightWin) * 100}%`;
 
 		this.setState({
@@ -56,12 +55,12 @@ class Project extends React.Component {
 		this.setState({ editorState });
 	};
 
-	loadTags() {
+	getTags() {
 		axios
-			.get(API.backend + "/tags" + this.props.match.params.id)
+			.get(API.backend + "/api/projects-tags:" + this.props.match.params.id)
 			.then((res) => {
 				this.setState({
-					tags: res.data,
+					tags: res.data.tags,
 					isLoaded: true,
 				});
 			})
@@ -73,18 +72,16 @@ class Project extends React.Component {
 			});
 	}
 
-	getProjectFromAPI() {
+	getProjects() {
 		axios
-			.get(API.backend + "/Project" + this.props.match.params.id)
+			.get(API.backend + "/api/project:" + this.props.match.params.id)
 			.then((res) => {
-				if (res.data[0].post) {
-					console.log("post test: " + res.data[0].post);
+				if (res.data.project[0].post) {
 					this.setState({
 						editorState: EditorState.createWithContent(
-							convertFromRaw(JSON.parse(res.data[0].post))
+							convertFromRaw(JSON.parse(res.data.project[0].post))
 						),
 					});
-					console.log("test");
 				} else {
 					this.setState({
 						editorState: EditorState.createEmpty(),
@@ -92,10 +89,11 @@ class Project extends React.Component {
 				}
 
 				this.setState({
-					project: res.data[0],
+					project: res.data.project[0],
 				});
 			})
 			.catch((err) => {
+				console.log(err);
 				this.setState({
 					isLoaded: true,
 					error: err,
@@ -133,8 +131,7 @@ class Project extends React.Component {
 							className="imageHeader"
 							alt="Header"
 							style={{
-								backgroundImage:
-									"url('" + this.state.project.image + "')",
+								backgroundImage: "url('" + this.state.project.image + "')",
 							}}></div>
 						<div className="projectcon">
 							<div className="headerCon">
@@ -166,15 +163,11 @@ class Project extends React.Component {
 									if (this.state.editorState) {
 										return (
 											<Editor
-												editorState={
-													this.state.editorState
-												}
+												editorState={this.state.editorState}
 												readOnly={true}
 												plugins={this.plugins}
 												onChange={this.onChange}
-												blockRendererFn={
-													mediaBlockRenderer
-												}
+												blockRendererFn={mediaBlockRenderer}
 											/>
 										);
 									}
@@ -188,9 +181,7 @@ class Project extends React.Component {
 								<img src="../img/me2.jpg" alt="Author" />
 								<div className="author">
 									<p className="authorName">Matt Boan</p>
-									<p className="authorDesc">
-										Programmer, Designer, Fullstack 🙏
-									</p>
+									<p className="authorDesc">Programmer, Designer, Fullstack 🙏</p>
 								</div>
 							</div>
 						</Link>

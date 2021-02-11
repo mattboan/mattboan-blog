@@ -1,9 +1,11 @@
 const auth = require("../middleware/auth");
 const multer = require("multer");
+const path = require("path");
 const project = require("../logic/projects");
 var express = require("express");
 var router = express.Router();
 const log = require("../logs/routes");
+const url = require("../config/URL");
 
 //Setup multer to enable multi part forms
 let storage = multer.diskStorage({
@@ -128,6 +130,7 @@ router.post("/api/update-project", upload.single("header-image"), async (req, re
 	try {
 		var proj = JSON.parse(req.body.project);
 		if (req.file) proj.image = url.backend + "/" + req.file.path;
+		console.log(proj.image);
 	} catch (err) {
 		log.error("/api/update-project", "404 error: " + err);
 		return res.status(400).send(); //Need to return this so the other responses don't get called
