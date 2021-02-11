@@ -68,7 +68,12 @@ router.post("/api/create-tag", async (req, res) => {
 router.get("/api/tag-exists::text", async (req, res) => {
 	log.route("/api/tag-exists::text");
 
-	var text = req.params.text;
+	try {
+		var text = req.params.text;
+	} catch (err) {
+		log.error("/api/tag-exists::text", err);
+		res.status(400).send();
+	}
 
 	try {
 		var result = await tags.exists(text);

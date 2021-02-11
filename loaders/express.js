@@ -1,3 +1,4 @@
+const dotenv = require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -9,7 +10,7 @@ const projectRoutes = require("../api/projects");
 const tagRoutes = require("../api/tags");
 const projectsTagsRoutes = require("../api/projectsTags");
 const usersRoutes = require("../api/users");
-const dotenv = require("dotenv").config();
+const emailRoutes = require("../api/email");
 
 function added(module) {
 	console.log("\t✅ " + module.green);
@@ -55,6 +56,13 @@ module.exports = async (app) => {
 		added("Users Routes");
 	} catch (err) {
 		notadded("Users Routes");
+	}
+
+	try {
+		app.use(emailRoutes);
+		added("Email Routes");
+	} catch (err) {
+		notadded("Email Routes");
 	}
 
 	try {
