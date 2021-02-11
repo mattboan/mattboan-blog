@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import Tag from "./Tag";
 
 //Config
@@ -20,22 +21,15 @@ class TagCon extends React.Component {
 	}
 
 	loadTags() {
-		fetch(API.backend + "/api/tags")
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						tags: result.tags,
-						isLoaded: true,
-					});
-				},
-				(error) => {
-					this.setState({
-						isLoaded: true,
-						error: error,
-					});
-				}
-			);
+		console.log("getting tags");
+		axios
+			.get(API.backend + "/api/tags")
+			.then((res) => {
+				this.setState({ loaded: true, tags: res.data.tags });
+			})
+			.catch((err) => {
+				this.setState({ loaded: true, error: err });
+			});
 	}
 
 	render() {

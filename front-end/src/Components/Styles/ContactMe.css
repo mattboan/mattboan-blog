@@ -30,6 +30,7 @@
 	align-self: flex-end;
 	cursor: pointer;
 	outline: none;
+	margin-left: 10px;
 }
 
 .buttonAndStatus {

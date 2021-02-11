@@ -20,7 +20,6 @@ export const isLogin = () => {
 	let exp = jwt_decode(cookie).exp * 1000;
 
 	if (exp < Date.now()) {
-		console.log("data comp!");
 		return false;
 	}
 

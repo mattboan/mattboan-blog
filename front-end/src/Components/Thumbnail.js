@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Tag from "./Tag";
+import axios from "axios";
 
 //Config
 import API from "../Config/URL";
@@ -33,22 +34,15 @@ class Thumbnail extends React.Component {
 	}
 
 	loadTags() {
-		fetch(API.backend + "/api/projects-tags:" + this.props.item.id)
-			.then((res) => res.json())
-			.then(
-				(result) => {
-					this.setState({
-						tags: result.tags,
-						isLoaded: true,
-					});
-				},
-				(error) => {
-					this.setState({
-						isLoaded: true,
-						error: error,
-					});
-				}
-			);
+		console.log("getting tags");
+		axios
+			.get(API.backend + "/api/projects-tags:" + this.props.item.id)
+			.then((res) => {
+				this.setState({ loaded: true, tags: res.data.tags });
+			})
+			.catch((err) => {
+				this.setState({ loaded: true, error: err });
+			});
 	}
 
 	render() {

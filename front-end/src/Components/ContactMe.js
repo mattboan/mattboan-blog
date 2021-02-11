@@ -48,17 +48,18 @@ class ContactMe extends React.Component {
 	sendEmail = () => {
 		this.setState({ sending: true });
 		console.log("sendEmail called");
-		var form = new FormData();
-		form.append("from", this.state.email);
-		form.append("subject", this.state.subject);
-		form.append("msg", this.state.message);
+
+		const params = new URLSearchParams();
+		params.append("from", this.state.email);
+		params.append("subject", this.state.subject);
+		params.append("message", this.state.message);
 
 		//First check if tag exists
 		axios({
 			method: "post",
-			url: API.backend + "/SendEmail",
-			data: form,
-			headers: { "Content-Type": "multipart/form-data" },
+			url: API.backend + "/api/send-email",
+			data: params,
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
 		})
 			.then((res) => {
 				console.log(res.data);
@@ -94,13 +95,7 @@ class ContactMe extends React.Component {
 					<div className="buttonAndStatus">
 						{(() => {
 							if (this.state.sending)
-								return (
-									<DotLoader
-										css={override}
-										size={25}
-										color={"#ffffff"}
-									/>
-								);
+								return <DotLoader css={override} size={25} color={"#ffffff"} />;
 							else return <p>{this.state.status}</p>;
 						})()}
 						<button onClick={this.sendEmail}>Send!</button>
