@@ -20,8 +20,8 @@ function notadded(module) {
 }
 
 module.exports = async (app) => {
+	app.use(history({ verbose: false }));
 	app.use(bodyParser.urlencoded({ extended: true }));
-
 	//use cors to allow cross origin resource sharing
 	app.use(cors({ origin: url.frontend, credentials: true }));
 
@@ -65,8 +65,6 @@ module.exports = async (app) => {
 		app.use(express.static(process.env.PROJ_PATH + "/pics"));
 		app.use("/uploads", express.static(process.env.PROJ_PATH + "/uploads"));
 		app.use("/images", express.static(process.env.PROJ_PATH + "/images"));
-
-		app.use(history({ verbose: false }));
 
 		added("Middleware");
 	} catch (err) {

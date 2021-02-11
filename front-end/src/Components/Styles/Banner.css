@@ -37,14 +37,14 @@
 	left: 0;
 	z-index: -1;
 	border-radius: 16px;
-	opacity: 100%;
+	opacity: 1;
 	/*
 	-webkit-animation: fadein sideIn 1s; 
 	-moz-animation: fadein sideIn 1s; 
 	-ms-animation: fadein 1s; 
 	-o-animation: fadein 1s; 
 	*/
-	animation: fadeIn 1s, widthIn 1s;
+	animation: fadeIn 1s;
 }
 
 /**/
@@ -65,54 +65,46 @@
 @keyframes fadeIn {
 	from {
 		opacity: 0%;
-	}
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes widthIn {
-	from {
 		width: 0%;
 	}
 	to {
+		opacity: 1;
 		width: 100%;
 	}
 }
-/*
+
 @-moz-keyframes fadein {
-    from {
-        width: 0%;
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-        width: 100%;
-    }
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
 }
 
 @-webkit-keyframes fadein {
-    from {
-        width: 0%;
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-        width: 100%;
-    }
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
 }
 
 @-ms-keyframes fadein {
-    from {
-        width: 0%;
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-        width: 100%;
-    }
+	from {
+		width: 0%;
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		width: 100%;
+	}
 }
-*/
 
 @media only screen and (min-width: 600px) {
 	.Banner {
