@@ -26,6 +26,18 @@ module.exports = async (app) => {
 	//use cors to allow cross origin resource sharing
 	app.use(cors({ origin: url.frontend, credentials: true }));
 
+	//Try to initialize the forced https re route
+	try {
+		app.use(function (req, res, next) {
+			if (!req.secure && req.protocol !== "https") {
+				res.redirect("https://" + req.get("Host") + req.url);
+			}
+		});
+		console.log("\t✅ " + "HTPS Reroute middleware added".green);
+	} catch (err) {
+		console.log("\t❌ " + "HTTPS Reroute middleware failed");
+	}
+
 	//Handle Project Routes
 	try {
 		app.use(projectRoutes);
@@ -63,18 +75,6 @@ module.exports = async (app) => {
 		added("Email Routes");
 	} catch (err) {
 		notadded("Email Routes");
-	}
-
-	//Try to initialize the forced https re route
-	try {
-		app.use(function (req, res, next) {
-			if (!req.secure && req.protocol !== "https") {
-				res.redirect("https://" + req.get("Host") + req.url);
-			}
-		});
-		console.log("\t✅ " + "HTPS Reroute middleware added".green);
-	} catch (err) {
-		console.log("\t❌ " + "HTTPS Reroute middleware failed");
 	}
 
 	try {
