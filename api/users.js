@@ -17,6 +17,7 @@ bouncer.blocked = function (req, res, next, remaining) {
  * This route registers a user, will be turned off once server is deployed
  * @TODO - Need to add deauthentication
  */
+/*
 router.post("/api/register-user", auth.deauthenitcateToken, async (req, res) => {
 	log.route("/api/register-user");
 
@@ -38,6 +39,7 @@ router.post("/api/register-user", auth.deauthenitcateToken, async (req, res) => 
 		res.status(500).send();
 	}
 });
+*/
 
 /**
  * This route checks if a user, already exists for a particular username
