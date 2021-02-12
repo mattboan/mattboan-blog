@@ -28,26 +28,3 @@ router.post("/api/send-email", async (req, res) => {
 });
 
 module.exports = router;
-
-/*
-app.post("/SendEmail", body.single(), (req, res) => {
-	const message = {
-		from: process.env.EMAIL_USER, // Sender address
-		to: process.env.EMAIL_DEST, // List of recipients
-		subject: req.body.subject, // Subject line
-		text: "From: " + req.body.from + "\n" + req.body.msg, // Plain text body
-	};
-
-	//Send the message to my DEST EMAIL
-	transport.sendMail(message, function (err, info) {
-		if (err) {
-			console.log(err);
-			res.json({ status: "fail" });
-		} else {
-			console.log(info);
-			SendConfirmationEmail(req);
-			res.json({ status: "sent" });
-		}
-	});
-});
-*/
