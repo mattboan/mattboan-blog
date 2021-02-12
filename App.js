@@ -5,7 +5,7 @@ const express = require("express");
 const loaders = require("./loaders");
 const http = require("http");
 const https = require("https");
-//const cert = require("./config/cert");
+const cert = require("./config/cert");
 
 async function startServer() {
 	const app = express();
@@ -14,10 +14,10 @@ async function startServer() {
 
 	try {
 		var httpServer = http.createServer(app);
-		//var httpsServer = https.createServer(cert.credentials, app);
+		var httpsServer = https.createServer(cert.credentials, app);
 
 		httpServer.listen(80);
-		//httpsServer.listen(443);
+		httpsServer.listen(443);
 	} catch (err) {
 		console.log("Error: " + err);
 	}
