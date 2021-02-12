@@ -1,9 +1,9 @@
 const fs = require("fs");
 require("dotenv").config();
 
-const privateKey = "";
-const certificate = "";
-const ca = "";
+var privateKey = "";
+var certificate = "";
+var ca = "";
 
 try {
 	privateKey = fs.readFileSync(process.env.PRIVATE_KEY, "utf8");
