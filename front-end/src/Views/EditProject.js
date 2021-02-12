@@ -32,6 +32,7 @@ class EditProject extends React.Component {
 			tagsLoaded: false,
 			project: { name: "", description: "" },
 			contentState: null,
+			tempContentState: null,
 			modalIsOpen: false,
 		};
 	}
@@ -50,7 +51,7 @@ class EditProject extends React.Component {
 
 	//Pass this to the PostEditor Comp.
 	getContentState = (tempContentState) => {
-		console.log("Got Content State: " + tempContentState);
+		console.log("getContentState(): " + tempContentState);
 		if (tempContentState) {
 			this.setState({ contentState: tempContentState });
 		}
@@ -75,10 +76,14 @@ class EditProject extends React.Component {
 	};
 
 	triggetHeaderImageInput = (e) => {
-		this.inputRef.click();
+		console.log("Content State @ triggetHeaderImageInput: " + this.state.contentState);
+		this.inputRef.click(e);
 	};
 
 	headerImageOnChange = (event) => {
+		console.log(
+			"Content State @ headerImageOnChange: " + JSON.stringify(this.state.contentState)
+		);
 		if (event.target.files && event.target.files[0]) {
 			let img = event.target.files[0];
 			this.setState({
@@ -93,6 +98,12 @@ class EditProject extends React.Component {
 	 * @param {*} image
 	 */
 	updateProject = () => {
+		if (
+			!window.confirm(
+				"Did you remember to touch the post section, if not it will be deleted!"
+			)
+		)
+			return;
 		let authHead = null;
 		if (isLogin()) {
 			authHead = `Bearer ${getToken()}`;
@@ -106,6 +117,7 @@ class EditProject extends React.Component {
 		//Append converted content state to the form item project
 		let tempContentState = convertToRaw(this.state.contentState);
 		project.post = tempContentState;
+		console.log(JSON.stringify(project.post));
 
 		form.append("project", JSON.stringify(project));
 		form.append("header-image", this.state.image);
@@ -119,6 +131,7 @@ class EditProject extends React.Component {
 			},
 		})
 			.then(function (res) {
+				alert(JSON.stringify(res.data));
 				console.log(res);
 			})
 			.catch(function (res) {
