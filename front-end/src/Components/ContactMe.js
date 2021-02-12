@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import DotLoader from "react-spinners/DotLoader";
+import { FaPaperPlane } from "react-icons/fa";
 import BigButton from "./BigButton";
 
 //Styles
@@ -98,7 +99,9 @@ class ContactMe extends React.Component {
 								return <DotLoader css={override} size={25} color={"#ffffff"} />;
 							else return <p>{this.state.status}</p>;
 						})()}
-						<button onClick={this.sendEmail}>Send!</button>
+						<button onClick={this.sendEmail}>
+							Send <FaPaperPlane />
+						</button>
 					</div>
 				</div>
 			</div>

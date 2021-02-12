@@ -7,6 +7,7 @@
 }
 
 .ContactMeForm input {
+	font-size: 12pt;
 	border-radius: 10px;
 	border: 0px;
 	border-color: none;
@@ -21,6 +22,7 @@
 }
 
 .ContactMeForm button {
+	display: flex;
 	border: none;
 	padding: 10px;
 	padding-left: 15px;
@@ -31,6 +33,13 @@
 	cursor: pointer;
 	outline: none;
 	margin-left: 10px;
+	background-color: white;
+	color: black;
+	font-weight: bold;
+}
+
+.ContactMeForm button svg {
+	margin-left: 5px;
 }
 
 .buttonAndStatus {
@@ -45,6 +54,7 @@
 }
 
 .ContactMeForm textarea {
+	font-size: 12pt;
 	line-height: 1.3;
 	font-family: unset;
 	width: unset;
@@ -72,4 +82,14 @@
 	margin-top: 15px;
 	margin-bottom: 15px;
 	align-self: flex-end;
+}
+
+@media only screen and (min-width: 600px) {
+	.ContactMeForm input {
+		font-size: 10pt;
+	}
+
+	.ContactMeForm textarea {
+		font-size: 10pt;
+	}
 }

@@ -10,7 +10,11 @@ class SocialIcon extends React.Component {
 	}
 
 	render() {
-		return <div className="SocialIcon">{this.props.icon}</div>;
+		return (
+			<a href={this.props.url} className="SocialIcon">
+				{this.props.icon}
+			</a>
+		);
 	}
 }
 
