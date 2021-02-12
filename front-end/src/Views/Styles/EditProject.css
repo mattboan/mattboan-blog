@@ -160,6 +160,42 @@
 	background-color: #dd5404;
 }
 
+.ReactModal__Overlay {
+	background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.ReactModal__Content {
+	position: absolute !important;
+	inset: 50% auto auto 50% !important;
+	border: 1px solid #3a3a3a !important;
+	background: #222222 !important;
+	overflow: auto !important;
+	border-radius: 4px !important;
+	outline: none !important;
+	padding: 10px !important;
+	padding-right: 15px !important;
+	padding-left: 15px !important;
+	margin-right: -50% !important;
+	transform: translate(-50%, -50%) !important;
+	text-align: center !important;
+}
+
+.ReactModal__Content button {
+	background-color: white;
+	color: black;
+	padding: 8px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border-radius: 5px;
+	border: none;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.ReactModal__Content button:hover {
+	background-color: #eeeeee;
+}
+
 @media only screen and (min-width: 768px) {
 	/* For desktop: */
 	.EditProject {

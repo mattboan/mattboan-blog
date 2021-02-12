@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 const log = require("../logs/routes");
 const projectsTags = require("../logic/projectsTags");
 const router = express.Router();
@@ -32,7 +33,7 @@ router.get("/api/projects-tags-exists", async (req, res) => {
  * This route creates a ProjectTags record
  * @TODO - Need to add authentication here
  */
-router.post("/api/create-projects-tags", async (req, res) => {
+router.post("/api/create-projects-tags", auth.authenticateToken, async (req, res) => {
 	log.route("/api/create-projects-tags");
 
 	//Try to parse the request variables
@@ -57,7 +58,7 @@ router.post("/api/create-projects-tags", async (req, res) => {
 /**
  * This route deletes a projects tags record based off the tag_id and project_id
  */
-router.delete("/api/delete-projects-tags", async (req, res) => {
+router.delete("/api/delete-projects-tags", auth.authenticateToken, async (req, res) => {
 	log.route("/api/delete-projects-tags");
 
 	//Try to parse the request variables

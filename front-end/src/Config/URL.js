@@ -1,5 +1,5 @@
 const URL = {
-	backend: "http://localhost:8080",
+	backend: "http://192.168.0.120:8080",
 	frontend: "https://www.mattboan.com",
 };
 

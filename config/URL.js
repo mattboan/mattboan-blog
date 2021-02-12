@@ -1,6 +1,6 @@
 const URL = {
-	backend: "http://localhost:8080",
-	frontend: "http://localhost:3000",
+	backend: "http://192.168.0.120:8080",
+	frontend: "http://192.168.0.120:3000",
 };
 
 module.exports = URL;

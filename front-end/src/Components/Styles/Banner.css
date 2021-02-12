@@ -49,17 +49,17 @@
 
 /**/
 .BannerImage {
-	width: 100%;
 	margin: 0;
 	margin-bottom: 0px;
 	display: flex;
 	align-items: flex-end;
+	margin-right: -30px;
+	margin-left: -30px;
 }
 
 .BannerImage img {
+	width: 100%;
 	margin-bottom: -15px;
-	margin-left: -30px;
-	margin-right: -30px;
 }
 
 @keyframes fadeIn {
@@ -132,6 +132,7 @@
 	}
 
 	.BannerImage {
+		width: 100%;
 		margin-top: -80px;
 	}
 }
@@ -146,7 +147,7 @@
 		overflow: hidden;
 		margin-top: -110px;
 		margin-bottom: -15px;
-		margin-right: -20px;
+		margin-right: -50px;
 	}
 
 	.BannerImage img {

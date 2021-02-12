@@ -15,18 +15,6 @@ import dotConfig from "../Config/DotConfig";
 //Styles
 import "./Styles/EditProject.css";
 
-const modalStyle = {
-	content: {
-		top: "50%",
-		left: "50%",
-		right: "auto",
-		bottom: "auto",
-		marginRight: "-50%",
-		transform: "translate(-50%, -50%)",
-		backgroundColor: "#22222",
-	},
-};
-
 Modal.setAppElement("#root");
 
 const DES_LEN = 80;
@@ -168,13 +156,14 @@ class EditProject extends React.Component {
 			authHead = `Bearer ${getToken()}`;
 		}
 		axios({
-			method: "post",
-			url: API.backend + "/api/delete-project" + this.props.match.params.id,
+			method: "delete",
+			url: API.backend + "/api/remove-project:" + this.props.match.params.id,
 			headers: {
 				Authorization: authHead,
 			},
 		})
 			.then(function (res) {
+				alert(JSON.stringify(res.data));
 				console.log(res);
 			})
 			.catch(function (res) {
@@ -250,11 +239,14 @@ class EditProject extends React.Component {
 				<Modal
 					isOpen={this.state.modalIsOpen}
 					onRequestClose={this.closeModal}
-					style={modalStyle}
-					class="EditProjectModal"
 					contentLabel="Example Modal">
+					<p>Are you sure you want to delete this Project?</p>
 					<button onClick={this.closeModal}>Close</button>
-					<button onClick={this.deleteProject}>Delete</button>
+					<button
+						style={{ backgroundColor: "red", color: "white" }}
+						onClick={this.deleteProject}>
+						Delete
+					</button>
 				</Modal>
 			</div>
 		);

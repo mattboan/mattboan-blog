@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 const log = require("../logs/routes");
 const users = require("../logic/users");
 const bodyParser = require("body-parser");
@@ -16,7 +17,7 @@ bouncer.blocked = function (req, res, next, remaining) {
  * This route registers a user, will be turned off once server is deployed
  * @TODO - Need to add deauthentication
  */
-router.post("/api/register-user", async (req, res) => {
+router.post("/api/register-user", auth.deauthenitcateToken, async (req, res) => {
 	log.route("/api/register-user");
 
 	//Try to parse the request variables

@@ -31,6 +31,26 @@ const sendMail = async (options) => {
 	return info;
 };
 
+const sendConfirmationEmail = async (from) => {
+	const message = {
+		from: process.env.EMAIL_USER,
+		to: from,
+		subject: "Confirmation - I Hear You!",
+		text:
+			"Thanks for sending me an email, I will get back to you ASAP 🙏\nKind Regards,\nMatt Boan",
+	};
+
+	// send mail with defined transport object
+	try {
+		var info = await transporter.sendMail(message);
+	} catch (err) {
+		throw err;
+	}
+
+	return info;
+};
+
 module.exports = {
 	sendMail,
+	sendConfirmationEmail,
 };

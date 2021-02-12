@@ -18,7 +18,8 @@ router.post("/api/send-email", async (req, res) => {
 	}
 
 	try {
-		var result = await emails.sendMail({ from: from, message: message, subject: subject });
+		await emails.sendMail({ from: from, message: message, subject: subject });
+		await emails.sendConfirmationEmail(from);
 		res.json({ sent: true });
 	} catch (err) {
 		log.error("/api/send-email", err);

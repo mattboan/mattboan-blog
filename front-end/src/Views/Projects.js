@@ -39,19 +39,15 @@ class Projects extends React.Component {
 			authHead = `Bearer ${getToken()}`;
 		}
 
-		//When authentication is added (set the auth token here before making the request)
-		let form = new FormData();
-		form.append("username", "mattboan");
-
 		axios({
 			method: "post",
-			url: API.backend + "/CreateNewProject",
-			data: form,
+			url: API.backend + "/api/create-project",
 			headers: {
-				"Content-Type": "multipart/form-data",
+				"Content-Type": "application/x-www-form-urlencoded",
 				Authorization: authHead,
 			},
 		}).then(function (res) {
+			console.log(res);
 			//This will be where the ID of the newly created project will passed to the EditProject React Route
 		});
 	}

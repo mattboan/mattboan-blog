@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 const log = require("../logs/routes");
 const tags = require("../logic/tags");
 const router = express.Router();
@@ -39,7 +40,7 @@ router.get("/api/projects-tags::id", async (req, res) => {
  * This route inserts a tag
  * @TODO - need to add authentication
  */
-router.post("/api/create-tag", async (req, res) => {
+router.post("/api/create-tag", auth.authenticateToken, async (req, res) => {
 	log.route("/api/create-tag");
 
 	console.log(req.body);
@@ -88,7 +89,7 @@ router.get("/api/tag-exists::text", async (req, res) => {
  * This route deletes a tag
  * @TODO - add authentication
  */
-router.delete("/api/delete-tag::id", async (req, res) => {
+router.delete("/api/delete-tag::id", auth.authenticateToken, async (req, res) => {
 	log.route("/api/delete-tag::id");
 
 	var id = req.params.id;

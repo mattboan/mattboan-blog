@@ -89,7 +89,7 @@ router.get("/api/project-query::query", async (req, res) => {
  * This route creates an empty project then returns the new projects id
  * @TODO - Need to add authentication middleware
  */
-router.post("/api/create-project", async (req, res) => {
+router.post("/api/create-project", auth.authenticateToken, async (req, res) => {
 	log.route("/api/create-project");
 
 	try {
@@ -105,7 +105,7 @@ router.post("/api/create-project", async (req, res) => {
  * This route deletes a project based off an id
  * @TODO - Need to add authentication middleware
  */
-router.delete("/api/remove-project::id", async (req, res) => {
+router.delete("/api/remove-project::id", auth.authenticateToken, async (req, res) => {
 	log.route("/api/remove-project");
 
 	var id = req.params.id;
@@ -123,26 +123,30 @@ router.delete("/api/remove-project::id", async (req, res) => {
  * This route updates a project
  * @TODO - Need to add authentication middleware
  */
-router.post("/api/update-project", upload.single("header-image"), async (req, res) => {
-	log.route("/api/update-project");
+router.post(
+	"/api/update-project",
+	[auth.authenticateToken, upload.single("header-image")],
+	async (req, res) => {
+		log.route("/api/update-project");
 
-	//Try to get data from the request - needed incase a request is empty or not formulated correctly
-	try {
-		var proj = JSON.parse(req.body.project);
-		if (req.file) proj.image = url.backend + "/" + req.file.path;
-	} catch (err) {
-		log.error("/api/update-project", "404 error: " + err);
-		return res.status(400).send(); //Need to return this so the other responses don't get called
-	}
+		//Try to get data from the request - needed incase a request is empty or not formulated correctly
+		try {
+			var proj = JSON.parse(req.body.project);
+			if (req.file) proj.image = url.backend + "/" + req.file.path;
+		} catch (err) {
+			log.error("/api/update-project", "404 error: " + err);
+			return res.status(400).send(); //Need to return this so the other responses don't get called
+		}
 
-	//Pass data to project logic to be processed
-	try {
-		var result = await project.edit(proj);
-		res.json({ updated: result });
-	} catch (err) {
-		log.error("/api/update-project", err);
-		res.status(500).send();
+		//Pass data to project logic to be processed
+		try {
+			var result = await project.edit(proj);
+			res.json({ updated: result });
+		} catch (err) {
+			log.error("/api/update-project", err);
+			res.status(500).send();
+		}
 	}
-});
+);
 
 module.exports = router;
