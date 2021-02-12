@@ -38,6 +38,12 @@
 	margin-left: 5px;
 }
 
+.noprojectsfound {
+	margin-right: 15px;
+	margin-left: 15px;
+	text-align: center;
+}
+
 @media only screen and (min-width: 600px) {
 	.searchBarWrapper {
 		margin-left: 10px;
@@ -50,5 +56,10 @@
 		display: flex;
 		justify-content: space-between;
 		align-content: center;
+	}
+	.noprojectsfound {
+		margin-right: 20px;
+		margin-left: 20px;
+		text-align: center;
 	}
 }

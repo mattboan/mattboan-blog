@@ -133,6 +133,8 @@ class Projects extends React.Component {
 						return <div>Error Loading Projects.</div>;
 					} else if (!loaded) {
 						return <DotLoader css={dotConfig} size={55} color={"#dd5405"} />;
+					} else if (!projects.length) {
+						return <p className="noprojectsfound">No Projects Found.</p>;
 					} else {
 						return <ProjectCon projects={projects} />;
 					}
