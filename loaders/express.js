@@ -65,6 +65,18 @@ module.exports = async (app) => {
 		notadded("Email Routes");
 	}
 
+	//Try to initialize the forced https re route
+	try {
+		app.use(function (req, res, next) {
+			if (!req.secure && req.protocol !== "https") {
+				res.redirect("https://" + req.get("Host") + req.url);
+			}
+		});
+		console.log("\t✅ " + "HTPS Reroute middleware added".green);
+	} catch (err) {
+		console.log("\t❌ " + "HTTPS Reroute middleware failed");
+	}
+
 	try {
 		//Allow static access to the front-end
 		app.use(express.static(`${process.env.PROJ_PATH}/front-end/build`));
