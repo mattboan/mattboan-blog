@@ -1,5 +1,3 @@
 .env
-node_modules
-uploads
-key
-front-end/build
+./node_modules
+./uploads

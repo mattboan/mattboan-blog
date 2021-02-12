@@ -13,8 +13,8 @@ async function startServer() {
 	await loaders(app);
 
 	try {
-		var httpServer = https.http.createServer(app);
-		var httpsServer = https.https.createServer(cert.credentials, app);
+		var httpServer = https.createServer(app);
+		var httpsServer = https.createServer(cert.credentials, app);
 
 		httpServer.listen(80);
 		httpsServer.listen(443);
