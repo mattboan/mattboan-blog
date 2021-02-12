@@ -34,7 +34,6 @@ class Thumbnail extends React.Component {
 	}
 
 	loadTags() {
-		console.log("getting tags");
 		axios
 			.get(API.backend + "/api/projects-tags:" + this.props.item.id)
 			.then((res) => {

@@ -51,7 +51,6 @@ class EditProject extends React.Component {
 
 	//Pass this to the PostEditor Comp.
 	getContentState = (tempContentState) => {
-		console.log("getContentState(): " + tempContentState);
 		if (tempContentState) {
 			this.setState({ contentState: tempContentState });
 		}
@@ -76,14 +75,10 @@ class EditProject extends React.Component {
 	};
 
 	triggetHeaderImageInput = (e) => {
-		console.log("Content State @ triggetHeaderImageInput: " + this.state.contentState);
 		this.inputRef.click(e);
 	};
 
 	headerImageOnChange = (event) => {
-		console.log(
-			"Content State @ headerImageOnChange: " + JSON.stringify(this.state.contentState)
-		);
 		if (event.target.files && event.target.files[0]) {
 			let img = event.target.files[0];
 			this.setState({
@@ -117,7 +112,6 @@ class EditProject extends React.Component {
 		//Append converted content state to the form item project
 		let tempContentState = convertToRaw(this.state.contentState);
 		project.post = tempContentState;
-		console.log(JSON.stringify(project.post));
 
 		form.append("project", JSON.stringify(project));
 		form.append("header-image", this.state.image);

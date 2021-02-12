@@ -21,7 +21,6 @@ class TagCon extends React.Component {
 	}
 
 	loadTags() {
-		console.log("getting tags");
 		axios
 			.get(API.backend + "/api/tags")
 			.then((res) => {
