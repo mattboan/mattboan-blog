@@ -49,3 +49,9 @@
 .SearchBar .FaSearch {
 	vertical-align: middle;
 }
+
+@media only screen and (min-width: 600px) {
+	.SearchBar input {
+		font-size: 10pt;
+	}
+}
