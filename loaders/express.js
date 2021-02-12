@@ -29,9 +29,13 @@ module.exports = async (app) => {
 	//Try to initialize the forced https re route
 	try {
 		app.use(function (req, res, next) {
-			if (!req.secure && req.get("X-Forwarded-Proto") !== "https") {
-				res.redirect("https://" + req.get("Host") + req.url);
-			} else next();
+			if (req.secure) {
+				// request was via https, so do no special handling
+				next();
+			} else {
+				// request was via http, so redirect to https
+				res.redirect("https://" + req.headers.host + req.url);
+			}
 		});
 		console.log("\t✅ " + "HTPS Reroute middleware added".green);
 	} catch (err) {
