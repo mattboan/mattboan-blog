@@ -31,11 +31,12 @@ class AboutMe extends React.Component {
 						start to break the problem down into smaller pieces, figure out what the
 						solution is for each piece and work backwards from the solution. Once the
 						problem seems solved I test vigorously and iterate over slightly different
-						designs to achieve the best possible solution. I’m BIG on teamwork.
-						Throughout my studies and various side ventures, being able to share my
-						passions, solve problems, and work within a group is like surfing a wave,
-						it’s fun but it’s even more fun when you have someone to share the wave
-						with.
+						designs to achieve the best possible solution.
+						<br />
+						I’m <b>BIG</b> on teamwork. Throughout my studies and various side ventures,
+						being able to share my passions, solve problems, and work within a group is
+						like surfing a wave, it’s fun but it’s even more fun when you have someone
+						to share the wave with.
 					</p>
 				</div>
 				<div className="creds">
