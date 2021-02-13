@@ -36,12 +36,12 @@ class AboutMe extends React.Component {
 						problem seems solved I test vigorously and iterate over slightly different
 						designs to achieve the best possible solution.
 						<br />
-						<img src={API.backend + "/images/the-team.png"} />
 						<br />
 						I’m <b>BIG</b> on teamwork. Throughout my studies and various side ventures,
 						being able to share my passions, solve problems, and work within a group is
 						like surfing a wave, it’s fun but it’s even more fun when you have someone
 						to share the wave with.
+						<img src={API.backend + "/images/the-team.png"} />
 					</p>
 				</div>
 				<div className="creds">
