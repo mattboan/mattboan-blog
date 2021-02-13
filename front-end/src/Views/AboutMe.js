@@ -5,6 +5,9 @@ import SocialIcon from "../Components/SocialIcon";
 //Styles
 import "./Styles/AboutMe.css";
 
+//Config
+import API from "../Config/URL";
+
 const headerImage = "./img/beach-2.png";
 
 class AboutMe extends React.Component {
@@ -33,6 +36,7 @@ class AboutMe extends React.Component {
 						problem seems solved I test vigorously and iterate over slightly different
 						designs to achieve the best possible solution.
 						<br />
+						<img src={API.backend + "/images/the-team.png"} />
 						<br />
 						I’m <b>BIG</b> on teamwork. Throughout my studies and various side ventures,
 						being able to share my passions, solve problems, and work within a group is
