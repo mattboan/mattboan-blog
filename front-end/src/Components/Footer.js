@@ -38,7 +38,7 @@ class Footer extends React.Component {
 					</div>
 					<div className="footercon-col">
 						<h3>Socials</h3>
-						<a href="https://www.linkedin.com/in/matt-boan-656561129/">
+						<a href="https://www.linkedin.com/in/matthew-boan-656561129/">
 							<FaLinkedin />
 							<p>LinkedIn</p>
 						</a>

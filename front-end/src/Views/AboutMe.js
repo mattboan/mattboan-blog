@@ -23,7 +23,8 @@ class AboutMe extends React.Component {
 					className="aboutMeImageHeader"
 					style={{
 						backgroundImage: "url('" + headerImage + "')",
-					}}></div>
+					}}
+				></div>
 				<div className="para">
 					<h2>Matt Boan</h2>
 					<p>
@@ -80,7 +81,7 @@ class AboutMe extends React.Component {
 					</p>
 					<div className="socialsCon">
 						<SocialIcon
-							url="https://www.linkedin.com/in/matt-boan-656561129/"
+							url="https://www.linkedin.com/in/matthew-boan-656561129/"
 							icon={<FaLinkedin className="icon" />}
 						/>
 						<SocialIcon
